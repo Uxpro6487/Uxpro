@@ -1,317 +1,47 @@
-/* style.css */
+/* Custom styles for ultra-modern effects */
 
-/* Google Fonts වලින් Premium Font එකක් (Poppins) සහ Neon Colors එකතු කිරීම */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-:root {
-  --background-color: #0b0c10;
-  --sidebar-color: rgba(30, 30, 40, 0.65); /* Glassmorphism සඳහා */
-  --card-background: linear-gradient(135deg, rgba(45, 45, 60, 0.3) 0%, rgba(20, 20, 30, 0.4) 100%);
-  --primary-color: #00ffe1; /* Neon Cyan */
-  --secondary-color: #7928ca; /* Premium Purple */
-  --accent-gradient: linear-gradient(135deg, #7928ca 0%, #ff0080 100%); /* High-end gradient */
-  --text-color: #f5f6fa;
-  --text-muted: #a0aec0;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --font-family: 'Poppins', sans-serif;
+/* Neon glow for text and borders */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+  50% { box-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
 }
 
-/* Reset and base styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Gradient text with animated background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
-/* Custom Scrollbar එකක් සෑදීම (Premium Look) */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--background-color);
-}
-::-webkit-scrollbar-thumb {
-  background: #222;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-color);
+.text-gradient {
+  background: linear-gradient(270deg, #f0f, #0ff, #ff0, #f0f);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 10s ease infinite;
 }
 
-body {
-  font-family: var(--font-family);
-  background-color: var(--background-color);
-  color: var(--text-color);
-  display: flex;
-  min-height: 100vh;
-  overflow-x: hidden;
-  letter-spacing: 0.5px;
+/* Glowing neon border for header */
+.gradient-glow {
+  border: 2px solid transparent;
+  background-image: linear-gradient(45deg, #f0f, #0ff, #f0f, #ff0);
+  background-size: 600% 600%;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  animation: gradientShift 15s ease infinite;
 }
 
-/* Advanced Sidebar with Glassmorphism Effect */
-.sidebar {
-  width: 260px;
-  background: var(--sidebar-color);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-right: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  padding: 25px 20px;
-  position: fixed;
-  height: 100vh;
-  z-index: 1000;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+/* Neon glow shadow for progress bar */
+.shadow-neon {
+  box-shadow: 0 0 10px #f0f, 0 0 20px #f0f, 0 0 30px #0ff, 0 0 40px #0ff inset;
 }
 
-.brand {
-  text-align: center;
-  margin-bottom: 30px;
+/* Neon glow for container borders */
+.border-purple-700 {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 10px #8b5cf6, inset 0 0 10px #8b5cf6;
 }
 
-/* Brand Name එකට Neon Text Glow එකක් දීම */
-.brand h1 {
-  color: var(--text-color);
-  font-size: 1.6em;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(0, 255, 225, 0.3);
-}
+/* Animate success checkmark or overlay if needed later */
 
-/* Premium Search Input Box */
-#toolSearch {
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  width: 100%;
-  margin-bottom: 25px;
-  font-family: var(--font-family);
-  font-size: 0.9em;
-  transition: all 0.3s ease;
-}
-
-#toolSearch:focus {
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: var(--primary-color);
-  box-shadow: 0 0 15px rgba(0, 255, 225, 0.2);
-}
-
-/* Navigation Menu */
-.nav ul {
-  list-style: none;
-}
-
-.nav li {
-  padding: 14px 18px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-  color: var(--text-muted);
-  font-weight: 500;
-  font-size: 0.95em;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* Hover සහ Active වෙද්දී Gradient Indicator එකක් සහ Glow එකක් ලැබීම */
-.nav li:hover, .nav li.active {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--primary-color);
-  border-left: 4px solid var(--primary-color);
-  padding-left: 14px; /* Border එක නිසා balance කරන්න */
-}
-
-.nav li .icon {
-  margin-right: 12px;
-  font-size: 1.1em;
-  transition: transform 0.3s ease;
-}
-
-.nav li:hover .icon {
-  transform: scale(1.1);
-}
-
-/* Main Content Area */
-.main-content {
-  margin-left: 260px;
-  padding: 40px;
-  width: calc(100% - 260px);
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* Sections & Page Animations (Fade-in + Smooth Slide-up) */
-.section {
-  display: none;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.section.active {
-  display: block;
-  animation: slideUpFade 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-}
-
-/* Advanced Grid Layout */
-.tool-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-  margin-top: 25px;
-}
-
-/* Cyberpunk Glassmorphism Tool Cards */
-.tool-card {
-  background: var(--card-background);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  padding: 25px;
-  border-radius: 14px;
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* Card එක උඩට mouse එක ගෙනිච්චම වෙනස් වන සුපිරි Glow Effect එක */
-.tool-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(0, 255, 225, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 255, 225, 0.1);
-  background: linear-gradient(135deg, rgba(45, 45, 60, 0.45) 0%, rgba(20, 20, 30, 0.55) 100%);
-}
-
-/* Card එක ඇතුළේ තියෙන Heading */
-.tool-card h3 {
-  font-size: 1.2em;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #fff;
-}
-
-h2 {
-  color: #fff;
-  font-size: 1.8em;
-  font-weight: 600;
-  position: relative;
-  margin-bottom: 25px;
-}
-
-/* Heading එක යටින් ලස්සන Gradient ඉරක් (Indicator) හැදීම */
-h2::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 50px;
-  height: 3px;
-  background: var(--accent-gradient);
-  border-radius: 2px;
-}
-
-/* Premium Gradient Buttons with Hover Animation */
-button {
-  background: var(--accent-gradient);
-  border: none;
-  padding: 12px 24px;
-  color: #fff;
-  font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 0.9em;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(121, 40, 202, 0.4);
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 0, 128, 0.5);
-}
-
-button:active {
-  transform: translateY(1px);
-}
-
-/* Responsive Media Queries */
-@media(max-width: 992px) {
-  .sidebar {
-    width: 80px;
-    padding: 20px 10px;
-    align-items: center;
-  }
-  .brand h1, #toolSearch, .nav li span:not(.icon) {
-    display: none; /* Screen එක පොඩි වෙද්දී අකුරු අයින් කර අයිකන් විතරක් ඉතිරි කිරීම */
-  }
-  .nav li {
-    padding: 15px;
-    justify-content: center;
-  }
-  .nav li .icon {
-    margin-right: 0;
-    font-size: 1.3em;
-  }
-  .main-content {
-    margin-left: 80px;
-    width: calc(100% - 80px);
-  }
-}
-
-@media(max-width: 576px) {
-  body {
-    flex-direction: column;
-  }
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    padding: 15px;
-    flex-direction: row;
-    justify-content: space-around;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-  }
-  .nav ul {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-  }
-  .nav li {
-    margin-bottom: 0;
-    border-left: none;
-  }
-  .nav li:hover, .nav li.active {
-    border-left: none;
-    border-bottom: 3px solid var(--primary-color);
-  }
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-    padding: 20px;
-  }
-}
-
-/* Utility classes */
-.hidden {
-  display: none;
-}
-
-/* Keyframe Animations */
-@keyframes slideUpFade {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Additional hover and focus effects for smooth experience */
