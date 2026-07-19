@@ -1,16 +1,16 @@
 /* Premium Glassmorphic Theme Layout Styles */
 
 :root {
-  --glass-bg: rgba(18, 20, 32, 0.5);
-  --glass-border: rgba(255, 255, 255, 0.07);
-  --glass-shadow: rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(18, 20, 32, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
 }
 
 body.bg-deep-space {
-  background-color: #080a12;
+  background-color: #06080e;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(35, 22, 60, 0.45) 0px, transparent 55%),
-    radial-gradient(at 100% 100%, rgba(12, 28, 55, 0.4) 0px, transparent 55%);
+    radial-gradient(at 0% 0%, rgba(45, 25, 75, 0.5) 0px, transparent 55%),
+    radial-gradient(at 100% 100%, rgba(10, 30, 65, 0.45) 0px, transparent 55%);
 }
 
 /* Core Transparency Panel */
@@ -25,7 +25,7 @@ body.bg-deep-space {
 /* Interactive Modern Tool Selection Cards */
 .tool-card {
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 1rem;
   padding: 1.25rem;
   cursor: pointer;
@@ -58,6 +58,7 @@ body.bg-deep-space {
 .tab-btn {
   color: #9ca3af;
   border-bottom: 2px solid transparent;
+  flex-shrink: 0;
 }
 .tab-btn:hover {
   color: #e5e7eb;
@@ -68,7 +69,16 @@ body.bg-deep-space {
   font-weight: 600;
 }
 
-/* Text Scrollbar Configurations */
+/* Custom Hide Scrollbar Utlity class helper */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Text Webkit Scrollbars Configurations */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -90,7 +100,18 @@ body.bg-deep-space {
 .prose-invert p { color: #d1d5db; line-height: 1.5; font-size: 0.9rem; margin-bottom: 0.6rem; }
 .prose-invert code { background: rgba(0,0,0,0.3); padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #60a5fa; font-size: 0.85rem; }
 
-/* Force element states visibility safely */
+/* Real-time Diff highlight colors styling sheets mappings */
+.diff-added { background-color: rgba(16, 185, 129, 0.25); color: #34d399; text-decoration: none; padding: 1px 3px; border-radius: 3px; }
+.diff-removed { background-color: rgba(239, 68, 68, 0.25); color: #f87171; text-decoration: line-through; padding: 1px 3px; border-radius: 3px; }
+
+/* Code Highlight Engine token classification classes overrides */
+.token-keyword { color: #c084fc; font-weight: bold; }
+.token-string { color: #34d399; }
+.token-number { color: #fb923c; }
+.token-comment { color: #6b7280; font-style: italic; }
+.token-symbol { color: #60a5fa; }
+
+/* Fixed element tracking display layout handlers override overrides safely */
 .fixed.opacity-100 {
   pointer-events: auto !important;
 }
