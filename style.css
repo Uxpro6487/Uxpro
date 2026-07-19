@@ -1,45 +1,34 @@
 /* Custom styles for ultra-modern effects */
 
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
-  50% { box-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
-}
-
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .text-gradient {
   background: linear-gradient(270deg, #f0f, #0ff, #ff0, #f0f);
-  background-size: 600% 600%;
+  background-size: 400% 400%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: gradientShift 10s ease infinite;
+  animation: gradientShift 8s ease infinite;
 }
 
+/* Glowing neon border for header */
 .gradient-glow {
-  border: 2px solid transparent;
-  background-image: linear-gradient(45deg, #f0f, #0ff, #f0f, #ff0);
-  background-size: 600% 600%;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  animation: gradientShift 15s ease infinite;
+  background: linear-gradient(45deg, #8b5cf6, #ec4899, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-/* Neon glow for progress bar and shadows */
+/* Neon glow shadow for progress bar */
 .shadow-neon {
-  box-shadow: 0 0 10px #f0f, 0 0 20px #f0f, 0 0 30px #0ff, 0 0 40px #0ff inset;
+  box-shadow: 0 0 8px #f0f, 0 0 15px #0ff;
 }
 
-/* Overlay success message fade in/out */
-#successMessage {
-  transform: scale(0.95);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-#successMessage.show {
-  transform: scale(1);
-  opacity: 1;
+/* Custom visibility classes controlled by JS */
+.fixed.opacity-100 {
+  pointer-events: auto !important;
 }
