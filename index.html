@@ -11,14 +11,16 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Custom CSS for Glassmorphism & Animations -->
+  <!-- Custom CSS for Glassmorphism & Premium UI -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Required CDNs -->
+  <!-- Required Third-Party CDNs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.3.0/docx.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+  <!-- Tesseract.js for OCR Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body class="bg-deep-space text-white font-sans min-h-screen flex flex-col items-center justify-start p-4 sm:p-6 overflow-x-hidden relative">
 
@@ -31,8 +33,13 @@
     <h1 id="brandHome" class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-blue-400 font-['Orbitron'] tracking-wider cursor-pointer drop-shadow-[0_0_10px_rgba(168,85,247,0.3)]">
       UxPro
     </h1>
-    <div class="text-xs uppercase tracking-widest text-gray-400 bg-white bg-opacity-5 px-3 py-1.5 rounded-lg border border-white/10">
-      v2.0 Advanced Stable
+    <div class="flex items-center gap-3">
+      <div id="pwaBadge" class="text-[10px] uppercase tracking-widest text-green-400 bg-green-500/10 px-2.5 py-1 rounded-md border border-green-500/20 font-semibold">
+        Offline Ready
+      </div>
+      <div class="text-xs uppercase tracking-widest text-gray-400 bg-white bg-opacity-5 px-3 py-1.5 rounded-lg border border-white/10">
+        v3.0 Ultra Pro
+      </div>
     </div>
   </header>
 
@@ -46,14 +53,14 @@
           Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-['Orbitron']">UxPro</span> Digital Suite
         </h2>
         <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
-          Convert texts into advanced file formats instantly or optimize code strings entirely on the client-side. No server uploads, 100% secure, lightning fast, and private by design.
+          Convert texts into advanced file formats instantly, scan images using OCR, or optimize code strings entirely on the client-side. No server uploads, 100% secure, lightning fast, and private by design.
         </p>
       </div>
 
       <!-- Quick Stats Cards -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2">
         <div class="bg-black/20 p-4 rounded-xl border border-white/5 text-center">
-          <div class="text-2xl font-bold text-purple-400">11+</div>
+          <div class="text-2xl font-bold text-purple-400">15+</div>
           <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">Smart Utilities</div>
         </div>
         <div class="bg-black/20 p-4 rounded-xl border border-white/5 text-center">
@@ -66,7 +73,7 @@
         </div>
         <div class="bg-black/20 p-4 rounded-xl border border-white/5 text-center">
           <div class="text-2xl font-bold text-green-400">Secure</div>
-          <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">Local Processing</div>
+          <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">Local History</div>
         </div>
       </div>
 
@@ -74,9 +81,10 @@
 
       <!-- NAVIGATION TABS -->
       <div>
-        <div class="flex border-b border-white/10 gap-2">
+        <div class="flex border-b border-white/10 gap-2 overflow-x-auto whitespace-nowrap scrollbar-none">
           <button id="tabFiles" class="tab-btn active px-5 py-2.5 text-sm font-medium tracking-wide transition-all uppercase">File Generators</button>
           <button id="tabUtils" class="tab-btn px-5 py-2.5 text-sm font-medium tracking-wide transition-all uppercase">Text & Code Utilities</button>
+          <button id="tabHistory" class="tab-btn px-5 py-2.5 text-sm font-medium tracking-wide transition-all uppercase text-purple-400">Recent Workspace History</button>
         </div>
 
         <!-- TAB CONTENT 1: FILE GENERATORS GRID -->
@@ -94,12 +102,12 @@
           <div class="tool-card group" data-tool="rar">
             <div class="tool-icon bg-red-500/10 text-red-400">RAR</div>
             <h3 class="font-semibold text-base group-hover:text-red-400 transition-colors">Rar Archive</h3>
-            <p class="text-xs text-gray-400 mt-1">Simulate highly requested compressed .rar files locally.</p>
+            <p class="text-xs text-gray-400 mt-1">Simulate compressed .rar files locally with high speed.</p>
           </div>
           <div class="tool-card group" data-tool="pdf">
             <div class="tool-icon bg-red-600/10 text-red-500">PDF</div>
             <h3 class="font-semibold text-base group-hover:text-red-500 transition-colors">PDF Document</h3>
-            <p class="text-xs text-gray-400 mt-1">Compile structures clean readable document layout targets.</p>
+            <p class="text-xs text-gray-400 mt-1">Compile structures into clean readable document layout targets.</p>
           </div>
           <div class="tool-card group" data-tool="docx">
             <div class="tool-icon bg-blue-600/10 text-blue-500">DOCX</div>
@@ -108,7 +116,7 @@
           </div>
         </div>
 
-        <!-- TAB CONTENT 2: UTILITIES GRID (Hidden by default) -->
+        <!-- TAB CONTENT 2: UTILITIES GRID -->
         <div id="gridUtils" class="tab-content hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
           <div class="tool-card group" data-tool="markdown">
             <div class="tool-icon bg-pink-500/10 text-pink-400">MD</div>
@@ -128,7 +136,22 @@
           <div class="tool-card group" data-tool="jsonformat">
             <div class="tool-icon bg-green-500/10 text-green-400">JSON</div>
             <h3 class="font-semibold text-base group-hover:text-green-400 transition-colors">JSON Formatter</h3>
-            <p class="text-xs text-gray-400 mt-1">Validate syntax strings, check schemas and align elements.</p>
+            <p class="text-xs text-gray-400 mt-1">Validate syntax strings, check schemas and highlight syntax elements.</p>
+          </div>
+          <div class="tool-card group" data-tool="ocr">
+            <div class="tool-icon bg-amber-500/10 text-amber-400">OCR</div>
+            <h3 class="font-semibold text-base group-hover:text-amber-400 transition-colors">Image to Text (OCR)</h3>
+            <p class="text-xs text-gray-400 mt-1">Extract editable text nodes straight from graphic images locally.</p>
+          </div>
+          <div class="tool-card group" data-tool="regex">
+            <div class="tool-icon bg-cyan-500/10 text-cyan-400">RGX</div>
+            <h3 class="font-semibold text-base group-hover:text-cyan-400 transition-colors">Regex Evaluator</h3>
+            <p class="text-xs text-gray-400 mt-1">Test regular expression patterns dynamically on character strings.</p>
+          </div>
+          <div class="tool-card group" data-tool="diff">
+            <div class="tool-icon bg-emerald-500/10 text-emerald-400">DIFF</div>
+            <h3 class="font-semibold text-base group-hover:text-emerald-400 transition-colors">Text Comparator</h3>
+            <p class="text-xs text-gray-400 mt-1">Compare text differences block-by-block with color states.</p>
           </div>
           <div class="tool-card group" data-tool="uppercase">
             <div class="tool-icon bg-teal-500/10 text-teal-400">ABC</div>
@@ -136,15 +159,26 @@
             <p class="text-xs text-gray-400 mt-1">Transform total character objects array strings swiftly.</p>
           </div>
           <div class="tool-card group" data-tool="lowercase">
-            <div class="tool-icon bg-emerald-500/10 text-emerald-400">abc</div>
-            <h3 class="font-semibold text-base group-hover:text-emerald-400 transition-colors">To lowercase</h3>
-            <p class="text-xs text-gray-400 mt-1">Convert upper casing variables instantly to basic lower structures.</p>
+            <div class="tool-icon bg-orange-500/10 text-orange-400">abc</div>
+            <h3 class="font-semibold text-base group-hover:text-orange-400 transition-colors">To lowercase</h3>
+            <p class="text-xs text-gray-400 mt-1">Convert upper casing variables instantly to basic structures.</p>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT 3: HISTORY LOG LIST -->
+        <div id="historyView" class="tab-content hidden flex flex-col gap-3 mt-6">
+          <div class="flex justify-between items-center px-2">
+            <span class="text-xs text-gray-400">Stored history tracking actions context inside your machine local browser state</span>
+            <button id="clearHistoryBtn" class="text-xs text-red-400 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-all border border-red-500/20">Purge Log Archive</button>
+          </div>
+          <div id="historyContainerList" class="flex flex-col gap-2 max-h-80 overflow-y-auto pr-1">
+            <span class="text-gray-500 text-sm italic p-4 text-center">No operations registered in local data session history yet...</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. ACTIVE WORKSPACE CONTAINER (Hidden until a card is selected) -->
+    <!-- 2. ACTIVE WORKSPACE CONTAINER -->
     <section id="workspaceSection" class="hidden glass-panel rounded-3xl p-6 sm:p-8 flex flex-col gap-6 scale-95 opacity-0 transition-all duration-300">
       
       <!-- Workspace Navigation Back & Title Banner -->
@@ -167,21 +201,65 @@
         </div>
       </div>
 
-      <!-- Main Input Text Area -->
-      <div>
-        <div class="flex justify-between items-center mb-2">
-          <label for="contentInput" class="text-xs font-semibold text-purple-300 tracking-wider uppercase">Workspace Data Input</label>
-          <button id="clearInputBtn" class="text-xs text-gray-500 hover:text-red-400 transition-colors uppercase font-medium">Clear Data</button>
+      <!-- Drag & Drop Zone Wrap Overlay -->
+      <div id="dragDropArea" class="w-full relative rounded-xl border border-white/10 transition-all duration-200 bg-black/20 group-drop">
+        <div id="dragZoneOverlay" class="absolute inset-0 bg-purple-600/10 border-2 border-dashed border-purple-400 rounded-xl hidden flex-col items-center justify-center z-20 pointer-events-none backdrop-blur-sm">
+          <p class="text-purple-300 font-bold text-lg">Drop your file / image here stream...</p>
+          <p class="text-gray-400 text-xs mt-1">Accepts .txt, .json, .md or regular graphic images</p>
         </div>
-        <textarea id="contentInput" class="w-full h-64 p-4 rounded-xl resize-none font-mono bg-black/40 focus:outline-none focus:ring-2 focus:ring-purple-500 border border-white/10 text-white placeholder-gray-600 transition-all text-sm leading-relaxed" placeholder="Type text, paste JSON strings or structured codes here..."></textarea>
+
+        <!-- Utility contextual sub-inputs fields -->
+        <div id="regexFieldsContainer" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 border-b border-white/10 bg-white/5">
+          <div>
+            <label class="block text-xs uppercase font-bold text-cyan-400 mb-1">Regex Pattern Structure</label>
+            <input id="regexPatternInput" type="text" class="w-full bg-black/40 border border-white/10 rounded-lg p-2 font-mono text-sm text-white focus:outline-none focus:border-cyan-500" placeholder="/[a-zA-Z]+/g">
+          </div>
+          <div>
+            <label class="block text-xs uppercase font-bold text-gray-400 mb-1">Regex Engine Matches Status</label>
+            <div id="regexStatusFeedback" class="bg-black/20 rounded-lg p-2 text-xs font-mono h-9 flex items-center text-gray-400">Matches Found: 0</div>
+          </div>
+        </div>
+
+        <div id="diffFieldsContainer" class="hidden flex flex-col gap-2 p-4 border-b border-white/10 bg-white/5">
+          <label class="block text-xs uppercase font-bold text-emerald-400">Target Text Box Matrix to Compare Against</label>
+          <textarea id="diffSecondaryInput" class="w-full h-32 bg-black/40 border border-white/10 rounded-lg p-3 font-mono text-xs text-white focus:outline-none focus:border-emerald-500 resize-none" placeholder="Paste secondary comparison block array text strings here..."></textarea>
+        </div>
+
+        <!-- Main Workspace Text Editor Box Container -->
+        <div class="relative w-full h-64 overflow-hidden rounded-xl">
+          <!-- Textarea serving as raw data processor layer -->
+          <textarea id="contentInput" class="w-full h-full p-4 resize-none font-mono bg-transparent focus:outline-none text-white placeholder-gray-600 text-sm leading-relaxed absolute inset-0 z-10 select-text bg-black/40 border border-transparent focus:border-purple-500/50 transition-all" placeholder="Type text, code strings, or drag-and-drop structural document files right inside this frame area..."></textarea>
+          <!-- Syntax Highlighting structural backdrop window layer mirroring content -->
+          <pre id="codeHighlightView" class="w-full h-full p-4 font-mono text-sm leading-relaxed text-gray-300 pointer-events-none absolute inset-0 overflow-y-auto whitespace-pre-wrap break-all hidden bg-black/60"></pre>
+        </div>
       </div>
 
-      <!-- Live Markdown Layout Presentation Box (Hidden contextually) -->
+      <!-- Workspace Management Controls Pipeline panel -->
+      <div class="flex flex-wrap justify-between items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/10">
+        <div class="flex items-center gap-2">
+          <!-- Speech Voice Trigger Button -->
+          <button id="speechRecordBtn" class="bg-white/5 hover:bg-white/10 text-gray-300 px-3 py-2 rounded-lg text-xs font-semibold uppercase tracking-wide transition-all border border-white/10 flex items-center gap-2">
+            <span id="speechIconDot" class="w-2 h-2 rounded-full bg-red-500 animate-pulse hidden"></span>
+            <span id="speechTextLabel">Dictate Speech (Audio)</span>
+          </button>
+          <span class="text-[10px] text-gray-500 italic hidden sm:inline">Supports multi-language local microphones dictation detection</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="clearInputBtn" class="text-xs text-gray-400 hover:text-red-400 transition-colors uppercase font-bold">Clear Input Data</button>
+        </div>
+      </div>
+
+      <!-- Dynamic Interactive Output Panels -->
       <div id="previewContainer" class="hidden flex flex-col gap-2">
-        <label class="block text-xs font-semibold text-pink-300 tracking-wider uppercase">Live Markdown Preview</label>
+        <label class="block text-xs font-semibold text-pink-300 tracking-wider uppercase">Live Rendering Presentation Box Frame</label>
         <div id="markdownPreview" class="w-full min-h-[150px] max-h-72 overflow-y-auto p-4 rounded-xl bg-white/5 border border-white/10 prose prose-invert max-w-none text-gray-200 font-sans">
           <span class="text-gray-500 italic text-sm">Preview window will align contents automatically...</span>
         </div>
+      </div>
+
+      <div id="diffResultsContainer" class="hidden flex flex-col gap-2">
+        <label class="block text-xs font-semibold text-emerald-400 tracking-wider uppercase">Analytical Delta Matrix Diff Comparison Preview Output</label>
+        <div id="diffVisualizerBox" class="w-full min-h-[120px] max-h-60 overflow-y-auto p-4 rounded-xl bg-black/50 border border-white/10 font-mono text-xs whitespace-pre-wrap break-all leading-relaxed"></div>
       </div>
 
       <!-- Action Invocation Button -->
@@ -211,17 +289,17 @@
     <div>
       <p>&copy; 2026 <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-bold font-['Orbitron']">UxPro</span> Suite. All rights reserved.</p>
     </div>
-    <div class="flex gap-6 text-xs uppercase tracking-wider">
-      <a href="#" class="hover:text-purple-400 transition-colors duration-200">Privacy Policy</a>
-      <a href="#" class="hover:text-purple-400 transition-colors duration-200">Terms of Use</a>
-      <a href="#" class="hover:text-purple-400 transition-colors duration-200">Contact Support</a>
+    <div class="flex gap-6 text-xs uppercase tracking-wider font-semibold">
+      <button id="openPrivacyBtn" class="hover:text-purple-400 transition-colors duration-200">Privacy Policy</button>
+      <button id="openTermsBtn" class="hover:text-purple-400 transition-colors duration-200">Terms of Use</button>
+      <button id="openSupportBtn" class="hover:text-purple-400 transition-colors duration-200">Contact Support</button>
     </div>
     <div>
       <p class="text-xs tracking-wide text-gray-600">Engineered with Advanced Glassmorphism Template</p>
     </div>
   </footer>
 
-  <!-- Notification Success Modal -->
+  <!-- Notification Success Modal Overlay -->
   <div id="successMessage" class="fixed inset-0 flex items-center justify-center bg-black/70 opacity-0 pointer-events-none z-50 transition-opacity duration-300 backdrop-blur-md">
     <div id="successCard" class="bg-gradient-to-br from-gray-900 to-black border border-green-500/30 p-8 rounded-2xl shadow-[0_0_40px_rgba(34,197,94,0.15)] flex flex-col items-center gap-3 transform scale-95 transition-transform duration-300 max-w-xs text-center">
       <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500">
@@ -234,7 +312,45 @@
     </div>
   </div>
 
-  <!-- Script Logic Wireframe -->
-  <script src="script.js"></script>
+  <!-- LEGAL AND SUPPORT COMPONENT MODALS DIALOGS -->
+  <div id="legalModalOverlay" class="fixed inset-0 flex items-center justify-center bg-black/80 opacity-0 pointer-events-none z-50 transition-opacity duration-300 backdrop-blur-md p-4">
+    <div class="glass-panel w-full max-w-xl rounded-2xl p-6 sm:p-8 relative flex flex-col max-h-[85vh] overflow-hidden">
+      <button id="closeLegalModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-xl transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <h3 id="legalModalTitle" class="text-xl font-bold text-white mb-4 border-b border-white/10 pb-2 font-['Orbitron'] tracking-wide">Legal Document</h3>
+      <div id="legalModalContent" class="overflow-y-auto text-sm text-gray-300 pr-2 leading-relaxed flex-grow flex flex-col gap-3">
+        <!-- Content gets dynamic alignment injection in runtime script below -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PWA Service Worker Embedded Initialization Hook Engine -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        // Embed inline service worker definition logic dynamically as a safe self-contained Blob configuration file url asset structure if external service file omitted
+        const swBlobCode = `
+          const CACHE_NAME = 'uxpro-suite-v3-cache';
+          const ASSETS = [ '/', '/index.html', '/style.css', '/script.js' ];
+          self.addEventListener('install', e => {
+            e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+          });
+          self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+          self.addEventListener('fetch', e => {
+            if(e.request.mode === 'navigate' || e.request.url.includes(location.origin)) {
+              e.respondWith(caches.match(e.request).then(res => res || fetch(e.request).catch(() => caches.match('/index.html'))));
+            }
+          });
+        `;
+        const blobObject = new Blob([swBlobCode], { type: 'application/javascript' });
+        const generatedSwUrl = URL.createObjectURL(blobObject);
+        
+        navigator.serviceWorker.register(generatedSwUrl, { scope: './' })
+          .then(() => console.log('UxPro Offline PWA Pipeline Engine active.'))
+          .catch(err => console.log('PWA core bypass validation hook: ', err));
+      });
+    }
+  </script>
 </body>
 </html>
