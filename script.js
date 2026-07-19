@@ -148,7 +148,6 @@ const activateWorkspace = (toolKey) => {
     diffFieldsContainer.classList.remove('hidden');
     diffResultsContainer.classList.remove('hidden');
   } else if (toolKey === 'jsonformat') {
-    // Enable code syntax background mirror processing view safely
     codeHighlightView.classList.remove('hidden');
     applyClientSideSyntaxHighlighting();
   }
@@ -201,7 +200,6 @@ dragDropArea.addEventListener('drop', (e) => {
 });
 
 const handleIncomingUploadedFileAsset = (fileObject) => {
-  // Scenario A: Check graphical imaging instances targets for OCR engine direct routing
   if (fileObject.type.startsWith('image/')) {
     selectedTool = 'ocr';
     activateWorkspace('ocr');
@@ -224,7 +222,6 @@ const handleIncomingUploadedFileAsset = (fileObject) => {
     return;
   }
 
-  // Scenario B: Plain text data array file streaming imports processing
   const fileReaderNode = new FileReader();
   fileReaderNode.onload = (event) => {
     contentInput.value = event.target.result;
@@ -237,7 +234,6 @@ const handleIncomingUploadedFileAsset = (fileObject) => {
 // --- SPECIFIC LIVE SYNTAX HIGHLIGHTING ENGINE LOGIC ---
 const applyClientSideSyntaxHighlighting = () => {
   const textVal = contentInput.value;
-  // Dynamic parsing logic to build high-end syntax coloring array maps client side safely without external network latency
   let proceduralTokens = textVal
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, '<span class="token-string">$1</span>')
@@ -287,7 +283,6 @@ const evaluateRegexPatternsLive = () => {
     return;
   }
   try {
-    // Extract flags configurations structures safely
     const coreFlags = matchPatternStr.match(/\/([gimy]*)$/)?.[1] || 'g';
     const bodyPattern = matchPatternStr.replace(/^\/|\/[gimy]*$/g, '');
     const compiledRegObj = new RegExp(bodyPattern, coreFlags);
@@ -305,7 +300,6 @@ const executeClientTextDiffProcessing = () => {
   const lineArrayTarget = diffSecondaryInput.value.split('\n');
   let compositeDiffOutputHtml = '';
 
-  // Standard lightweight core sequencing diff mapping array comparison engine processing
   const maxLinesCountRange = Math.max(lineArraySource.length, lineArrayTarget.length);
   for(let index = 0; index < maxLinesCountRange; index++) {
     const srcLine = lineArraySource[index] || '';
@@ -589,23 +583,23 @@ clearHistoryBtn.addEventListener('click', () => {
 // --- POPUP MODALS LEGAL DOCUMENTS CONFIGURATION DIALOG SYSTEM ---
 const dictionaryLegalDocsContent = {
   privacy: `
-    <h4>1. Data Processing Isolation Protocol</h4>
-    <p>UxPro Suite runs entirely inside your client web browser memory workspace grid environment. No text data, keys arrays or properties files get channeled out onto cloud network clusters or remote logging arrays.</p>
-    <h4>2. Local Cache Allocation Layer</h4>
-    <p>Optional tracking history logs use local browser localStorage vectors. You can completely purge logs files anytime through the dashboard interface tools settings actions panels instantly.</p>
+    <h4 class="font-bold text-purple-400 mb-1">1. Data Privacy Policy</h4>
+    <p class="mb-3">UxPro Suite runs entirely inside your client web browser memory workspace. No data or text strings get channeled out to cloud network clusters or remote logging arrays.</p>
+    <h4 class="font-bold text-purple-400 mb-1">2. Local Cache Storage</h4>
+    <p>Optional history logs use local browser localStorage vectors. You can completely purge logs anytime through the dashboard history panel.</p>
   `,
   terms: `
-    <h4>1. Service Usage Authorization Profiles</h4>
-    <p>UxPro tools suite elements solutions are free for personal deployment architectures, development environments sandbox pipelines or enterprise level production tasks without limitation structural liabilities.</p>
-    <h4>2. Zero Warrenty Indemnity Clause</h4>
-    <p>As calculation steps transpire exclusively locally in runtime parameters, the author bears zero system failure accountability actions constraints for data compression variations or format distortions.</p>
+    <h4 class="font-bold text-pink-400 mb-1">1. Service Usage Authorization</h4>
+    <p class="mb-3">UxPro tools suite solutions are 100% free for personal deployment architectures, development environments, or enterprise tasks without technical liabilities.</p>
+    <h4 class="font-bold text-pink-400 mb-1">2. Zero Warranty Clause</h4>
+    <p>As calculation steps transpire exclusively locally inside your browser, the platform bears zero system failure accountability for data variations.</p>
   `,
   support: `
-    <h4>UxPro Live Support Desk Portal</h4>
-    <p>Need pipeline assistance, system configuration updates instructions or bug reports tracking validation processing channels?</p>
+    <h4 class="font-bold text-blue-400 mb-2">UxPro Live Developer Help Desk</h4>
+    <p class="mb-2">Need pipeline assistance, system configuration instructions or want to report a bug?</p>
     <div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); margin-top:10px;">
-      <strong>Core Direct Core Mail:</strong> support@uxpro-suite.local<br>
-      <strong>Response Latency Window Target:</strong> Under 24 Business Hours Response SLA
+      <strong>Direct Support Email:</strong> support@uxpro-suite.local<br>
+      <strong>SLA Window:</strong> Under 24 Business Hours Response Guarantee.
     </div>
   `
 };
@@ -617,9 +611,9 @@ const displayTargetModalOverlayContent = (documentKeyType, titleLabelText) => {
   legalModalOverlay.classList.add('opacity-100');
 };
 
-openPrivacyBtn.addEventListener('click', () => displayTargetModalOverlayContent('privacy', 'Data Privacy Protection Policy Statement'));
-openTermsBtn.addEventListener('click', () => displayTargetModalOverlayContent('terms', 'Global Terms Of Service Agreement Regulation'));
-openSupportBtn.addEventListener('click', () => displayTargetModalOverlayContent('support', 'UxPro Developer Help Desk Support System'));
+openPrivacyBtn.addEventListener('click', () => displayTargetModalOverlayContent('privacy', 'Data Privacy Policy'));
+openTermsBtn.addEventListener('click', () => displayTargetModalOverlayContent('terms', 'Terms Of Use Agreement'));
+openSupportBtn.addEventListener('click', () => displayTargetModalOverlayContent('support', 'Live Developer Support Desk'));
 
 const hideTargetModalOverlay = () => {
   legalModalOverlay.classList.remove('opacity-100');
@@ -661,3 +655,6 @@ clearInputBtn.addEventListener('click', () => {
   regexPatternInput.value = '';
   updateMetrics();
 });
+
+// --- ATTACH MAIN PROCESS INVOCATION BINDINGS ---
+generateBtn.addEventListener('click', handleProcessInvocation);
