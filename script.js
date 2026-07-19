@@ -85,7 +85,6 @@ const toolNames = {
   base64encode: 'Base64 Encryption Encoder',
   base64decode: 'Base64 Decryption Decoder',
   jsonformat: 'JSON Tree Structurer & Formatter',
-  ocr: 'Advanced Image Optical Character Recognition (OCR)',
   regex: 'Regular Expression (Regex) Match Tester',
   diff: 'Delta Core Text Difference Comparator',
   uppercase: 'Text Case Transform: UPPERCASE',
@@ -123,7 +122,7 @@ const activateWorkspace = (toolKey) => {
   // Dynamic button labels setup assignment layout targeting actions
   if (['uppercase', 'lowercase', 'base64encode', 'base64decode', 'jsonformat', 'regex', 'diff'].includes(toolKey)) {
     generateBtn.textContent = "Apply Transformation Engine Operation";
-  } else if (toolKey === 'markdown' || toolKey === 'ocr') {
+  } else if (toolKey === 'markdown') {
     generateBtn.textContent = "Refresh Render Node View Processing";
   } else {
     generateBtn.textContent = "Generate & Download Safe Protected File Asset";
@@ -200,28 +199,6 @@ dragDropArea.addEventListener('drop', (e) => {
 });
 
 const handleIncomingUploadedFileAsset = (fileObject) => {
-  if (fileObject.type.startsWith('image/')) {
-    selectedTool = 'ocr';
-    activateWorkspace('ocr');
-    statusText.textContent = "Scanning image context nodes... please hold.";
-    progressContainer.classList.remove('opacity-0');
-    progressContainer.classList.add('opacity-100');
-    progressBar.style.width = '40%';
-    
-    Tesseract.recognize(fileObject, 'eng', { logger: m => console.log(m) }).then(({ data: { text } }) => {
-      contentInput.value = text;
-      updateMetrics();
-      progressBar.style.width = '100%';
-      statusText.textContent = "OCR extraction completed.";
-      triggerSuccessNotification("Image text nodes extracted cleanly into workspace context data.");
-      setTimeout(() => clearUISession(), 1500);
-    }).catch(err => {
-      alert("Failed running local client OCR computation engine pipeline mapping on source image.");
-      clearUISession();
-    });
-    return;
-  }
-
   const fileReaderNode = new FileReader();
   fileReaderNode.onload = (event) => {
     contentInput.value = event.target.result;
@@ -266,9 +243,6 @@ const updateMetrics = () => {
 };
 
 contentInput.addEventListener('input', updateMetrics);
-codeHighlightView.addEventListener('scroll', () => {
-  contentInput.scrollTop = codeHighlightView.scrollTop;
-});
 
 const renderMarkdownLive = () => {
   const text = contentInput.value.trim();
@@ -290,7 +264,7 @@ const evaluateRegexPatternsLive = () => {
     regexStatusFeedback.textContent = `Matches Found: ${matchedArrays ? matchedArrays.length : 0}`;
     regexStatusFeedback.className = "bg-green-500/10 border border-green-500/20 rounded-lg p-2 text-xs font-mono h-9 flex items-center text-green-400";
   } catch(e) {
-    regexStatusFeedback.textContent = "Syntax Evaluation Error: Invalid Regex Pattern Config Mapping Schema";
+    regexStatusFeedback.textContent = "Syntax Evaluation Error";
     regexStatusFeedback.className = "bg-red-500/10 border border-red-500/20 rounded-lg p-2 text-xs font-mono h-9 flex items-center text-red-400";
   }
 };
@@ -318,7 +292,7 @@ const executeClientTextDiffProcessing = () => {
       }
     }
   }
-  diffVisualizerBox.innerHTML = compositeDiffOutputHtml || '<span class="text-gray-600 italic">No delta mutations identified across structures...</span>';
+  diffVisualizerBox.innerHTML = compositeDiffOutputHtml || '<span class="text-gray-600 italic">No mutations identified...</span>';
 };
 
 diffSecondaryInput.addEventListener('input', executeClientTextDiffProcessing);
@@ -328,7 +302,7 @@ regexPatternInput.addEventListener('input', evaluateRegexPatternsLive);
 const initializeSpeechRecognitionSystem = () => {
   const SpeechEngineClass = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechEngineClass) {
-    alert("Native speech voice articulation processing mapping API missing or denied inside your browser architecture platform.");
+    alert("Audio processing APIs are not supported inside this browser environment.");
     return;
   }
   speechRecognitionEngine = new SpeechEngineClass();
@@ -354,7 +328,7 @@ const startVoiceRecognitionRecording = () => {
     speechRecognitionEngine.start();
     isVoiceRecordingActive = true;
     speechIconDot.classList.remove('hidden');
-    speechTextLabel.textContent = "Listening System Live (Click to Stop)...";
+    speechTextLabel.textContent = "Listening Live (Click to Stop)...";
     speechRecordBtn.classList.add('bg-red-500/10', 'border-red-500/30');
   } catch(e) {
     stopVoiceRecognitionRecording();
@@ -383,7 +357,7 @@ speechRecordBtn.addEventListener('click', () => {
 const handleProcessInvocation = () => {
   const rawInput = contentInput.value;
   if (!rawInput.trim()) {
-    alert('Please insert structural string data into the input workspace space area first.');
+    alert('Please insert string data into the input workspace space area first.');
     return;
   }
 
@@ -438,43 +412,31 @@ const executeTransformationEngine = (input, operation) => {
         break;
       case 'uppercase':
         contentInput.value = input.toUpperCase();
-        triggerSuccessNotification("Transformed variables structural string characters to UPPERCASE.");
+        triggerSuccessNotification("Transformed variables to UPPERCASE.");
         break;
       case 'lowercase':
         contentInput.value = input.toLowerCase();
-        triggerSuccessNotification("Transformed variables structural string characters to lowercase.");
+        triggerSuccessNotification("Transformed variables to lowercase.");
         break;
       case 'base64encode':
         contentInput.value = btoa(unescape(encodeURIComponent(input)));
-        triggerSuccessNotification("Encoded input text characters array safely into Base64 format.");
+        triggerSuccessNotification("Encoded input text safely into Base64 format.");
         break;
       case 'base64decode':
         contentInput.value = decodeURIComponent(escape(atob(input.trim())));
-        triggerSuccessNotification("Decoded Base64 sequence configuration parameters successfully.");
+        triggerSuccessNotification("Decoded Base64 sequence parameter logs successfully.");
         break;
       case 'jsonformat':
         contentInput.value = JSON.stringify(JSON.parse(input), null, 2);
         applyClientSideSyntaxHighlighting();
-        triggerSuccessNotification("Indented and arranged structural JSON schema parameters correctly.");
-        break;
-      case 'markdown':
-        renderMarkdownLive();
-        triggerSuccessNotification("Render mapping refreshed dynamic context visibility frame.");
-        break;
-      case 'regex':
-        evaluateRegexPatternsLive();
-        triggerSuccessNotification("Regex verification operation execution step complete.");
-        break;
-      case 'diff':
-        executeClientTextDiffProcessing();
-        triggerSuccessNotification("Structural data string logs layout comparison transaction complete.");
+        triggerSuccessNotification("Indented and arranged JSON structural layout parameters correctly.");
         break;
     }
     progressBar.style.width = '100%';
     statusText.textContent = 'Complete: 100%';
     setTimeout(() => clearUISession(), 1000);
   } catch (e) {
-    alert('Processing execution validation failure error. Check syntax mapping profiles layout structure.');
+    alert('Processing execution validation failure error. Check your structure layout markup syntax syntax configurations.');
     clearUISession();
   }
 };
@@ -497,7 +459,7 @@ const archiveZipEngine = (textString, completeFileName) => {
   zipPacker.file("UxPro_Content_Source.txt", textString);
   zipPacker.generateAsync({ type: 'blob' }).then(blobPackage => {
     triggerBlobDownload(blobPackage, completeFileName);
-    triggerSuccessNotification(`${completeFileName.endsWith('.zip') ? 'ZIP' : 'RAR Simulated'} compression package complete.`);
+    triggerSuccessNotification(`${completeFileName.endsWith('.zip') ? 'ZIP' : 'RAR Simulated'} compression package initialized.`);
   });
 };
 
@@ -545,7 +507,7 @@ const refreshHistoryLogListDisplay = () => {
   } catch(e) { logsList = []; }
 
   if(logsList.length === 0) {
-    historyContainerList.innerHTML = '<span class="text-gray-500 text-sm italic p-4 text-center">No operations registered in local data session history yet...</span>';
+    historyContainerList.innerHTML = '<span class="text-gray-500 text-sm italic p-4 text-center">No operations registered in local logging caches yet...</span>';
     return;
   }
 
@@ -555,8 +517,8 @@ const refreshHistoryLogListDisplay = () => {
     historicalRowItem.innerHTML = `
       <div class="flex flex-col gap-0.5">
         <div class="flex items-center gap-2">
-          <span class="text-xs uppercase font-bold text-purple-400 font-['Orbitron']">${log.tool}</span>
-          <span class="text-[10px] text-gray-500">${log.timestamp}</span>
+          <span class="text-[10px] uppercase font-bold text-purple-400 font-['Orbitron']">${log.tool}</span>
+          <span class="text-[9px] text-gray-500">${log.timestamp}</span>
         </div>
         <span class="text-xs text-gray-400 font-mono mt-0.5">${log.snippet}</span>
       </div>
@@ -568,7 +530,7 @@ const refreshHistoryLogListDisplay = () => {
       selectedTool = log.tool;
       activateWorkspace(log.tool);
       updateMetrics();
-      triggerSuccessNotification("Workspace historical checkpoint content state restored.");
+      triggerSuccessNotification("Workspace historical state checkpoint restored.");
     });
     historyContainerList.appendChild(historicalRowItem);
   });
@@ -577,36 +539,36 @@ const refreshHistoryLogListDisplay = () => {
 clearHistoryBtn.addEventListener('click', () => {
   localStorage.removeItem('uxpro_history_logs_v3');
   refreshHistoryLogListDisplay();
-  triggerSuccessNotification("Purged transaction history logging profiles archives.");
+  triggerSuccessNotification("Purged sandbox session history mapping databases archives.");
 });
 
 // --- POPUP MODALS LEGAL DOCUMENTS CONFIGURATION DIALOG SYSTEM ---
 const dictionaryLegalDocsContent = {
   privacy: `
-    <h4 class="font-bold text-purple-400 mb-1">1. Data Privacy Policy</h4>
-    <p class="mb-3">UxPro Suite runs entirely inside your client web browser memory workspace. No data or text strings get channeled out to cloud network clusters or remote logging arrays.</p>
-    <h4 class="font-bold text-purple-400 mb-1">2. Local Cache Storage</h4>
-    <p>Optional history logs use local browser localStorage vectors. You can completely purge logs anytime through the dashboard history panel.</p>
+    <h4 class="font-bold text-purple-400 mb-1">1. Data Security Isolation</h4>
+    <p class="mb-3">UxPro runs purely embedded inside client runtime. No textual elements flow outward across cloud pipelines.</p>
+    <h4 class="font-bold text-purple-400 mb-1">2. Local Cache Arrays</h4>
+    <p>Session variables use native security protocols exclusively confined to your personal sandboxed browser local space storage parameters logs mapping settings assets.</p>
   `,
   terms: `
-    <h4 class="font-bold text-pink-400 mb-1">1. Service Usage Authorization</h4>
-    <p class="mb-3">UxPro tools suite solutions are 100% free for personal deployment architectures, development environments, or enterprise tasks without technical liabilities.</p>
-    <h4 class="font-bold text-pink-400 mb-1">2. Zero Warranty Clause</h4>
-    <p>As calculation steps transpire exclusively locally inside your browser, the platform bears zero system failure accountability for data variations.</p>
+    <h4 class="font-bold text-pink-400 mb-1">1. Usage Licensing Scope</h4>
+    <p class="mb-3">Tools provided free for developer personal implementations or standard technical configurations production pipelines operations steps.</p>
+    <h4 class="font-bold text-pink-400 mb-1">2. Core Warranties Exclusion</h4>
+    <p>Platform yields zero system liability variations for code calculations or data changes transpirations inside browser sandboxes.</p>
   `,
   support: `
-    <h4 class="font-bold text-blue-400 mb-2">UxPro Live Developer Help Desk</h4>
-    <p class="mb-2">Need pipeline assistance, system configuration instructions or want to report a bug?</p>
-    <div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); margin-top:10px;">
-      <strong>Direct Support Email:</strong> support@uxpro-suite.local<br>
-      <strong>SLA Window:</strong> Under 24 Business Hours Response Guarantee.
+    <h4 class="font-bold text-blue-400 mb-2">UxPro Live Help Desk Core</h4>
+    <p class="mb-2">Need pipeline assistance or want to drop integration requests?</p>
+    <div class="bg-black/40 border border-white/10 p-3 rounded-xl mt-2 text-xs font-mono">
+      <strong>Dev Channel Email:</strong> support@uxpro-suite.local<br>
+      <strong>Ticket Responses:</strong> Under 24 Business Hours Response SLA window.
     </div>
   `
 };
 
 const displayTargetModalOverlayContent = (documentKeyType, titleLabelText) => {
   legalModalTitle.textContent = titleLabelText;
-  legalModalContent.innerHTML = dictionaryLegalDocsContent[documentKeyType] || '<p>Content missing configuration state...</p>';
+  legalModalContent.innerHTML = dictionaryLegalDocsContent[documentKeyType] || '<p>Configuration profiles parameters missing...</p>';
   legalModalOverlay.classList.remove('opacity-0', 'pointer-events-none');
   legalModalOverlay.classList.add('opacity-100');
 };
