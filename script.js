@@ -336,4 +336,18 @@ downloadBtn.addEventListener('click', () => {
   a.click();
 });
 
+// script.js එකේ යටින්ම මේක පේස්ට් කරන්න
+
+document.getElementById('overview-card').addEventListener('click', function() {
+    // 1. හැම section එකකින්ම 'active' class එක අයින් කරනවා
+    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+    
+    // 2. Tools section එක විතරක් active කරනවා (මෙහි 'tools' යනු ඔයාගේ tools section එකේ id එකයි)
+    document.getElementById('tools').classList.add('active');
+    
+    // 3. Sidebar එකේ තියෙන menu active එකත් මාරු කරන්න (Sidebar එකේ tools button එකේ class එක active කරයි)
+    document.querySelectorAll('.nav li').forEach(li => li.classList.remove('active'));
+    document.querySelector('[data-section="tools"]').classList.add('active');
+});
+
 // End of script
