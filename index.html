@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UxPro - Advanced File Generator</title>
 
-  <!-- Google Fonts for premium typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Custom CSS for advanced styles -->
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css" />
 
   <!-- Libraries for file generation -->
@@ -23,7 +23,7 @@
 
   <!-- Header -->
   <header class="w-full max-w-5xl mb-10 flex justify-center items-center">
-    <h1 class="text-6xl font-extrabold bg-clip-text text-transparent gradient-glow animate-gradient-text shadow-neon p-4 rounded-xl backdrop-blur-md bg-black bg-opacity-30 border border-purple-600 border-opacity-50">
+    <h1 class="text-6xl font-extrabold bg-clip-text text-transparent gradient-glow shadow-neon p-4 rounded-xl backdrop-blur-md bg-black bg-opacity-30 border border-purple-600 border-opacity-50 font-['Orbitron'] tracking-wider">
       UxPro
     </h1>
   </header>
@@ -32,18 +32,18 @@
   <main class="w-full max-w-5xl flex flex-col gap-8">
 
     <!-- Input Card -->
-    <div class="bg-gray-800 bg-opacity-40 backdrop-blur-xl rounded-3xl shadow-xl border border-purple-600 border-opacity-30 p-6 transition-transform hover:scale-105 hover:border-opacity-60 hover:shadow-2xl">
+    <div class="bg-gray-800 bg-opacity-40 backdrop-blur-xl rounded-3xl shadow-xl border border-purple-600 border-opacity-30 p-6 transition-transform hover:scale-[1.01] hover:border-opacity-60">
       <label for="contentInput" class="block mb-4 text-2xl font-semibold tracking-wide text-gradient">Content Input</label>
-      <textarea id="contentInput" class="w-full h-64 p-4 rounded-xl resize-none font-mono bg-gray-900 bg-opacity-70 focus:outline-none focus:ring-4 focus:ring-purple-500 transition-shadow border border-gray-700 hover:border-purple-500 hover:shadow-lg" placeholder="Enter your content here..."></textarea>
+      <textarea id="contentInput" class="w-full h-64 p-4 rounded-xl resize-none font-mono bg-gray-900 bg-opacity-70 focus:outline-none focus:ring-4 focus:ring-purple-500 transition-shadow border border-gray-700 hover:border-purple-500 text-white" placeholder="Enter your content here..."></textarea>
     </div>
 
     <!-- Format Selector Card -->
-    <div class="bg-gray-800 bg-opacity-40 backdrop-blur-xl rounded-3xl shadow-xl border border-purple-600 border-opacity-30 p-6 transition-transform hover:scale-105 hover:border-opacity-60 hover:shadow-2xl">
+    <div class="bg-gray-800 bg-opacity-40 backdrop-blur-xl rounded-3xl shadow-xl border border-purple-600 border-opacity-30 p-6 transition-transform hover:scale-[1.01] hover:border-opacity-60">
       <label for="formatSelect" class="block mb-4 text-2xl font-semibold tracking-wide text-gradient">Select Output Format</label>
-      <select id="formatSelect" class="w-full p-4 rounded-xl bg-gray-900 bg-opacity-70 focus:outline-none focus:ring-4 focus:ring-purple-500 transition-shadow border border-gray-700 hover:border-purple-500 hover:shadow-lg text-xl font-semibold">
+      <select id="formatSelect" class="w-full p-4 rounded-xl bg-gray-900 bg-opacity-70 focus:outline-none focus:ring-4 focus:ring-purple-500 transition-shadow border border-gray-700 hover:border-purple-500 text-xl font-semibold text-white">
         <option value="txt">Plain Text (.txt)</option>
         <option value="zip">Zip Archive (.zip)</option>
-        <option value="rar">Rar Archive (.rar)</option>
+        <option value="rar">Rar Archive (.rar) [Simulated via ZIP]</option>
         <option value="pdf">PDF Document (.pdf)</option>
         <option value="docx">Word Document (.docx)</option>
       </select>
@@ -51,19 +51,17 @@
 
     <!-- Generate Button -->
     <div class="flex justify-center">
-      <button id="generateBtn" class="relative bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 px-10 py-4 rounded-full font-semibold text-xl shadow-lg transform hover:scale-105 hover:shadow-xl transition duration-300 focus:outline-none focus:ring-4 focus:ring-purple-400 active:scale-95 active:ring-purple-600">
+      <button id="generateBtn" class="relative bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 px-10 py-4 rounded-full font-semibold text-xl shadow-lg transform hover:scale-105 hover:shadow-xl transition duration-300 focus:outline-none focus:ring-4 focus:ring-purple-400 active:scale-95">
         <span class="z-10 relative">Generate & Download</span>
         <div class="absolute inset-0 bg-white bg-opacity-20 rounded-full blur-sm scale-105 hover:scale-100 transition-transform duration-300"></div>
       </button>
     </div>
 
     <!-- Progress Container -->
-    <div id="progressContainer" class="w-full max-w-5xl flex flex-col gap-4 opacity-0 transition-opacity duration-500">
-      <!-- Progress Bar Wrapper -->
+    <div id="progressContainer" class="w-full max-w-5xl flex flex-col gap-4 opacity-0 pointer-events-none transition-opacity duration-500">
       <div class="w-full h-4 rounded-full bg-gray-700 overflow-hidden shadow-inner border border-purple-700 border-opacity-40">
-        <div id="progressBar" class="h-4 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 w-0 transition-all duration-300 ease-in-out shadow-neon"></div>
+        <div id="progressBar" class="h-4 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 w-0 transition-all duration-100 ease-out shadow-neon"></div>
       </div>
-      <!-- Status Texts -->
       <div class="flex justify-between text-sm font-semibold px-2 text-gradient">
         <div id="statusText">Processing: 0%</div>
         <div id="timeElapsed">Time Elapsed: 0.00s</div>
@@ -73,12 +71,12 @@
   </main>
 
   <!-- Success Overlay -->
-  <div id="successMessage" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 z-50 transition-opacity duration-400 backdrop-blur-lg rounded-xl">
-    <div class="bg-green-600 p-6 rounded-xl shadow-xl flex items-center gap-4 transform scale-95 transition-transform duration-300">
+  <div id="successMessage" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 opacity-0 pointer-events-none z-50 transition-opacity duration-300 backdrop-blur-sm">
+    <div id="successCard" class="bg-green-600 p-6 rounded-xl shadow-xl flex items-center gap-4 transform scale-95 transition-transform duration-300">
       <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
       </svg>
-      <span class="text-white font-semibold text-xl">Success!</span>
+      <span class="text-white font-semibold text-xl">Success! Your file is ready.</span>
     </div>
   </div>
 
