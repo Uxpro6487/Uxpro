@@ -12,11 +12,11 @@ const successOverlay = document.getElementById('successMessage');
 
 let animationFrameId = null;
 let startTime = null;
-let progress = 0;
 
-// Utility functions
+// Utility to format time
 const formatTime = (seconds, milliseconds) => `${seconds}.${milliseconds.toString().padStart(2, '0')}s`;
 
+// Show/hide progress and success
 const showProgress = () => {
   progressContainer.classList.remove('opacity-0');
   progressContainer.classList.add('opacity-100');
@@ -26,21 +26,20 @@ const hideProgress = () => {
   progressContainer.classList.add('opacity-0');
 };
 const showSuccess = () => {
-  successOverlay.classList.add('opacity-100');
+  successOverlay.classList.add('show');
   successOverlay.classList.remove('opacity-0');
-  // Animate success
   setTimeout(() => {
-    successOverlay.classList.remove('opacity-100');
+    successOverlay.classList.remove('show');
   }, 1500);
 };
 
-// Start generation process
+// Start process
 const startGeneration = () => {
   const content = contentInput.value.trim();
   const format = formatSelect.value;
 
   if (!content) {
-    alert('Please enter some content before generating.');
+    alert('Please enter some content.');
     return;
   }
 
@@ -48,41 +47,41 @@ const startGeneration = () => {
   generateBtn.disabled = true;
   generateBtn.classList.add('opacity-50', 'cursor-not-allowed');
 
-  // Show progress
   showProgress();
+  progressBar.style.width = '0%';
+  statusText.textContent = 'Processing: 0%';
+  timeElapsedText.textContent = 'Time Elapsed: 0.00s';
 
-  // Reset progress
-  progress = 0;
-  updateProgress(0);
   startTime = performance.now();
+  const duration = 3000; // 3 seconds for demo
 
-  // Animate progress (simulate realistic process)
-  const duration = 3000; // 3 sec for demo, can be dynamic
   const animate = (timestamp) => {
     if (!startTime) startTime = timestamp;
     const elapsed = timestamp - startTime;
-    progress = Math.min(elapsed / duration, 1);
-    updateProgress(progress * 100);
-    if (progress < 1) {
+    const progressPercent = Math.min(elapsed / duration, 1);
+    updateProgress(progressPercent);
+    if (progressPercent < 1) {
       animationFrameId = requestAnimationFrame(animate);
     } else {
+      // Finalize download
       finalizeDownload(content, format);
     }
   };
+
   animationFrameId = requestAnimationFrame(animate);
 };
 
-// Update progress UI
+// Update UI
 const updateProgress = (percent) => {
-  progressBar.style.width = `${percent}%`;
-  statusText.textContent = `Processing: ${Math.round(percent)}%`;
+  progressBar.style.width = `${(percent * 100).toFixed(2)}%`;
+  statusText.textContent = `Processing: ${(percent * 100).toFixed(0)}%`;
   const now = performance.now();
   const seconds = Math.floor((now - startTime) / 1000);
-  const milliseconds = Math.floor(((now - startTime) % 1000) / 10);
-  timeElapsedText.textContent = `Time Elapsed: ${formatTime(seconds, milliseconds)}`;
+  const ms = Math.floor(((now - startTime) % 1000) / 10);
+  timeElapsedText.textContent = `Time Elapsed: ${formatTime(seconds, ms)}`;
 };
 
-// Finalize download
+// Finalize file
 const finalizeDownload = (content, format) => {
   const filenameBase = `UxPro_document_${new Date().getFullYear()}`;
   switch (format) {
@@ -93,7 +92,7 @@ const finalizeDownload = (content, format) => {
       generateZip(content, filenameBase);
       break;
     case 'rar':
-      alert('RAR not supported, generating ZIP instead.');
+      alert('RAR not supported. Generating ZIP instead.');
       generateZip(content, filenameBase);
       break;
     case 'pdf':
@@ -107,10 +106,13 @@ const finalizeDownload = (content, format) => {
       resetUI();
       return;
   }
-  // Animate progress to full
+
+  // Animate progress complete
   progressBar.style.width = '100%';
-  statusText.textContent = `Processing: 100%`;
+  statusText.textContent = 'Processing: 100%';
   showSuccess();
+
+  // Reset UI after delay
   setTimeout(() => resetUI(), 1500);
 };
 
@@ -160,5 +162,5 @@ const resetUI = () => {
   }
 };
 
-// Event listener
+// Event Listener
 generateBtn.addEventListener('click', startGeneration);
