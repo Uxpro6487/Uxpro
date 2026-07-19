@@ -2,167 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UxPro - Web Tools Collection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UxPro - Advanced File Generator</title>
+
+  <!-- Google Fonts for premium typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom CSS for advanced styles -->
   <link rel="stylesheet" href="style.css" />
-  <!-- You can include Google Fonts if desired -->
+
+  <!-- Libraries for file generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.3.0/docx.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
-<body>
-  <!-- Sidebar Navigation -->
-  <aside class="sidebar">
-    <div class="brand">
-      <h1>UxPro</h1>
+<body class="bg-gray-900 text-white font-sans min-h-screen flex flex-col items-center justify-start p-6 font-sans">
+
+  <!-- Fancy Header -->
+  <header class="w-full max-w-5xl mb-10 flex justify-center items-center">
+    <h1 class="text-6xl font-extrabold bg-clip-text text-transparent gradient-glow animate-gradient-text shadow-neon p-4 rounded-xl backdrop-blur-md bg-black bg-opacity-30 border border-purple-600 border-opacity-50">
+      UxPro
+    </h1>
+  </header>
+
+  <!-- Main Content -->
+  <main class="w-full max-w-5xl flex flex-col gap-8">
+
+    <!-- Input Card -->
+    <div class="bg-gray-800 bg-opacity-40 backdrop-blur-xl rounded-3xl shadow-xl border border-purple-600 border-opacity-30 p-6 transition-transform hover:scale-105 hover:border-opacity-60 hover:shadow-2xl">
+      <label for="contentInput" class="block mb-4 text-2xl font-semibold tracking-wide text-gradient">Content Input</label>
+      <textarea id="contentInput" class="w-full h-64 p-4 rounded-xl resize-none font-mono bg-gray-900 bg-opacity-70 focus:outline-none focus:ring-4 focus:ring-purple-500 transition-shadow border border-gray-700 hover:border-purple-500 hover:shadow-lg" placeholder="Enter your content here..."></textarea>
     </div>
-    <div class="search-container">
-      <input type="text" id="toolSearch" placeholder="Search tools..." />
+
+    <!-- Format Selector Card -->
+    <div class="bg-gray-800 bg-opacity-40 backdrop-blur-xl rounded-3xl shadow-xl border border-purple-600 border-opacity-30 p-6 transition-transform hover:scale-105 hover:border-opacity-60 hover:shadow-2xl">
+      <label for="formatSelect" class="block mb-4 text-2xl font-semibold tracking-wide text-gradient">Select Output Format</label>
+      <select id="formatSelect" class="w-full p-4 rounded-xl bg-gray-900 bg-opacity-70 focus:outline-none focus:ring-4 focus:ring-purple-500 transition-shadow border border-gray-700 hover:border-purple-500 hover:shadow-lg text-xl font-semibold">
+        <option value="txt">Plain Text (.txt)</option>
+        <option value="zip">Zip Archive (.zip)</option>
+        <option value="rar">Rar Archive (.rar)</option>
+        <option value="pdf">PDF Document (.pdf)</option>
+        <option value="docx">Word Document (.docx)</option>
+      </select>
     </div>
-    <nav class="nav">
-      <ul id="toolList">
-        <li data-tool="dashboard" class="active"><span class="icon">🏠</span> Dashboard</li>
-        <li data-tool="colorPalette"><span class="icon">🎨</span> Color Palette</li>
-        <li data-tool="colorConverter"><span class="icon">🔄</span> Color Converter</li>
-        <li data-tool="contrastChecker"><span class="icon">🔍</span> Contrast Checker</li>
-        <li data-tool="aspectRatio"><span class="icon">📐</span> Aspect Ratio</li>
-        <li data-tool="typography"><span class="icon">🔤</span> Typography</li>
-        <li data-tool="imageResizer"><span class="icon">🖼️</span> Image Resizer</li>
-      </ul>
-    </nav>
-  </aside>
 
-  <!-- Main Content Area -->
-  <main class="main-content">
-    <!-- Welcome Dashboard -->
-    <section id="dashboard" class="section active">
-      <h2>Welcome to UxPro</h2>
-      <div class="tool-grid">
-        <div class="tool-card" data-tool="colorPalette">
-          <h3>Color Palette Generator</h3>
-          <p>Create trendy color palettes with locking options.</p>
-        </div>
-        <div class="tool-card" data-tool="colorConverter">
-          <h3>Color Converter</h3>
-          <p>Convert HEX, RGB, HSL formats seamlessly.</p>
-        </div>
-        <div class="tool-card" data-tool="contrastChecker">
-          <h3>WCAG Contrast Checker</h3>
-          <p>Check color contrast for accessibility compliance.</p>
-        </div>
-        <div class="tool-card" data-tool="aspectRatio">
-          <h3>Aspect Ratio Calculator</h3>
-          <p>Calculate dimensions for social media posts and banners.</p>
-        </div>
-        <div class="tool-card" data-tool="typography">
-          <h3>Typography Previewer</h3>
-          <p>Preview text in different fonts and sizes.</p>
-        </div>
-        <div class="tool-card" data-tool="imageResizer">
-          <h3>Image Resizer & Cropper</h3>
-          <p>Resize and crop images easily.</p>
-        </div>
-      </div>
-    </section>
+    <!-- Generate Button -->
+    <div class="flex justify-center">
+      <button id="generateBtn" class="relative bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 px-10 py-4 rounded-full font-semibold text-xl shadow-lg transform hover:scale-105 hover:shadow-xl transition duration-300 focus:outline-none focus:ring-4 focus:ring-purple-400 active:scale-95 active:ring-purple-600">
+        <span class="z-10 relative">Generate & Download</span>
+        <div class="absolute inset-0 bg-white bg-opacity-20 rounded-full blur-sm scale-105 hover:scale-100 transition-transform duration-300"></div>
+      </button>
+    </div>
 
-    <!-- Color Palette Generator -->
-    <section id="colorPalette" class="section">
-      <h2>Color Palette Generator</h2>
-      <div class="palette-controls">
-        <button id="generatePalette">Generate Palette</button>
-        <button id="lockColors">Lock/Unlock</button>
+    <!-- Progress Container -->
+    <div id="progressContainer" class="w-full max-w-5xl flex flex-col gap-4 opacity-0 transition-opacity duration-500">
+      <!-- Progress Bar Wrapper -->
+      <div class="w-full h-4 rounded-full bg-gray-700 overflow-hidden shadow-inner border border-purple-700 border-opacity-40">
+        <div id="progressBar" class="h-4 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 w-0 transition-all duration-300 ease-in-out shadow-neon"></div>
       </div>
-      <div class="palette" id="paletteContainer"></div>
-    </section>
+      <!-- Status Texts -->
+      <div class="flex justify-between text-sm font-semibold px-2 text-gradient">
+        <div id="statusText">Processing: 0%</div>
+        <div id="timeElapsed">Time Elapsed: 0.00s</div>
+      </div>
+    </div>
 
-    <!-- Color Converter -->
-    <section id="colorConverter" class="section">
-      <h2>Color Converter</h2>
-      <div class="converter-grid">
-        <div class="input-group">
-          <label for="hexInput">HEX:</label>
-          <input type="text" id="hexInput" placeholder="#FFFFFF" />
-        </div>
-        <div class="input-group">
-          <label for="rgbInput">RGB:</label>
-          <input type="text" id="rgbInput" placeholder="rgb(255,255,255)" />
-        </div>
-        <div class="input-group">
-          <label for="hslInput">HSL:</label>
-          <input type="text" id="hslInput" placeholder="hsl(0, 0%, 100%)" />
-        </div>
-        <div class="color-preview" id="colorPreview"></div>
-      </div>
-    </section>
-
-    <!-- WCAG Contrast Checker -->
-    <section id="contrastChecker" class="section">
-      <h2>WCAG Contrast Checker</h2>
-      <div class="contrast-controls">
-        <div class="input-group">
-          <label for="fgColor">Foreground:</label>
-          <input type="color" id="fgColor" value="#000000"/>
-        </div>
-        <div class="input-group">
-          <label for="bgColor">Background:</label>
-          <input type="color" id="bgColor" value="#FFFFFF"/>
-        </div>
-      </div>
-      <div class="contrast-result" id="contrastResult">
-        Contrast Ratio: <span id="ratio">--</span><br/>
-        Rating: <span id="rating">--</span>
-      </div>
-    </section>
-
-    <!-- Aspect Ratio Calculator -->
-    <section id="aspectRatio" class="section">
-      <h2>Aspect Ratio Calculator</h2>
-      <div class="aspect-controls">
-        <div class="input-group">
-          <label for="width">Width (px):</label>
-          <input type="number" id="width" />
-        </div>
-        <div class="input-group">
-          <label for="height">Height (px):</label>
-          <input type="number" id="height" />
-        </div>
-        <div class="presets">
-          <button data-ratio="16:9">16:9</button>
-          <button data-ratio="4:5">4:5</button>
-          <button data-ratio="1:1">1:1</button>
-        </div>
-      </div>
-      <div class="aspect-output">
-        <p>Calculated Dimensions:</p>
-        <p id="aspectResult">Width: -- px, Height: -- px</p>
-      </div>
-    </section>
-
-    <!-- Typography Previewer -->
-    <section id="typography" class="section">
-      <h2>Typography Previewer</h2>
-      <div class="typography-controls">
-        <label for="typedText">Enter text:</label>
-        <input type="text" id="typedText" placeholder="Your sample text" />
-      </div>
-      <div class="font-preview" id="fontPreview"></div>
-    </section>
-
-    <!-- Image Resizer & Cropper -->
-    <section id="imageResizer" class="section">
-      <h2>Image Resizer & Cropper</h2>
-      <div class="image-upload">
-        <input type="file" id="imageInput" accept="image/*" />
-      </div>
-      <canvas id="imageCanvas"></canvas>
-      <div class="resize-controls">
-        <label for="resizeWidth">Width:</label>
-        <input type="number" id="resizeWidth" />
-        <label for="resizeHeight">Height:</label>
-        <input type="number" id="resizeHeight" />
-        <button id="resizeBtn">Resize</button>
-        <button id="downloadBtn">Download</button>
-      </div>
-    </section>
   </main>
 
+  <!-- Success Overlay -->
+  <div id="successMessage" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 z-50 transition-opacity duration-400 backdrop-blur-lg rounded-xl">
+    <div class="bg-green-600 p-6 rounded-xl shadow-xl flex items-center gap-4 transform scale-95 transition-transform duration-300">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+      <span class="text-white font-semibold text-xl">Success!</span>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>
