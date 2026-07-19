@@ -1,5 +1,4 @@
 /* Custom styles for ultra-modern effects */
-
 body {
   font-family: 'Inter', sans-serif;
 }
@@ -43,7 +42,6 @@ body {
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #f3f4f6;
-  margin-bottom: 0.5rem;
   transition: color 0.2s;
 }
 
@@ -57,7 +55,7 @@ body {
   line-height: 1.4;
 }
 
-/* Tab Button UI Layout State Active colors configuration mappings */
+/* Tab Button Configuration */
 .tab-btn {
   color: #6b7280;
   background: transparent;
@@ -72,26 +70,40 @@ body {
   border-color: rgba(168, 85, 247, 0.25);
 }
 
-/* Specialized Diff Line Coloring system blocks elements definitions classes */
-.diff-added {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  display: block;
-  padding: 0 4px;
+/* Dynamic Field Category Badges Elements */
+.badge {
+  font-size: 9px;
+  font-weight: bold;
+  padding: 2.5px 7px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
-.diff-removed {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  display: block;
-  padding: 0 4px;
+.badge-general {
+  background: rgba(156, 163, 175, 0.1);
+  color: #d1d5db;
+  border: 1px solid rgba(156, 163, 175, 0.2);
+}
+.badge-design {
+  background: rgba(236, 72, 153, 0.1);
+  color: #f472b6;
+  border: 1px solid rgba(236, 72, 153, 0.25);
+}
+.badge-dev {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.25);
 }
 
-/* Custom JSON Highlighting parameters nodes markup configuration sets classes */
+/* Specialized Diff Line Coloring */
+.diff-added { background-color: rgba(16, 185, 129, 0.15); color: #34d399; display: block; padding: 0 4px; }
+.diff-removed { background-color: rgba(239, 68, 68, 0.15); color: #f87171; display: block; padding: 0 4px; }
+
+/* Custom JSON Highlighting */
 .token-string { color: #f43f5e; }
 .token-keyword { color: #3b82f6; font-weight: bold; }
 .token-number { color: #10b981; }
 
-/* Neon element properties specs anchors overrides */
 .shadow-neon {
   box-shadow: 0 0 8px rgba(168, 85, 247, 0.6), 0 0 15px rgba(59, 130, 246, 0.4);
 }
