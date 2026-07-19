@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UxPro - Web Tools Collection</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- You can include Google Fonts if desired -->
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>UxPro</h1>
+    </div>
+    <div class="search-container">
+      <input type="text" id="toolSearch" placeholder="Search tools..." />
+    </div>
+    <nav class="nav">
+      <ul id="toolList">
+        <li data-tool="dashboard" class="active"><span class="icon">🏠</span> Dashboard</li>
+        <li data-tool="colorPalette"><span class="icon">🎨</span> Color Palette</li>
+        <li data-tool="colorConverter"><span class="icon">🔄</span> Color Converter</li>
+        <li data-tool="contrastChecker"><span class="icon">🔍</span> Contrast Checker</li>
+        <li data-tool="aspectRatio"><span class="icon">📐</span> Aspect Ratio</li>
+        <li data-tool="typography"><span class="icon">🔤</span> Typography</li>
+        <li data-tool="imageResizer"><span class="icon">🖼️</span> Image Resizer</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Welcome Dashboard -->
+    <section id="dashboard" class="section active">
+      <h2>Welcome to UxPro</h2>
+      <div class="tool-grid">
+        <div class="tool-card" data-tool="colorPalette">
+          <h3>Color Palette Generator</h3>
+          <p>Create trendy color palettes with locking options.</p>
+        </div>
+        <div class="tool-card" data-tool="colorConverter">
+          <h3>Color Converter</h3>
+          <p>Convert HEX, RGB, HSL formats seamlessly.</p>
+        </div>
+        <div class="tool-card" data-tool="contrastChecker">
+          <h3>WCAG Contrast Checker</h3>
+          <p>Check color contrast for accessibility compliance.</p>
+        </div>
+        <div class="tool-card" data-tool="aspectRatio">
+          <h3>Aspect Ratio Calculator</h3>
+          <p>Calculate dimensions for social media posts and banners.</p>
+        </div>
+        <div class="tool-card" data-tool="typography">
+          <h3>Typography Previewer</h3>
+          <p>Preview text in different fonts and sizes.</p>
+        </div>
+        <div class="tool-card" data-tool="imageResizer">
+          <h3>Image Resizer & Cropper</h3>
+          <p>Resize and crop images easily.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Color Palette Generator -->
+    <section id="colorPalette" class="section">
+      <h2>Color Palette Generator</h2>
+      <div class="palette-controls">
+        <button id="generatePalette">Generate Palette</button>
+        <button id="lockColors">Lock/Unlock</button>
+      </div>
+      <div class="palette" id="paletteContainer"></div>
+    </section>
+
+    <!-- Color Converter -->
+    <section id="colorConverter" class="section">
+      <h2>Color Converter</h2>
+      <div class="converter-grid">
+        <div class="input-group">
+          <label for="hexInput">HEX:</label>
+          <input type="text" id="hexInput" placeholder="#FFFFFF" />
+        </div>
+        <div class="input-group">
+          <label for="rgbInput">RGB:</label>
+          <input type="text" id="rgbInput" placeholder="rgb(255,255,255)" />
+        </div>
+        <div class="input-group">
+          <label for="hslInput">HSL:</label>
+          <input type="text" id="hslInput" placeholder="hsl(0, 0%, 100%)" />
+        </div>
+        <div class="color-preview" id="colorPreview"></div>
+      </div>
+    </section>
+
+    <!-- WCAG Contrast Checker -->
+    <section id="contrastChecker" class="section">
+      <h2>WCAG Contrast Checker</h2>
+      <div class="contrast-controls">
+        <div class="input-group">
+          <label for="fgColor">Foreground:</label>
+          <input type="color" id="fgColor" value="#000000"/>
+        </div>
+        <div class="input-group">
+          <label for="bgColor">Background:</label>
+          <input type="color" id="bgColor" value="#FFFFFF"/>
+        </div>
+      </div>
+      <div class="contrast-result" id="contrastResult">
+        Contrast Ratio: <span id="ratio">--</span><br/>
+        Rating: <span id="rating">--</span>
+      </div>
+    </section>
+
+    <!-- Aspect Ratio Calculator -->
+    <section id="aspectRatio" class="section">
+      <h2>Aspect Ratio Calculator</h2>
+      <div class="aspect-controls">
+        <div class="input-group">
+          <label for="width">Width (px):</label>
+          <input type="number" id="width" />
+        </div>
+        <div class="input-group">
+          <label for="height">Height (px):</label>
+          <input type="number" id="height" />
+        </div>
+        <div class="presets">
+          <button data-ratio="16:9">16:9</button>
+          <button data-ratio="4:5">4:5</button>
+          <button data-ratio="1:1">1:1</button>
+        </div>
+      </div>
+      <div class="aspect-output">
+        <p>Calculated Dimensions:</p>
+        <p id="aspectResult">Width: -- px, Height: -- px</p>
+      </div>
+    </section>
+
+    <!-- Typography Previewer -->
+    <section id="typography" class="section">
+      <h2>Typography Previewer</h2>
+      <div class="typography-controls">
+        <label for="typedText">Enter text:</label>
+        <input type="text" id="typedText" placeholder="Your sample text" />
+      </div>
+      <div class="font-preview" id="fontPreview"></div>
+    </section>
+
+    <!-- Image Resizer & Cropper -->
+    <section id="imageResizer" class="section">
+      <h2>Image Resizer & Cropper</h2>
+      <div class="image-upload">
+        <input type="file" id="imageInput" accept="image/*" />
+      </div>
+      <canvas id="imageCanvas"></canvas>
+      <div class="resize-controls">
+        <label for="resizeWidth">Width:</label>
+        <input type="number" id="resizeWidth" />
+        <label for="resizeHeight">Height:</label>
+        <input type="number" id="resizeHeight" />
+        <button id="resizeBtn">Resize</button>
+        <button id="downloadBtn">Download</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
