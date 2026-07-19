@@ -1,12 +1,10 @@
 /* Custom styles for ultra-modern effects */
 
-/* Neon glow for text and borders */
 @keyframes glow {
   0%, 100% { box-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
   50% { box-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
 }
 
-/* Gradient text with animated background */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
@@ -21,7 +19,6 @@
   animation: gradientShift 10s ease infinite;
 }
 
-/* Glowing neon border for header */
 .gradient-glow {
   border: 2px solid transparent;
   background-image: linear-gradient(45deg, #f0f, #0ff, #f0f, #ff0);
@@ -31,17 +28,18 @@
   animation: gradientShift 15s ease infinite;
 }
 
-/* Neon glow shadow for progress bar */
+/* Neon glow for progress bar and shadows */
 .shadow-neon {
   box-shadow: 0 0 10px #f0f, 0 0 20px #f0f, 0 0 30px #0ff, 0 0 40px #0ff inset;
 }
 
-/* Neon glow for container borders */
-.border-purple-700 {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 10px #8b5cf6, inset 0 0 10px #8b5cf6;
+/* Overlay success message fade in/out */
+#successMessage {
+  transform: scale(0.95);
+  opacity: 0;
+  transition: all 0.3s ease;
 }
-
-/* Animate success checkmark or overlay if needed later */
-
-/* Additional hover and focus effects for smooth experience */
+#successMessage.show {
+  transform: scale(1);
+  opacity: 1;
+}
