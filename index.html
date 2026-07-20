@@ -25,8 +25,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   
-  <!-- External CSS Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Inline Critical Styles to Avoid Loading Errors -->
+  <style>
+    body { background-color: #030712; color: #f3f4f6; font-family: 'Inter', sans-serif; }
+    .tab-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: #9ca3af; }
+    .tab-btn:hover { background: rgba(255, 255, 255, 0.06); color: #ffffff; }
+    .tab-btn.active { background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(219, 39, 119, 0.2)); border-color: rgba(168, 85, 247, 0.5); color: #ffffff; box-shadow: 0 0 15px rgba(168, 85, 247, 0.15); }
+    .tool-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+    .tool-card:hover { background: rgba(255, 255, 255, 0.07); box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.2); }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(168, 85, 247, 0.5); }
+  </style>
 
   <!-- Required Processing Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -96,11 +107,6 @@
           <h3 class="font-bold text-sm mb-1">Zip Package Compressor</h3>
           <p class="text-xs text-gray-400">Bundle content securely into compressed ZIP archives.</p>
         </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="rar">
-          <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">RAR</div>
-          <h3 class="font-bold text-sm mb-1">Rar Package Container</h3>
-          <p class="text-xs text-gray-400">Package workspace payload into custom RAR archives.</p>
-        </div>
         <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="pdf">
           <div class="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">PDF</div>
           <h3 class="font-bold text-sm mb-1">PDF Document Compiler</h3>
@@ -130,55 +136,10 @@
           <h3 class="font-bold text-sm mb-1">WCAG Contrast Checker</h3>
           <p class="text-xs text-gray-400">Analyze foreground/background color accessibility ratios.</p>
         </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="img2base64">
-          <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">🔄</div>
-          <h3 class="font-bold text-sm mb-1">Image Asset To Base64</h3>
-          <p class="text-xs text-gray-400">Convert local image assets into web-ready Base64 streams.</p>
-        </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="svgpreview">
-          <div class="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">📐</div>
-          <h3 class="font-bold text-sm mb-1">SVG Code Paths Optimizer</h3>
-          <p class="text-xs text-gray-400">Render and validate vector XML source code markup live.</p>
-        </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="lorem">
-          <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">📝</div>
-          <h3 class="font-bold text-sm mb-1">Lorem Ipsum Generator</h3>
-          <p class="text-xs text-gray-400">Generate dummy placeholder typography strings quickly.</p>
-        </div>
       </div>
 
       <!-- Grid Group 3: Text Utilities -->
       <div id="gridUtils" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden">
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="markdown">
-          <div class="w-10 h-10 rounded-xl bg-violet-500/20 text-violet-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">MD</div>
-          <h3 class="font-bold text-sm mb-1">Live Markdown Preview</h3>
-          <p class="text-xs text-gray-400">Render markdown elements live into formatted HTML views.</p>
-        </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="base64encode">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">ENC</div>
-          <h3 class="font-bold text-sm mb-1">Base64 Encryption Encoder</h3>
-          <p class="text-xs text-gray-400">Securely encode text strings into encrypted Base64 parameters.</p>
-        </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="base64decode">
-          <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">DEC</div>
-          <h3 class="font-bold text-sm mb-1">Base64 Decryption Decoder</h3>
-          <p class="text-xs text-gray-400">Decode Base64 sequence strings back to readable text.</p>
-        </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="jsonformat">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">JSON</div>
-          <h3 class="font-bold text-sm mb-1">JSON Tree Formatter</h3>
-          <p class="text-xs text-gray-400">Beautify and validate nested JSON data structures.</p>
-        </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="regex">
-          <div class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">REG</div>
-          <h3 class="font-bold text-sm mb-1">Regular Expression Tester</h3>
-          <p class="text-xs text-gray-400">Test and match custom regex patterns against text input.</p>
-        </div>
-        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="diff">
-          <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">DIFF</div>
-          <h3 class="font-bold text-sm mb-1">Text Difference Comparator</h3>
-          <p class="text-xs text-gray-400">Compare text streams and track line alterations delta.</p>
-        </div>
         <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="uppercase">
           <div class="w-10 h-10 rounded-xl bg-lime-500/20 text-lime-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">UP</div>
           <h3 class="font-bold text-sm mb-1">Transform: UPPERCASE</h3>
@@ -188,6 +149,11 @@
           <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">LOW</div>
           <h3 class="font-bold text-sm mb-1">Transform: lowercase</h3>
           <p class="text-xs text-gray-400">Convert all alphabetical text characters to lowercase.</p>
+        </div>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="base64encode">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">ENC</div>
+          <h3 class="font-bold text-sm mb-1">Base64 Encryption Encoder</h3>
+          <p class="text-xs text-gray-400">Securely encode text strings into encrypted Base64 parameters.</p>
         </div>
       </div>
 
@@ -257,44 +223,14 @@
             </div>
           </div>
 
-          <div id="imageUploadFieldsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl text-center">
-            <input type="file" id="designImageFileSelector" class="hidden" accept="image/*">
-            <button id="triggerImageSelectBtn" class="bg-purple-600/20 border border-purple-500/40 hover:bg-purple-600 px-4 py-2.5 rounded-xl text-xs font-semibold transition">Browse & Upload Asset Image File</button>
-            <p id="imagePreviewFeedbackName" class="text-[11px] text-gray-400 mt-2 font-mono">No image loaded...</p>
-          </div>
-
-          <div id="regexFieldsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl">
-            <label class="text-xs text-gray-400 block mb-1 font-semibold">Regular Expression Match Pattern String:</label>
-            <input type="text" id="regexPatternInput" placeholder="/[A-Z]+/g" class="w-full p-2.5 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-purple-500">
-            <p id="regexStatusFeedback" class="text-xs font-bold text-purple-400 mt-2 font-mono">Matches Found: 0</p>
-          </div>
-
-          <div id="diffFieldsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl">
-            <label class="text-xs text-gray-400 block mb-1 font-semibold">Secondary Text Stream Comparison Target:</label>
-            <textarea id="diffSecondaryInput" rows="3" placeholder="Insert secondary baseline text payload..." class="w-full p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500 resize-none"></textarea>
-          </div>
-
           <!-- Main Input Drag & Drop Zone Area -->
           <div id="dragDropArea" class="relative bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col transition hover:border-purple-500/40">
-            <div id="dragZoneOverlay" class="hidden absolute inset-0 bg-purple-950/80 backdrop-blur-sm rounded-2xl z-20 flex items-center justify-center border-2 border-dashed border-purple-400">
-              <p class="font-bold text-sm text-purple-200">Drop local file assets here to process...</p>
-            </div>
-            
             <div class="flex justify-between items-center mb-2">
               <span class="text-xs font-semibold text-gray-400 font-['Orbitron']">Primary Workspace Payload Area</span>
-              <div class="flex items-center gap-2">
-                <button id="speechRecordBtn" class="bg-white/5 hover:bg-white/10 border border-white/10 px-2.5 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition">
-                  <span id="speechIconDot" class="hidden w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-                  <span id="speechTextLabel">Dictate Speech (Audio)</span>
-                </button>
-                <button id="clearInputBtn" class="bg-white/5 hover:bg-white/10 border border-white/10 px-2.5 py-1.5 rounded-lg text-xs transition">Clear Text</button>
-              </div>
+              <button id="clearInputBtn" class="bg-white/5 hover:bg-white/10 border border-white/10 px-2.5 py-1.5 rounded-lg text-xs transition">Clear Text</button>
             </div>
-
-            <textarea id="contentInput" rows="8" placeholder="Type, paste text strings, or drop files here..." class="w-full p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500 resize-y"></textarea>
+            <textarea id="contentInput" rows="8" placeholder="Type, paste text strings here..." class="w-full p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500 resize-y"></textarea>
             
-            <div id="codeHighlightView" class="hidden w-full p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono text-white h-48 overflow-y-auto"></div>
-
             <div class="flex justify-between items-center mt-3 text-[11px] text-gray-400 font-mono">
               <div class="flex gap-4">
                 <span>Characters: <strong id="charCount" class="text-purple-400">0</strong></span>
@@ -302,12 +238,6 @@
                 <span>Lines: <strong id="lineCount" class="text-purple-400">0</strong></span>
               </div>
             </div>
-          </div>
-
-          <!-- Diff Results Visualizer Box -->
-          <div id="diffResultsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl">
-            <label class="text-xs text-gray-400 block mb-2 font-semibold">Delta Transformation Comparator Visualizer Output:</label>
-            <div id="diffVisualizerBox" class="p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono h-36 overflow-y-auto whitespace-pre-wrap"></div>
           </div>
 
           <!-- Action Process Button & Progress Tracker -->
@@ -334,18 +264,13 @@
           <div class="bg-white/5 border border-white/10 p-4 rounded-2xl flex flex-col h-full min-h-[380px]">
             <h3 class="text-xs font-bold font-['Orbitron'] text-purple-400 mb-3">Live Studio Render Preview</h3>
             
-            <div id="previewContainer" class="hidden flex-1 p-3 bg-black/40 border border-gray-700 rounded-xl text-xs overflow-y-auto">
-              <div id="markdownPreview" class="prose prose-invert max-w-none text-xs"></div>
-            </div>
-
-            <div id="svgPreviewDisplayWindow" class="hidden flex-1 p-3 bg-black/40 border border-gray-700 rounded-xl flex items-center justify-center overflow-auto">
-              <span class="text-gray-600 italic text-xs">Awaiting clean vector input XML code markup...</span>
-            </div>
-
             <!-- Thumbnail Studio Preview Canvas -->
             <div id="thumbnailPreviewDisplayWindow" class="hidden flex-1 flex flex-col items-center justify-center bg-black/60 border border-gray-700 rounded-xl p-2 overflow-hidden shadow-2xl">
               <canvas id="thumbCanvas" width="1280" height="720" class="w-full aspect-video rounded-lg shadow-lg border border-white/10 object-contain"></canvas>
               <p class="text-[10px] text-gray-400 mt-2 font-mono">16:9 HD YouTube Thumbnail Canvas Output</p>
+            </div>
+            <div id="defaultPreviewText" class="flex-1 flex items-center justify-center text-xs text-gray-500 italic">
+              Active tool output previews will appear here...
             </div>
           </div>
         </div>
