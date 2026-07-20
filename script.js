@@ -179,64 +179,122 @@ function updateMetrics() {
 let currentThumbImage = null;
 let currentTrendingStyle = 'gaming';
 
-function setupAITrendingThumbnailUI() {
-  const triggerThumbBgBtn = document.getElementById('triggerThumbBgBtn');
-  const thumbBgUpload = document.getElementById('thumbBgUpload');
-  const aiSmartGenBtn = document.getElementById('aiSmartGenBtn');
+// --- MULTI-TEMPLATE PROFESSIONAL THUMBNAIL STUDIO ---
+
+function setupMultiTemplateStudio() {
+  const thumbCon = document.getElementById('thumbnailFieldsContainer');
+  if(!thumbCon) return;
+
+  // ටෙම්ප්ලේට්ස් තෝරාගන්නා බටන්ස් සහ කැන්වස් ප්‍රිවිව් ප්‍රදේශය ඩైనමික් ලෙස සකස් කිරීම
+  thumbCon.innerHTML = `
+    <div class="flex flex-col gap-2">
+      <label class="text-[11px] text-purple-400 font-semibold">Select Professional Design Concept:</label>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <button data-template="dramatic" class="template-choice-btn active text-[10px] p-2 rounded-xl border border-purple-500 bg-purple-600/20 font-bold transition">🎬 Dramatic Sinhala</button>
+        <button data-template="gaming" class="template-choice-btn text-[10px] p-2 rounded-xl border border-gray-700 bg-black/40 font-semibold transition">🔥 Gaming / FreeFire</button>
+        <button data-template="neon" class="template-choice-btn text-[10px] p-2 rounded-xl border border-gray-700 bg-black/40 font-semibold transition">⚡ Cyber Neon</button>
+        <button data-template="clean" class="template-choice-btn text-[10px] p-2 rounded-xl border border-gray-700 bg-black/40 font-semibold transition">🌟 Clean Studio</button>
+      </div>
+    </div>
+    <div>
+      <label class="text-[11px] text-gray-400 block mb-1 font-semibold">Client Text / Title Input:</label>
+      <input type="text" id="thumbTextInput" class="w-full p-2.5 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-purple-500" value="පපු වේ නිසල්">
+    </div>
+  `;
+
+  // බට්න් ක්ලික් කළ විට අදාළ ටෙම්ප්ලේට් එක මාරු වීම
+  document.querySelectorAll('.template-choice-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.template-choice-btn').forEach(b => {
+        b.classList.remove('active', 'border-purple-500', 'bg-purple-600/20', 'font-bold');
+        b.classList.add('border-gray-700', 'bg-black/40', 'font-semibold');
+      });
+      e.target.classList.add('active', 'border-purple-500', 'bg-purple-600/20', 'font-bold');
+      e.target.classList.remove('border-gray-700', 'bg-black/40', 'font-semibold');
+      
+      currentTemplateStyle = e.target.getAttribute('data-template');
+      drawThumbnailCanvas();
+      triggerSuccessNotification(`Switched to ${currentTemplateStyle.toUpperCase()} template!`);
+    });
+  });
+
   const thumbTextInput = document.getElementById('thumbTextInput');
-
-  if(triggerThumbBgBtn && thumbBgUpload && !triggerThumbBgBtn.hasAttribute('data-bound')) {
-    triggerThumbBgBtn.setAttribute('data-bound', 'true');
-    triggerThumbBgBtn.addEventListener('click', () => thumbBgUpload.click());
-    thumbBgUpload.addEventListener('change', handleThumbBgUpload);
-  }
-
-  if(thumbTextInput && !thumbTextInput.hasAttribute('data-bound')) {
-    thumbTextInput.setAttribute('data-bound', 'true');
+  if(thumbTextInput) {
     thumbTextInput.addEventListener('input', () => {
       drawThumbnailCanvas();
       updateMetrics();
     });
   }
-
-  document.querySelectorAll('.trend-style-btn').forEach(btn => {
-    if(!btn.hasAttribute('data-bound')) {
-      btn.setAttribute('data-bound', 'true');
-      btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.trend-style-btn').forEach(b => {
-          b.classList.remove('active', 'border-purple-500/50', 'bg-purple-600/20', 'font-bold');
-          b.classList.add('border-gray-700', 'bg-black/40');
-        });
-        e.target.classList.add('active', 'border-purple-500/50', 'bg-purple-600/20', 'font-bold');
-        e.target.classList.remove('border-gray-700', 'bg-black/40');
-        currentTrendingStyle = e.target.getAttribute('data-style');
-        drawThumbnailCanvas();
-        triggerSuccessNotification(`Switched to ${currentTrendingStyle.toUpperCase()} template!`);
-      });
-    }
-  });
-
-  if(aiSmartGenBtn && !aiSmartGenBtn.hasAttribute('data-bound')) {
-    aiSmartGenBtn.setAttribute('data-bound', 'true');
-    aiSmartGenBtn.addEventListener('click', () => {
-      const aiPhrases = [
-        "🔥 මේක නම් පට්ටම ට්‍රික් එකක්! (Must Watch)",
-        "⚠️ කවුරුත් නොදන්න රහසක්! (Secret Revealed)",
-        "😱 පුදුම වෙයි! මේක බලන්නම වෙනවා",
-        "⚡ ලේසියෙන්ම ගේම ගහමු! (Pro Guide)"
-      ];
-      const randomAiText = aiPhrases[Math.floor(Math.random() * aiPhrases.length)];
-      const textInputEl = document.getElementById('thumbTextInput');
-      if (textInputEl) {
-        textInputEl.value = randomAiText;
-        if(contentInput) contentInput.value = randomAiText;
-        updateMetrics();
-        drawThumbnailCanvas();
-        triggerSuccessNotification("✨ AI optimized thumbnail text!");
-      }
-    });
-  }
 }
+
+let currentTemplateStyle = 'dramatic';
+
+function drawThumbnailCanvas() {
+  const canvas = document.getElementById('thumbCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  // 1. ටෙම්ප්ලේට් ස්ටයිල් එක අනුව පසුබිම සහ ඩිසයින් ප්‍රයෝග වෙනස් වීම
+  ctx.fillStyle = '#030712';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  if(currentThumbImage) {
+    ctx.drawImage(currentThumbImage, 0, 0, canvas.width, canvas.height);
+  } else {
+    let grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    if(currentTemplateStyle === 'dramatic') {
+      grad.addColorStop(0, '#450a0a'); grad.addColorStop(1, '#1e1b4b'); // Dark Cinematic Red/Blue
+    } else if(currentTemplateStyle === 'gaming') {
+      grad.addColorStop(0, '#581c87'); grad.addColorStop(1, '#831843'); // Vibrant Purple/Pink
+    } else if(currentTemplateStyle === 'neon') {
+      grad.addColorStop(0, '#065f46'); grad.addColorStop(1, '#1e3a8a'); // Emerald/Cyan
+    } else {
+      grad.addColorStop(0, '#312e81'); grad.addColorStop(1, '#0f172a'); // Clean Deep Blue
+    }
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // ඩේජර්/ඩාර්ක් ශැඩෝ ලේයර් එක
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // ටෙම්ප්ලේට් එකට අදාළ බැජ් (Badge) එකක් ඉහළින් පෙන්වීම
+  ctx.fillStyle = currentTemplateStyle === 'dramatic' ? '#b91c1c' : (currentTemplateStyle === 'gaming' ? '#db2777' : '#059669');
+  ctx.beginPath();
+  ctx.roundRect(80, 70, 260, 55, 10);
+  ctx.fill();
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 22px Inter, sans-serif';
+  ctx.fillText(currentTemplateStyle.toUpperCase() + ' EDITION', 105, 105);
+
+  // ටෙක්ස්ට් එක ලබා ගැනීම
+  const thumbTextInput = document.getElementById('thumbTextInput');
+  const textVal = thumbTextInput ? thumbTextInput.value : 'පපු වේ නිසල්';
+
+  const x = 80;
+  const y = 280;
+
+  // 2. ප්‍රොෆෙෂනල් ඩබල් ස්ට්‍රෝක් සහ ෂැඩෝ ප්‍රයෝගය (Professional Outlines)
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+  ctx.shadowBlur = 20;
+  
+  // Outer Black Stroke
+  ctx.lineWidth = 16;
+  ctx.strokeStyle = '#000000';
+  ctx.strokeText(textVal, x, y);
+
+  // Inner Colored Accent Stroke (ටෙම්ප්ලේට් එක අනුව වෙනස් වේ)
+  ctx.lineWidth = 8;
+  ctx.strokeStyle = currentTemplateStyle === 'dramatic' ? '#f59e0b' : (currentTemplateStyle === 'gaming' ? '#facc15' : '#38bdf8');
+  ctx.strokeText(textVal, x, y);
+
+  // Main White Text Fill
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 68px Inter, sans-serif';
+  ctx.fillText(textVal, x, y);
+}
+
 
 function handleThumbBgUpload(e) {
   const file = e.target.files[0];
