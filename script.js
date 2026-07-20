@@ -247,33 +247,70 @@ const updateMetrics = () => {
 contentInput.addEventListener('input', updateMetrics);
 thumbTextInput.addEventListener('input', drawThumbnailCanvas);
 
+
 // --- AI & TRENDING THUMBNAIL STUDIO ADVANCED LOGIC ---
 let currentThumbImage = null;
 let currentTrendingStyle = 'gaming';
 
 function setupAITrendingThumbnailUI() {
-  const container = thumbnailFieldsContainer;
-  container.innerHTML = `
-    <div class="flex flex-col gap-3">
-      <input type="file" id="thumbBgUpload" class="hidden" accept="image/*">
-      <div class="flex gap-2">
-        <button id="triggerThumbBgBtn" class="flex-1 bg-purple-600/20 border border-purple-500/40 hover:bg-purple-600 p-2.5 rounded-lg text-xs font-semibold transition text-center">Upload Custom Background</button>
-        <button id="aiSmartGenBtn" class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 hover:opacity-90 p-2.5 rounded-lg text-xs font-bold transition text-center shadow-lg">✨ AI Smart Auto-Design</button>
-      </div>
-      <div>
-        <label class="text-[11px] text-gray-400 block mb-1 font-semibold">Select Trending AI Style Template:</label>
-        <div id="trendingStyleBtns" class="grid grid-cols-3 gap-2">
-          <button data-style="gaming" class="trend-style-btn active text-[10px] p-2 rounded-lg border border-purple-500/50 bg-purple-600/20 font-bold transition">🔥 Gaming / FreeFire</button>
-          <button data-style="tech" class="trend-style-btn text-[10px] p-2 rounded-lg border border-gray-700 bg-black/40 font-semibold transition">⚡ Tech / Review</button>
-          <button data-style="vlog" class="trend-style-btn text-[10px] p-2 rounded-lg border border-gray-700 bg-black/40 font-semibold transition">🌟 Vlog / Lifestyle</button>
-        </div>
-      </div>
-      <div>
-        <label class="text-[11px] text-gray-400 block mb-1 font-semibold">Thumbnail Text (Supports Sinhala & English):</label>
-        <input type="text" id="thumbTextInput" class="w-full p-2.5 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-purple-500" placeholder="උදා: Free Fire Sinhala Gameplay 🔥">
-      </div>
-    </div>
-  `;
+  // Re-bind listeners for static HTML elements
+  const triggerThumbBgBtn = document.getElementById('triggerThumbBgBtn');
+  const thumbBgUpload = document.getElementById('thumbBgUpload');
+  const aiSmartGenBtn = document.getElementById('aiSmartGenBtn');
+  const thumbTextInput = document.getElementById('thumbTextInput');
+
+  if(triggerThumbBgBtn && !triggerThumbBgBtn.hasAttribute('data-bound')) {
+    triggerThumbBgBtn.setAttribute('data-bound', 'true');
+    triggerThumbBgBtn.addEventListener('click', () => thumbBgUpload.click());
+    thumbBgUpload.addEventListener('change', handleThumbBgUpload);
+  }
+
+  if(thumbTextInput && !thumbTextInput.hasAttribute('data-bound')) {
+    thumbTextInput.setAttribute('data-bound', 'true');
+    thumbTextInput.addEventListener('input', (e) => {
+      drawThumbnailCanvas();
+      updateMetrics();
+    });
+  }
+
+  document.querySelectorAll('.trend-style-btn').forEach(btn => {
+    if(!btn.hasAttribute('data-bound')) {
+      btn.setAttribute('data-bound', 'true');
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.trend-style-btn').forEach(b => {
+          b.classList.remove('active', 'border-purple-500/50', 'bg-purple-600/20', 'font-bold');
+          b.classList.add('border-gray-700', 'bg-black/40');
+        });
+        e.target.classList.add('active', 'border-purple-500/50', 'bg-purple-600/20', 'font-bold');
+        e.target.classList.remove('border-gray-700', 'bg-black/40');
+        currentTrendingStyle = e.target.getAttribute('data-style');
+        drawThumbnailCanvas();
+        triggerSuccessNotification(`Switched to ${currentTrendingStyle.toUpperCase()} trending template!`);
+      });
+    }
+  });
+
+  if(aiSmartGenBtn && !aiSmartGenBtn.hasAttribute('data-bound')) {
+    aiSmartGenBtn.setAttribute('data-bound', 'true');
+    aiSmartGenBtn.addEventListener('click', () => {
+      const aiPhrases = [
+        "🔥 මේක නම් පට්ටම ට්‍රික් එකක්! (Must Watch)",
+        "⚠️ කවුරුත් නොදන්න රහසක්! (Secret Revealed)",
+        "😱 පුදුම වෙයි! මේක බලන්නම වෙනවා",
+        "⚡ ලේසියෙන්ම ගේම ගහමු! (Pro Guide)"
+      ];
+      const randomAiText = aiPhrases[Math.floor(Math.random() * aiPhrases.length)];
+      const textInputEl = document.getElementById('thumbTextInput');
+      if (textInputEl) {
+        textInputEl.value = randomAiText;
+        contentInput.value = randomAiText;
+        updateMetrics();
+        drawThumbnailCanvas();
+        triggerSuccessNotification("✨ AI successfully optimized your thumbnail text for maximum CTR!");
+      }
+    });
+  }
+}
 
   // Re-bind listeners for newly generated dynamic elements
   document.getElementById('triggerThumbBgBtn').addEventListener('click', () => document.getElementById('thumbBgUpload').click());
