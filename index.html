@@ -30,19 +30,72 @@
   </header>
 
   <!-- Welcome Dashboard / Landing Animation View -->
-  <main id="welcomeDashboard" class="w-full max-w-5xl text-center py-12 transition-all duration-500">
-    <div class="inline-block px-4 py-1.5 mb-6 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs font-semibold tracking-wide animate-fade-in">
+  <main id="welcomeDashboard" class="w-full max-w-5xl text-center py-10 transition-all duration-500">
+    <div class="inline-block px-4 py-1.5 mb-4 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs font-semibold tracking-wide animate-fade-in">
       🚀 Next-Gen Web Design & Development Toolkit
     </div>
-    <h2 class="text-4xl md:text-6xl font-extrabold font-['Orbitron'] tracking-tight mb-6 text-gradient">
+    <h2 class="text-4xl md:text-6xl font-extrabold font-['Orbitron'] tracking-tight mb-4 text-gradient">
       Create. Convert. Optimize.
     </h2>
-    <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base mb-10 leading-relaxed">
+    <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base mb-8 leading-relaxed">
       Unlock professional-grade creation tools, lightning-fast file converters, graphic generators, and our brand new Thumbnail Studio wrapped in an ultra-modern environment.
     </p>
-    <button id="getStartedBtn" class="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 px-8 py-4 rounded-full font-bold text-sm shadow-xl shadow-purple-900/40 transform hover:scale-105 active:scale-95 transition duration-300">
-      Launch Studio Dashboard ✨
-    </button>
+    
+    <div class="mb-10">
+      <button id="getStartedBtn" class="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 px-8 py-4 rounded-full font-bold text-sm shadow-xl shadow-purple-900/40 transform hover:scale-105 active:scale-95 transition duration-300">
+        Launch Studio Dashboard ✨
+      </button>
+    </div>
+
+    <!-- Eye-Catching Active Tools & Secure Highlights Showcase -->
+    <div class="w-full bg-gray-900/40 border border-purple-500/20 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl text-left mt-6 animate-fade-in">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-gray-800 gap-4">
+        <div>
+          <span class="text-xs font-bold text-purple-400 tracking-widest font-['Orbitron'] uppercase block mb-1">SYSTEM OVERVIEW</span>
+          <h3 class="text-xl md:text-2xl font-bold font-['Orbitron'] text-white">Active Studio Suite & Secure Modules</h3>
+        </div>
+        <div class="flex items-center gap-2 bg-green-500/10 border border-green-500/30 px-3.5 py-1.5 rounded-full text-green-400 text-xs font-semibold">
+          <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> 100% Client-Side Secure Environment
+        </div>
+      </div>
+
+      <p class="text-gray-300 text-xs md:text-sm mb-6 leading-relaxed">
+        UxPro provides an advanced ecosystem of professional utilities designed to run directly inside your browser with absolute local security. Your data never leaves your device, ensuring maximum privacy across all file conversions, design assets, and text transformers.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Tool Item 1 -->
+        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
+          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">📁 File Converters (.txt, .zip, .rar, .pdf, .docx)</h4>
+          <p class="text-xs text-gray-400 leading-normal">Instantly package text data into secure standard formats, compile clean PDF documents, or build MS Word files on the fly.</p>
+        </div>
+        <!-- Tool Item 2 -->
+        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
+          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">🖼️ Thumbnail Studio</h4>
+          <p class="text-xs text-gray-400 leading-normal">Design custom YouTube thumbnails with high-resolution image layering, custom background imports, and live text styling.</p>
+        </div>
+        <!-- Tool Item 3 -->
+        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
+          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">🎨 Design & Color Suite</h4>
+          <p class="text-xs text-gray-400 leading-normal">Generate dynamic color palettes, check WCAG accessibility contrast ratios, encode image assets to Base64, and optimize SVG vectors.</p>
+        </div>
+        <!-- Tool Item 4 -->
+        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
+          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">⚡ Text Transformers & Utils</h4>
+          <p class="text-xs text-gray-400 leading-normal">Perform case modifications, Base64 encoding/decoding, syntax-highlighted JSON formatting, live markdown previewing, and text diffing.</p>
+        </div>
+        <!-- Tool Item 5 -->
+        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
+          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">🎙️ Speech Dictation Support</h4>
+          <p class="text-xs text-gray-400 leading-normal">Input text hands-free using real-time browser speech recognition capabilities to speed up your content creation workflow.</p>
+        </div>
+        <!-- Tool Item 6 -->
+        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
+          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">📜 Local Action History</h4>
+          <p class="text-xs text-gray-400 leading-normal">Automatically track, review, and restore previous sandbox outputs directly from your browser's local storage.</p>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- Main App Dashboard View (Initially Hidden) -->
@@ -52,7 +105,6 @@
     <aside class="w-full md:w-72 bg-gray-900/40 border border-gray-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col gap-3 max-h-[80vh] overflow-y-auto">
       <h3 class="text-xs font-bold text-gray-400 tracking-wider font-['Orbitron'] px-2">QUICK STUDIO BAR</h3>
       <div class="flex flex-col gap-1.5" id="sidebarToolNavList">
-        <!-- Dynamically injected sidebar buttons or category links -->
         <button class="sidebar-tool-btn active text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="gridFiles">
           <span>📁 File Converters</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">5</span>
         </button>
@@ -122,7 +174,6 @@
 
       <!-- Grid Layout 2: Design Suite & Thumbnail Studio -->
       <div id="gridDesign" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden animate-fade-in">
-        <!-- New Thumbnail Studio Tool Card -->
         <div class="tool-card group border-purple-500/40 bg-purple-950/20" data-tool="thumbnail">
           <div class="flex justify-between items-start mb-2">
             <h3 class="text-purple-300">Thumbnail Studio 🖼️</h3>
@@ -330,7 +381,6 @@
 
           <div id="svgPreviewDisplayWindow" class="flex-grow border border-gray-800 bg-black/40 rounded-xl p-4 mb-4 hidden flex items-center justify-center max-h-[300px] min-h-[200px] overflow-auto"></div>
 
-          <!-- Thumbnail Studio Preview Canvas -->
           <div id="thumbnailPreviewDisplayWindow" class="flex-grow border border-gray-800 bg-black/40 rounded-xl p-2 mb-4 hidden flex items-center justify-center overflow-auto">
             <canvas id="thumbCanvas" width="1280" height="720" class="w-full h-auto rounded-lg shadow-2xl border border-gray-700"></canvas>
           </div>
