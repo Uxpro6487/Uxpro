@@ -4,204 +4,244 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UxPro - Advanced Studio Suite</title>
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css" />
-  <!-- External Generation Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.3.0/docx.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
-<body class="bg-gray-900 text-white font-sans min-h-screen flex flex-col items-center justify-start p-4 md:p-6">
+<body class="bg-gray-950 text-white font-sans min-h-screen flex flex-col items-center justify-start p-4 md:p-6 overflow-x-hidden">
+
+  <!-- Animated Background Elements -->
+  <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute top-1/2 -right-40 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+  </div>
 
   <!-- Header Section -->
-  <header class="w-full max-w-5xl mb-8 flex justify-between items-center bg-black bg-opacity-30 p-4 rounded-2xl border border-purple-600 border-opacity-20 backdrop-blur-md">
-    <h1 id="brandHome" class="text-3xl font-extrabold text-gradient font-['Orbitron'] tracking-wider cursor-pointer">
+  <header class="w-full max-w-6xl mb-8 flex justify-between items-center bg-gray-900/60 p-4 rounded-2xl border border-purple-500/20 backdrop-blur-xl shadow-2xl">
+    <h1 id="brandHome" class="text-3xl font-extrabold text-gradient font-['Orbitron'] tracking-wider cursor-pointer animate-bounce-subtle">
       UxPro
     </h1>
-    <div class="flex gap-2">
-      <button id="openPrivacyBtn" class="text-xs text-gray-400 hover:text-purple-400 transition">Privacy</button>
-      <span class="text-gray-600">|</span>
-      <button id="openTermsBtn" class="text-xs text-gray-400 hover:text-pink-400 transition">Terms</button>
-      <span class="text-gray-600">|</span>
-      <button id="openSupportBtn" class="text-xs text-gray-400 hover:text-blue-400 transition">Support</button>
+    <div class="flex gap-4 items-center">
+      <span class="text-xs text-purple-400 font-mono hidden sm:inline animate-pulse">✨ Studio Suite Active</span>
     </div>
   </header>
 
-  <!-- Welcome Dashboard Grid -->
-  <main id="welcomeDashboard" class="w-full max-w-5xl">
-    <!-- Navigation Tabs inside Dashboard -->
-    <div class="flex gap-4 mb-6 border-b border-gray-800 pb-3">
-      <button id="tabFiles" class="tab-btn active px-4 py-2 font-semibold text-sm rounded-lg transition">File Engine</button>
-      <button id="tabDesign" class="tab-btn px-4 py-2 font-semibold text-sm rounded-lg transition">Design Suite</button>
-      <button id="tabUtils" class="tab-btn px-4 py-2 font-semibold text-sm rounded-lg transition">Text Transformers</button>
-      <button id="tabHistory" class="tab-btn px-4 py-2 font-semibold text-sm rounded-lg transition">Local History</button>
+  <!-- Welcome Dashboard / Landing Animation View -->
+  <main id="welcomeDashboard" class="w-full max-w-5xl text-center py-12 transition-all duration-500">
+    <div class="inline-block px-4 py-1.5 mb-6 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs font-semibold tracking-wide animate-fade-in">
+      🚀 Next-Gen Web Design & Development Toolkit
     </div>
-
-    <!-- Grid Layout 1: File Converters -->
-    <div id="gridFiles" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <div class="tool-card group" data-tool="txt">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Plain Text (.txt)</h3>
-          <span class="badge badge-general">General</span>
-        </div>
-        <p>Convert structures directly into optimized raw plaintext logs.</p>
-      </div>
-      <div class="tool-card group" data-tool="zip">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Zip Compressor (.zip)</h3>
-          <span class="badge badge-general">General</span>
-        </div>
-        <p>Package strings inside high efficiency standard zip archives.</p>
-      </div>
-      <div class="tool-card group" data-tool="rar">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Rar Compressor (.rar)</h3>
-          <span class="badge badge-general">General</span>
-        </div>
-        <p>Generate clean, client-simulated custom protected RAR structures.</p>
-      </div>
-      <div class="tool-card group" data-tool="pdf">
-        <div class="flex justify-between items-start mb-2">
-          <h3>PDF Document (.pdf)</h3>
-          <span class="badge badge-design">Design & Dev</span>
-        </div>
-        <p>Render input characters elegantly on strict print-safe layouts.</p>
-      </div>
-      <div class="tool-card group" data-tool="docx">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Word Document (.docx)</h3>
-          <span class="badge badge-general">General</span>
-        </div>
-        <p>Build formatted MS Word documents directly on the browser layer.</p>
-      </div>
-    </div>
-
-    <!-- Grid Layout 2: Design Suite (NEW) -->
-    <div id="gridDesign" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 hidden">
-      <!-- මේ කොටස gridDesign කියන div එක ඇතුලට දාන්න -->
-<div class="tool-card group" data-tool="thumbnail">
-  <div class="flex justify-between items-start mb-2">
-    <h3>Thumbnail Studio</h3>
-    <span class="badge badge-design">Graphic Design</span>
-  </div>
-  <p>Design custom YouTube thumbnails with live text and image layers.</p>
-</div>
-
-      <div class="tool-card group" data-tool="palette">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Palette Generator</h3>
-          <span class="badge badge-design">Graphic Design</span>
-        </div>
-        <p>Generate trending custom color schemes with live HEX code mapping.</p>
-      </div>
-      <div class="tool-card group" data-tool="contrast">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Contrast Checker</h3>
-          <span class="badge badge-design">UI/UX Design</span>
-        </div>
-        <p>Evaluate WCAG visibility compliance thresholds across contrast nodes.</p>
-      </div>
-      <div class="tool-card group" data-tool="img2base64">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Image to Base64</h3>
-          <span class="badge badge-design">Graphic Design</span>
-        </div>
-        <p>Convert graphic asset layers into pure lightweight web code strings.</p>
-      </div>
-      <div class="tool-card group" data-tool="svgpreview">
-        <div class="flex justify-between items-start mb-2">
-          <h3>SVG Optimizer</h3>
-          <span class="badge badge-design">UI/UX Design</span>
-        </div>
-        <p>Render vector source paths live and clean markup formatting artifacts.</p>
-      </div>
-      <div class="tool-card group" data-tool="lorem">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Dummy Typography</h3>
-          <span class="badge badge-design">Graphic Design</span>
-        </div>
-        <p>Instantly generate standard Lorem Ipsum dummy content arrays.</p>
-      </div>
-    </div>
-
-    <!-- Grid Layout 3: Text Utilities -->
-    <div id="gridUtils" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 hidden">
-      <div class="tool-card group" data-tool="uppercase">
-        <div class="flex justify-between items-start mb-2">
-          <h3>UPPERCASE</h3>
-          <span class="badge badge-dev">Development</span>
-        </div>
-        <p>Transform your document text completely into capitalization mapping.</p>
-      </div>
-      <div class="tool-card group" data-tool="lowercase">
-        <div class="flex justify-between items-start mb-2">
-          <h3>lowercase</h3>
-          <span class="badge badge-dev">Development</span>
-        </div>
-        <p>Instantly reduce text character nodes array into uniform lowercase formats.</p>
-      </div>
-      <div class="tool-card group" data-tool="base64encode">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Base64 Encoder</h3>
-          <span class="badge badge-dev">Development</span>
-        </div>
-        <p>Encrypt structures into standard safe system transfer algorithms.</p>
-      </div>
-      <div class="tool-card group" data-tool="base64decode">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Base64 Decoder</h3>
-          <span class="badge badge-dev">Development</span>
-        </div>
-        <p>Parse incoming Base64 matrix outputs clean back into standard characters.</p>
-      </div>
-      <div class="tool-card group" data-tool="jsonformat">
-        <div class="flex justify-between items-start mb-2">
-          <h3>JSON Formatter</h3>
-          <span class="badge badge-dev">Development</span>
-        </div>
-        <p>Validate, syntax-highlight, and beautify dense raw configuration strings.</p>
-      </div>
-      <div class="tool-card group" data-tool="markdown">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Markdown Review</h3>
-          <span class="badge badge-dev">Development</span>
-        </div>
-        <p>Write raw markdown tags and view dynamic real-time parsed rendering layouts.</p>
-      </div>
-      <div class="tool-card group" data-tool="regex">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Regex Tester</h3>
-          <span class="badge badge-dev">Development</span>
-        </div>
-        <p>Evaluate pattern configurations matches across custom texts live.</p>
-      </div>
-      <div class="tool-card group" data-tool="diff">
-        <div class="flex justify-between items-start mb-2">
-          <h3>Text Diff Tool</h3>
-          <span class="badge badge-dev">Development</span>
-        </div>
-        <p>Perform precise logical line comparison analytics highlighting differences.</p>
-      </div>
-    </div>
-
-    <!-- Local History Panel -->
-    <div id="historyView" class="bg-gray-900 border border-gray-800 rounded-2xl p-6 hidden">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-bold font-['Orbitron'] text-purple-400">Recent Sandbox Actions</h2>
-        <button id="clearHistoryBtn" class="text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white transition">Clear Logs</button>
-      </div>
-      <div id="historyContainerList" class="flex flex-col gap-3"></div>
-    </div>
+    <h2 class="text-4xl md:text-6xl font-extrabold font-['Orbitron'] tracking-tight mb-6 text-gradient">
+      Create. Convert. Optimize.
+    </h2>
+    <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base mb-10 leading-relaxed">
+      Unlock professional-grade creation tools, lightning-fast file converters, graphic generators, and our brand new Thumbnail Studio wrapped in an ultra-modern environment.
+    </p>
+    <button id="getStartedBtn" class="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 px-8 py-4 rounded-full font-bold text-sm shadow-xl shadow-purple-900/40 transform hover:scale-105 active:scale-95 transition duration-300">
+      Launch Studio Dashboard ✨
+    </button>
   </main>
 
-  <!-- Workspace Processing Studio -->
-  <section id="workspaceSection" class="w-full max-w-5xl hidden opacity-0 transform scale-95 transition-all duration-300">
+  <!-- Main App Dashboard View (Initially Hidden) -->
+  <div id="mainDashboardView" class="w-full max-w-6xl hidden opacity-0 transition-all duration-500 flex flex-col md:flex-row gap-6">
+    
+    <!-- Optional Sidebar Tool-Card Navigation Bar -->
+    <aside class="w-full md:w-72 bg-gray-900/40 border border-gray-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col gap-3 max-h-[80vh] overflow-y-auto">
+      <h3 class="text-xs font-bold text-gray-400 tracking-wider font-['Orbitron'] px-2">QUICK STUDIO BAR</h3>
+      <div class="flex flex-col gap-1.5" id="sidebarToolNavList">
+        <!-- Dynamically injected sidebar buttons or category links -->
+        <button class="sidebar-tool-btn active text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="gridFiles">
+          <span>📁 File Converters</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">5</span>
+        </button>
+        <button class="sidebar-tool-btn text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="gridDesign">
+          <span>🎨 Design Suite & Thumbnails</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">6</span>
+        </button>
+        <button class="sidebar-tool-btn text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="gridUtils">
+          <span>⚡ Text Transformers</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">8</span>
+        </button>
+        <button class="sidebar-tool-btn text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="historyView">
+          <span>📜 Local History</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">Logs</span>
+        </button>
+      </div>
+      <button id="backToHomeBtn" class="mt-auto bg-gray-800/60 hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-gray-700/60 p-2.5 rounded-xl text-xs font-semibold transition text-center">
+        ← Back to Welcome Screen
+      </button>
+    </aside>
+
+    <!-- Main Content Area Grids -->
+    <div class="flex-grow flex flex-col">
+      <!-- Navigation Tabs Header -->
+      <div class="flex gap-3 mb-6 border-b border-gray-800 pb-3 overflow-x-auto">
+        <button id="tabFiles" class="tab-btn active px-4 py-2 font-semibold text-sm rounded-xl transition flex-shrink-0">File Engine</button>
+        <button id="tabDesign" class="tab-btn px-4 py-2 font-semibold text-sm rounded-xl transition flex-shrink-0">Design & Thumbnail Suite</button>
+        <button id="tabUtils" class="tab-btn px-4 py-2 font-semibold text-sm rounded-xl transition flex-shrink-0">Text Transformers</button>
+        <button id="tabHistory" class="tab-btn px-4 py-2 font-semibold text-sm rounded-xl transition flex-shrink-0">Local History</button>
+      </div>
+
+      <!-- Grid Layout 1: File Converters -->
+      <div id="gridFiles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade-in">
+        <div class="tool-card group" data-tool="txt">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Plain Text (.txt)</h3>
+            <span class="badge badge-general">General</span>
+          </div>
+          <p>Convert structures directly into optimized raw plaintext logs.</p>
+        </div>
+        <div class="tool-card group" data-tool="zip">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Zip Compressor (.zip)</h3>
+            <span class="badge badge-general">General</span>
+          </div>
+          <p>Package strings inside high efficiency standard zip archives.</p>
+        </div>
+        <div class="tool-card group" data-tool="rar">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Rar Compressor (.rar)</h3>
+            <span class="badge badge-general">General</span>
+          </div>
+          <p>Generate clean, client-simulated custom protected RAR structures.</p>
+        </div>
+        <div class="tool-card group" data-tool="pdf">
+          <div class="flex justify-between items-start mb-2">
+            <h3>PDF Document (.pdf)</h3>
+            <span class="badge badge-design">Design & Dev</span>
+          </div>
+          <p>Render input characters elegantly on strict print-safe layouts.</p>
+        </div>
+        <div class="tool-card group" data-tool="docx">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Word Document (.docx)</h3>
+            <span class="badge badge-general">General</span>
+          </div>
+          <p>Build formatted MS Word documents directly on the browser layer.</p>
+        </div>
+      </div>
+
+      <!-- Grid Layout 2: Design Suite & Thumbnail Studio -->
+      <div id="gridDesign" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden animate-fade-in">
+        <!-- New Thumbnail Studio Tool Card -->
+        <div class="tool-card group border-purple-500/40 bg-purple-950/20" data-tool="thumbnail">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="text-purple-300">Thumbnail Studio 🖼️</h3>
+            <span class="badge badge-design">Featured</span>
+          </div>
+          <p>Design custom YouTube thumbnails with live text and image layering.</p>
+        </div>
+        <div class="tool-card group" data-tool="palette">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Palette Generator</h3>
+            <span class="badge badge-design">Graphic Design</span>
+          </div>
+          <p>Generate trending custom color schemes with live HEX code mapping.</p>
+        </div>
+        <div class="tool-card group" data-tool="contrast">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Contrast Checker</h3>
+            <span class="badge badge-design">UI/UX Design</span>
+          </div>
+          <p>Evaluate WCAG visibility compliance thresholds across contrast nodes.</p>
+        </div>
+        <div class="tool-card group" data-tool="img2base64">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Image to Base64</h3>
+            <span class="badge badge-design">Graphic Design</span>
+          </div>
+          <p>Convert graphic asset layers into pure lightweight web code strings.</p>
+        </div>
+        <div class="tool-card group" data-tool="svgpreview">
+          <div class="flex justify-between items-start mb-2">
+            <h3>SVG Optimizer</h3>
+            <span class="badge badge-design">UI/UX Design</span>
+          </div>
+          <p>Render vector source paths live and clean markup formatting artifacts.</p>
+        </div>
+        <div class="tool-card group" data-tool="lorem">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Dummy Typography</h3>
+            <span class="badge badge-design">Graphic Design</span>
+          </div>
+          <p>Instantly generate standard Lorem Ipsum dummy content arrays.</p>
+        </div>
+      </div>
+
+      <!-- Grid Layout 3: Text Utilities -->
+      <div id="gridUtils" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden animate-fade-in">
+        <div class="tool-card group" data-tool="uppercase">
+          <div class="flex justify-between items-start mb-2">
+            <h3>UPPERCASE</h3>
+            <span class="badge badge-dev">Development</span>
+          </div>
+          <p>Transform your document text completely into capitalization mapping.</p>
+        </div>
+        <div class="tool-card group" data-tool="lowercase">
+          <div class="flex justify-between items-start mb-2">
+            <h3>lowercase</h3>
+            <span class="badge badge-dev">Development</span>
+          </div>
+          <p>Instantly reduce text character nodes array into uniform lowercase formats.</p>
+        </div>
+        <div class="tool-card group" data-tool="base64encode">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Base64 Encoder</h3>
+            <span class="badge badge-dev">Development</span>
+          </div>
+          <p>Encrypt structures into standard safe system transfer algorithms.</p>
+        </div>
+        <div class="tool-card group" data-tool="base64decode">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Base64 Decoder</h3>
+            <span class="badge badge-dev">Development</span>
+          </div>
+          <p>Parse incoming Base64 matrix outputs clean back into standard characters.</p>
+        </div>
+        <div class="tool-card group" data-tool="jsonformat">
+          <div class="flex justify-between items-start mb-2">
+            <h3>JSON Formatter</h3>
+            <span class="badge badge-dev">Development</span>
+          </div>
+          <p>Validate, syntax-highlight, and beautify dense raw configuration strings.</p>
+        </div>
+        <div class="tool-card group" data-tool="markdown">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Markdown Review</h3>
+            <span class="badge badge-dev">Development</span>
+          </div>
+          <p>Write raw markdown tags and view dynamic real-time parsed rendering layouts.</p>
+        </div>
+        <div class="tool-card group" data-tool="regex">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Regex Tester</h3>
+            <span class="badge badge-dev">Development</span>
+          </div>
+          <p>Evaluate pattern configurations matches across custom texts live.</p>
+        </div>
+        <div class="tool-card group" data-tool="diff">
+          <div class="flex justify-between items-start mb-2">
+            <h3>Text Diff Tool</h3>
+            <span class="badge badge-dev">Development</span>
+          </div>
+          <p>Perform precise logical line comparison analytics highlighting differences.</p>
+        </div>
+      </div>
+
+      <!-- Local History Panel -->
+      <div id="historyView" class="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 hidden animate-fade-in backdrop-blur-md">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold font-['Orbitron'] text-purple-400">Recent Sandbox Actions</h2>
+          <button id="clearHistoryBtn" class="text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white transition">Clear Logs</button>
+        </div>
+        <div id="historyContainerList" class="flex flex-col gap-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workspace Processing Studio (Hidden by Default) -->
+  <section id="workspaceSection" class="w-full max-w-6xl hidden opacity-0 transform scale-95 transition-all duration-300">
     <div class="flex justify-between items-center mb-4">
-      <button id="backToDashboardBtn" class="bg-gray-800 border border-gray-700 hover:border-purple-500 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition">
+      <button id="backToDashboardBtn" class="bg-gray-800/80 border border-gray-700 hover:border-purple-500 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition backdrop-blur-md">
         ← Return Dashboard
       </button>
       <h2 id="activeToolTitle" class="text-lg md:text-xl font-bold font-['Orbitron'] text-gradient">Active Engine Module</h2>
@@ -209,7 +249,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Left Box: Workspace Input Stream -->
-      <div id="dragDropArea" class="relative bg-gray-900 bg-opacity-40 border-2 border-dashed border-gray-800 rounded-3xl p-5 hover:border-purple-500 transition-colors flex flex-col min-h-[400px]">
+      <div id="dragDropArea" class="relative bg-gray-900/40 border-2 border-dashed border-gray-800 rounded-3xl p-5 hover:border-purple-500 transition-colors flex flex-col min-h-[400px] backdrop-blur-md">
         <div id="dragZoneOverlay" class="absolute inset-0 bg-purple-900/40 backdrop-blur-md rounded-3xl flex items-center justify-center border-2 border-purple-500 hidden z-20">
           <p class="text-lg font-bold">Drop file asset here to import instantly...</p>
         </div>
@@ -226,14 +266,19 @@
         </div>
 
         <div class="relative flex-grow flex flex-col">
-          <textarea id="contentInput" class="w-full flex-grow min-h-[300px] p-4 rounded-xl font-mono bg-black bg-opacity-40 focus:outline-none border border-gray-800 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 text-white resize-y" placeholder="Type or paste source data elements here..."></textarea>
-          <div id="codeHighlightView" class="w-full absolute inset-0 p-4 rounded-xl font-mono bg-black bg-opacity-95 text-white overflow-auto border border-gray-800 hidden whitespace-pre-wrap select-text"></div>
+          <textarea id="contentInput" class="w-full flex-grow min-h-[300px] p-4 rounded-xl font-mono bg-black/40 focus:outline-none border border-gray-800 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 text-white resize-y" placeholder="Type or paste source data elements here..."></textarea>
+          <div id="codeHighlightView" class="w-full absolute inset-0 p-4 rounded-xl font-mono bg-black/95 text-white overflow-auto border border-gray-800 hidden whitespace-pre-wrap select-text"></div>
+        </div>
+
+        <!-- Thumbnail Studio Special UI Controls -->
+        <div id="thumbnailFieldsContainer" class="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl hidden flex flex-col gap-3">
+          <input type="file" id="thumbBgUpload" class="hidden" accept="image/*">
+          <button id="triggerThumbBgBtn" class="bg-purple-600/20 border border-purple-500/40 hover:bg-purple-600 p-2.5 rounded-lg text-xs font-semibold transition text-center">Set Thumbnail Background Image</button>
+          <input type="text" id="thumbTextInput" class="p-2.5 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-purple-500" placeholder="Enter Thumbnail Title Overlay...">
         </div>
 
         <!-- Design Tools Special Panels UI Controls -->
-        <div id="paletteFieldsContainer" class="mt-4 hidden grid grid-cols-5 gap-2">
-          <!-- Live dynamic palette nodes generated -->
-        </div>
+        <div id="paletteFieldsContainer" class="mt-4 hidden grid grid-cols-5 gap-2"></div>
 
         <div id="contrastFieldsContainer" class="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl hidden flex flex-col gap-3">
           <div class="flex flex-col sm:flex-row gap-4">
@@ -264,7 +309,7 @@
 
         <div id="diffFieldsContainer" class="mt-4 hidden flex flex-col gap-2">
           <span class="text-xs text-gray-400 font-semibold">TARGET TEXT BUFFER TO COMPARE</span>
-          <textarea id="diffSecondaryInput" class="w-full h-32 p-3 rounded-xl font-mono bg-black bg-opacity-40 border border-gray-800 focus:outline-none text-xs text-white" placeholder="Insert secondary tracking values text..."></textarea>
+          <textarea id="diffSecondaryInput" class="w-full h-32 p-3 rounded-xl font-mono bg-black/40 border border-gray-800 focus:outline-none text-xs text-white" placeholder="Insert secondary tracking values text..."></textarea>
         </div>
 
         <div class="mt-4 pt-3 border-t border-gray-800/60 grid grid-cols-3 text-center text-[11px] font-semibold tracking-wider text-gray-400">
@@ -275,7 +320,7 @@
       </div>
 
       <!-- Right Box: System Output Render Node -->
-      <div class="bg-gray-900 bg-opacity-40 border border-gray-800 rounded-3xl p-5 flex flex-col justify-between min-h-[400px]">
+      <div class="bg-gray-900/40 border border-gray-800 rounded-3xl p-5 flex flex-col justify-between min-h-[400px] backdrop-blur-md">
         <span class="text-xs text-gray-400 font-semibold tracking-wide block mb-3">SYSTEM PREVIEW RENDER NODE</span>
         
         <div class="flex-grow flex flex-col justify-between">
@@ -283,8 +328,11 @@
             <div id="markdownPreview" class="prose prose-invert text-sm max-w-none"></div>
           </div>
 
-          <div id="svgPreviewDisplayWindow" class="flex-grow border border-gray-800 bg-black/40 rounded-xl p-4 mb-4 hidden flex items-center justify-center max-h-[300px] min-h-[200px] overflow-auto">
-            <!-- Render vectors structural targets -->
+          <div id="svgPreviewDisplayWindow" class="flex-grow border border-gray-800 bg-black/40 rounded-xl p-4 mb-4 hidden flex items-center justify-center max-h-[300px] min-h-[200px] overflow-auto"></div>
+
+          <!-- Thumbnail Studio Preview Canvas -->
+          <div id="thumbnailPreviewDisplayWindow" class="flex-grow border border-gray-800 bg-black/40 rounded-xl p-2 mb-4 hidden flex items-center justify-center overflow-auto">
+            <canvas id="thumbCanvas" width="1280" height="720" class="w-full h-auto rounded-lg shadow-2xl border border-gray-700"></canvas>
           </div>
 
           <div id="diffResultsContainer" class="flex-grow border border-gray-800 bg-black/40 p-3 rounded-xl overflow-auto font-mono text-xs max-h-[300px] mb-4 hidden whitespace-pre-wrap">
@@ -322,17 +370,6 @@
       <div>
         <h4 class="text-md font-bold text-green-400 font-['Orbitron']">ACTION SUCCESSFUL</h4>
         <p id="successDetail" class="text-xs text-gray-400 mt-0.5"></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Legal Overlay Modals Window -->
-  <div id="legalModalOverlay" class="fixed inset-0 flex items-center justify-center bg-black/70 opacity-0 pointer-events-none z-50 transition-opacity duration-300 backdrop-blur-sm">
-    <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl max-w-lg w-full mx-4 relative shadow-2xl">
-      <h3 id="legalModalTitle" class="text-xl font-bold font-['Orbitron'] border-b border-gray-800 pb-2 mb-4 text-purple-400">Policy Specification</h3>
-      <div id="legalModalContent" class="text-sm text-gray-300 leading-relaxed max-h-[300px] overflow-auto mb-6 pr-2"></div>
-      <div class="flex justify-end">
-        <button id="closeLegalModalBtn" class="bg-gray-800 border border-gray-700 hover:border-purple-500 px-5 py-2 rounded-xl text-xs font-semibold transition">Acknowledge Close</button>
       </div>
     </div>
   </div>
