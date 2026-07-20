@@ -1,10 +1,8 @@
 // --- UXPRO STUDIO ENGINE LOGIC ---
 
-// State Management Variables
 let activeTool = 'txt';
 let historyLogs = JSON.parse(localStorage.getItem('uxpro_history') || '[]');
 
-// DOM Elements Initialization
 const welcomeDashboard = document.getElementById('welcomeDashboard');
 const mainDashboardView = document.getElementById('mainDashboardView');
 const workspaceSection = document.getElementById('workspaceSection');
@@ -39,36 +37,51 @@ const progressBar = document.getElementById('progressBar');
 const statusText = document.getElementById('statusText');
 const timeElapsed = document.getElementById('timeElapsed');
 
-// Navigation Transition Handlers
 function showWorkspace() {
-  welcomeDashboard.classList.add('opacity-0', 'scale-95', 'hidden');
-  mainDashboardView.classList.add('hidden', 'opacity-0');
-  workspaceSection.classList.remove('hidden');
-  setTimeout(() => {
-    workspaceSection.classList.remove('opacity-0', 'scale-95');
-    workspaceSection.classList.add('opacity-100', 'scale-100');
-  }, 50);
+  if (welcomeDashboard) {
+    welcomeDashboard.classList.add('opacity-0', 'scale-95', 'hidden');
+  }
+  if (mainDashboardView) {
+    mainDashboardView.classList.add('hidden', 'opacity-0');
+  }
+  if (workspaceSection) {
+    workspaceSection.classList.remove('hidden');
+    setTimeout(() => {
+      workspaceSection.classList.remove('opacity-0', 'scale-95');
+      workspaceSection.classList.add('opacity-100', 'scale-100');
+    }, 50);
+  }
 }
 
 function showDashboard() {
-  workspaceSection.classList.remove('opacity-100', 'scale-100');
-  workspaceSection.classList.add('opacity-0', 'scale-95');
-  setTimeout(() => {
-    workspaceSection.classList.add('hidden');
-    welcomeDashboard.classList.remove('hidden');
+  if (workspaceSection) {
+    workspaceSection.classList.remove('opacity-100', 'scale-100');
+    workspaceSection.classList.add('opacity-0', 'scale-95');
     setTimeout(() => {
-      welcomeDashboard.classList.remove('opacity-0', 'scale-95');
-    }, 50);
-  }, 300);
+      workspaceSection.classList.add('hidden');
+      if (welcomeDashboard) {
+        welcomeDashboard.classList.remove('hidden');
+        setTimeout(() => {
+          welcomeDashboard.classList.remove('opacity-0', 'scale-95');
+        }, 50);
+      }
+    }, 300);
+  }
 }
 
 function launchMainGrid() {
-  welcomeDashboard.classList.add('opacity-0', 'scale-95', 'hidden');
-  workspaceSection.classList.add('hidden');
-  mainDashboardView.classList.remove('hidden');
-  setTimeout(() => {
-    mainDashboardView.classList.remove('opacity-0');
-  }, 50);
+  if (welcomeDashboard) {
+    welcomeDashboard.classList.add('opacity-0', 'scale-95', 'hidden');
+  }
+  if (workspaceSection) {
+    workspaceSection.classList.add('hidden');
+  }
+  if (mainDashboardView) {
+    mainDashboardView.classList.remove('hidden');
+    setTimeout(() => {
+      mainDashboardView.classList.remove('opacity-0');
+    }, 50);
+  }
 }
 
 if(getStartedBtn) getStartedBtn.addEventListener('click', launchMainGrid);
@@ -76,7 +89,6 @@ if(backToHomeBtn) backToHomeBtn.addEventListener('click', showDashboard);
 if(backToDashboardBtn) backToDashboardBtn.addEventListener('click', launchMainGrid);
 if(brandHome) brandHome.addEventListener('click', showDashboard);
 
-// Tab Navigation Switching
 const tabButtons = [tabFiles, tabDesign, tabUtils, tabHistory];
 const gridContainers = [gridFiles, gridDesign, gridUtils, historyView];
 
@@ -95,7 +107,6 @@ if(tabDesign) tabDesign.addEventListener('click', () => switchTab(tabDesign, gri
 if(tabUtils) tabUtils.addEventListener('click', () => switchTab(tabUtils, gridUtils));
 if(tabHistory) tabHistory.addEventListener('click', () => switchTab(tabHistory, historyView));
 
-// Tool Card Click Triggers
 document.querySelectorAll('.tool-card').forEach(card => {
   card.addEventListener('click', () => {
     const toolName = card.getAttribute('data-tool');
@@ -105,47 +116,30 @@ document.querySelectorAll('.tool-card').forEach(card => {
   });
 });
 
-// Tool Interface Configuration Layouts
 function setupToolInterface(tool) {
-  activeToolTitle.textContent = cardTitleMap(tool);
+  if(activeToolTitle) activeToolTitle.textContent = cardTitleMap(tool);
   
-  // Hide all specialized containers first
-  document.getElementById('paletteFieldsContainer').classList.add('hidden');
-  document.getElementById('contrastFieldsContainer').classList.add('hidden');
-  document.getElementById('thumbnailFieldsContainer').classList.add('hidden');
-  document.getElementById('imageUploadFieldsContainer').classList.add('hidden');
-  document.getElementById('regexFieldsContainer').classList.add('hidden');
-  document.getElementById('diffFieldsContainer').classList.add('hidden');
-  document.getElementById('diffResultsContainer').classList.add('hidden');
-  document.getElementById('codeHighlightView').classList.add('hidden');
-  document.getElementById('previewContainer').classList.add('hidden');
-  document.getElementById('svgPreviewDisplayWindow').classList.add('hidden');
-  document.getElementById('thumbnailPreviewDisplayWindow').classList.add('hidden');
-  document.getElementById('dragDropArea').classList.remove('hidden');
+  const paletteCon = document.getElementById('paletteFieldsContainer');
+  const contrastCon = document.getElementById('contrastFieldsContainer');
+  const thumbCon = document.getElementById('thumbnailFieldsContainer');
+  const thumbPreview = document.getElementById('thumbnailPreviewDisplayWindow');
+  const defaultPreview = document.getElementById('defaultPreviewText');
+  const dragArea = document.getElementById('dragDropArea');
 
-  if(tool === 'palette') {
-    document.getElementById('paletteFieldsContainer').classList.remove('hidden');
-    generateDynamicPalette();
-  } else if(tool === 'contrast') {
-    document.getElementById('contrastFieldsContainer').classList.remove('hidden');
-  } else if(tool === 'thumbnail') {
-    document.getElementById('thumbnailFieldsContainer').classList.remove('hidden');
-    document.getElementById('thumbnailPreviewDisplayWindow').classList.remove('hidden');
-    document.getElementById('dragDropArea').classList.add('hidden');
+  if(paletteCon) paletteCon.classList.add('hidden');
+  if(contrastCon) contrastCon.classList.add('hidden');
+  if(thumbCon) thumbCon.classList.add('hidden');
+  if(thumbPreview) thumbPreview.classList.add('hidden');
+  if(defaultPreview) defaultPreview.classList.remove('hidden');
+  if(dragArea) dragArea.classList.remove('hidden');
+
+  if(tool === 'thumbnail') {
+    if(thumbCon) thumbCon.classList.remove('hidden');
+    if(thumbPreview) thumbPreview.classList.remove('hidden');
+    if(defaultPreview) defaultPreview.classList.add('hidden');
+    if(dragArea) dragArea.classList.add('hidden');
     setupAITrendingThumbnailUI();
     drawThumbnailCanvas();
-  } else if(tool === 'img2base64') {
-    document.getElementById('imageUploadFieldsContainer').classList.remove('hidden');
-  } else if(tool === 'svgpreview' || tool === 'jsonformat') {
-    document.getElementById('codeHighlightView').classList.remove('hidden');
-    document.getElementById('svgPreviewDisplayWindow').classList.remove('hidden');
-  } else if(tool === 'markdown') {
-    document.getElementById('previewContainer').classList.remove('hidden');
-  } else if(tool === 'regex') {
-    document.getElementById('regexFieldsContainer').classList.remove('hidden');
-  } else if(tool === 'diff') {
-    document.getElementById('diffFieldsContainer').classList.remove('hidden');
-    document.getElementById('diffResultsContainer').classList.remove('hidden');
   }
 }
 
@@ -153,53 +147,35 @@ function cardTitleMap(tool) {
   const map = {
     txt: 'Plain Text Document Exporter',
     zip: 'Zip Archive Package Compressor',
-    rar: 'Rar Container Package Generator',
     pdf: 'PDF Document Compiler Engine',
     docx: 'Microsoft Word .docx Builder',
     thumbnail: 'AI Trending YouTube Thumbnail Studio',
     palette: 'Dynamic Harmonized Color Palette Generator',
     contrast: 'WCAG Accessibility Contrast Analyzer',
-    img2base64: 'Image Asset To Base64 Converter',
-    svgpreview: 'SVG Vector Path XML Markup Optimizer',
-    lorem: 'Lorem Ipsum Placeholder Text Generator',
-    markdown: 'Live Markdown Preview Renderer',
-    base64encode: 'Base64 String Encryption Encoder',
-    base64decode: 'Base64 String Decryption Decoder',
-    jsonformat: 'JSON Tree Formatter & Validator',
-    regex: 'Regular Expression Pattern Match Tester',
-    diff: 'Text Difference Stream Comparator',
     uppercase: 'Alphabetical UPPERCASE Transformer',
-    lowercase: 'Alphabetical lowercase Transformer'
+    lowercase: 'Alphabetical lowercase Transformer',
+    base64encode: 'Base64 String Encryption Encoder'
   };
   return map[tool] || 'Workspace Tool Engine';
 }
 
-// Input Typing & Metrics Live Counters
 if(contentInput) {
   contentInput.addEventListener('input', () => {
     updateMetrics();
-    if(activeTool === 'markdown') {
-      renderMarkdownPreview(contentInput.value);
-    } else if(activeTool === 'svgpreview') {
-      renderSvgPreview(contentInput.value);
-    } else if(activeTool === 'jsonformat') {
-      renderJsonHighlight(contentInput.value);
-    } else if(activeTool === 'regex') {
-      runRegexMatching();
-    } else if(activeTool === 'diff') {
-      runTextDiffComparison();
+    if(activeTool === 'thumbnail') {
+      drawThumbnailCanvas();
     }
   });
 }
 
 function updateMetrics() {
-  const text = contentInput.value || '';
-  charCount.textContent = text.length;
-  wordCount.textContent = text.trim() ? text.trim().split(/\s+/).length : 0;
-  lineCount.textContent = text.split('\n').length;
+  const text = contentInput ? contentInput.value : '';
+  if(charCount) charCount.textContent = text.length;
+  if(wordCount) wordCount.textContent = text.trim() ? text.trim().split(/\s+/).length : 0;
+  if(lineCount) lineCount.textContent = text.split('\n').length;
 }
 
-// --- AI & TRENDING THUMBNAIL STUDIO LOGIC ---
+// --- THUMBNAIL STUDIO LOGIC ---
 let currentThumbImage = null;
 let currentTrendingStyle = 'gaming';
 
@@ -209,7 +185,7 @@ function setupAITrendingThumbnailUI() {
   const aiSmartGenBtn = document.getElementById('aiSmartGenBtn');
   const thumbTextInput = document.getElementById('thumbTextInput');
 
-  if(triggerThumbBgBtn && !triggerThumbBgBtn.hasAttribute('data-bound')) {
+  if(triggerThumbBgBtn && thumbBgUpload && !triggerThumbBgBtn.hasAttribute('data-bound')) {
     triggerThumbBgBtn.setAttribute('data-bound', 'true');
     triggerThumbBgBtn.addEventListener('click', () => thumbBgUpload.click());
     thumbBgUpload.addEventListener('change', handleThumbBgUpload);
@@ -217,7 +193,7 @@ function setupAITrendingThumbnailUI() {
 
   if(thumbTextInput && !thumbTextInput.hasAttribute('data-bound')) {
     thumbTextInput.setAttribute('data-bound', 'true');
-    thumbTextInput.addEventListener('input', (e) => {
+    thumbTextInput.addEventListener('input', () => {
       drawThumbnailCanvas();
       updateMetrics();
     });
@@ -253,10 +229,10 @@ function setupAITrendingThumbnailUI() {
       const textInputEl = document.getElementById('thumbTextInput');
       if (textInputEl) {
         textInputEl.value = randomAiText;
-        contentInput.value = randomAiText;
+        if(contentInput) contentInput.value = randomAiText;
         updateMetrics();
         drawThumbnailCanvas();
-        triggerSuccessNotification("✨ AI optimized thumbnail text for maximum CTR!");
+        triggerSuccessNotification("✨ AI optimized thumbnail text!");
       }
     });
   }
@@ -271,7 +247,7 @@ function handleThumbBgUpload(e) {
       img.onload = function() {
         currentThumbImage = img;
         drawThumbnailCanvas();
-        triggerSuccessNotification("Custom thumbnail background loaded!");
+        triggerSuccessNotification("Custom background loaded!");
       }
       img.src = event.target.result;
     }
@@ -284,34 +260,27 @@ function drawThumbnailCanvas() {
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
   
-  // Clear & Draw Background
   ctx.fillStyle = '#0f172a';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   if(currentThumbImage) {
     ctx.drawImage(currentThumbImage, 0, 0, canvas.width, canvas.height);
   } else {
-    // Gradient fallback background based on style
     let grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
     if(currentTrendingStyle === 'gaming') {
       grad.addColorStop(0, '#581c87');
       grad.addColorStop(1, '#831843');
-    } else if(currentTrendingStyle === 'tech') {
+    } else {
       grad.addColorStop(0, '#1e3a8a');
       grad.addColorStop(1, '#0f766e');
-    } else {
-      grad.addColorStop(0, '#9a3412');
-      grad.addColorStop(1, '#312e81');
     }
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  // Dark overlay vignette for text pop
   ctx.fillStyle = 'rgba(0,0,0,0.45)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Draw Trending Badge
   ctx.fillStyle = '#db2777';
   ctx.beginPath();
   ctx.roundRect(80, 80, 240, 60, 12);
@@ -320,9 +289,8 @@ function drawThumbnailCanvas() {
   ctx.font = 'bold 26px Inter, sans-serif';
   ctx.fillText('🔥 VIRAL TREND', 105, 120);
 
-  // Draw Main Thumbnail Text
   const thumbTextInput = document.getElementById('thumbTextInput');
-  const textVal = thumbTextInput ? thumbTextInput.value : (contentInput.value || 'UxPro Studio Thumbnail');
+  const textVal = thumbTextInput ? thumbTextInput.value : (contentInput ? contentInput.value : 'UxPro Studio');
   
   ctx.fillStyle = '#ffffff';
   ctx.font = '900 64px Inter, sans-serif';
@@ -331,7 +299,6 @@ function drawThumbnailCanvas() {
   ctx.lineWidth = 8;
   ctx.strokeStyle = '#000000';
 
-  // Word wrap formatting
   wrapText(ctx, textVal, 80, 280, 1100, 80);
 }
 
@@ -356,7 +323,6 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
   context.fillText(line, x, y);
 }
 
-// Action Engine Execution Button Handler
 if(generateBtn) {
   generateBtn.addEventListener('click', () => {
     executeTransformationEngine();
@@ -364,19 +330,20 @@ if(generateBtn) {
 }
 
 function executeTransformationEngine() {
+  if(!progressContainer || !progressBar || !statusText) return;
   progressContainer.classList.remove('opacity-0', 'pointer-events-none');
   let progress = 0;
   const startTime = performance.now();
 
   const interval = setInterval(() => {
-    progress += Math.floor(Math.random() * 25) + 15;
+    progress += 25;
     if(progress >= 100) {
       progress = 100;
       clearInterval(interval);
       
       const endTime = performance.now();
       const elapsed = ((endTime - startTime) / 1000).toFixed(2);
-      timeElapsed.textContent = `Time Elapsed: ${elapsed}s`;
+      if(timeElapsed) timeElapsed.textContent = `Time Elapsed: ${elapsed}s`;
       progressBar.style.width = '100%';
       statusText.textContent = 'Operation Completed Successfully: 100%';
 
@@ -387,60 +354,29 @@ function executeTransformationEngine() {
       }, 500);
     } else {
       progressBar.style.width = `${progress}%`;
-      statusText.textContent = `Processing Stream Pipeline: ${progress}%`;
+      statusText.textContent = `Processing Pipeline: ${progress}%`;
     }
   }, 100);
 }
 
 function processToolOutput() {
-  const val = contentInput.value;
+  const val = contentInput ? contentInput.value : '';
   let successMsg = 'Operation completed.';
 
   if(activeTool === 'txt') {
     downloadBlob(val, 'uxpro_document.txt', 'text/plain');
-    successMsg = 'Plain text document exported successfully.';
-  } else if(activeTool === 'zip') {
-    const zip = new JSZip();
-    zip.file("payload.txt", val);
-    zip.generateAsync({type:"blob"}).then(content => {
-      downloadBlob(content, 'uxpro_archive.zip', 'application/zip');
-    });
-    successMsg = 'Compressed ZIP archive compiled successfully.';
-  } else if(activeTool === 'pdf') {
-    const element = document.createElement('div');
-    element.innerHTML = `<h1 style="color:purple; font-family:sans-serif;">UxPro PDF Document</h1><p style="font-family:monospace; white-space:pre-wrap;">${val}</p>`;
-    html2pdf().from(element).save('uxpro_document.pdf');
-    successMsg = 'Professional PDF document compiled successfully.';
-  } else if(activeTool === 'docx') {
-    const doc = new docx.Document({
-      sections: [{ properties: {}, children: [new docx.Paragraph(val)] }]
-    });
-    docx.Packer.toBlob(doc).then(blob => {
-      downloadBlob(blob, 'uxpro_document.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-    });
-    successMsg = 'Microsoft Word document generated successfully.';
+    successMsg = 'Plain text exported successfully.';
   } else if(activeTool === 'thumbnail') {
     const canvas = document.getElementById('thumbCanvas');
-    canvas.toBlob(blob => {
-      downloadBlob(blob, 'uxpro_trending_thumbnail.png', 'image/png');
-    });
-    successMsg = 'HD YouTube Thumbnail downloaded successfully.';
-  } else if(activeTool === 'uppercase') {
-    contentInput.value = val.toUpperCase();
-    successMsg = 'Text transformed to UPPERCASE.';
-  } else if(activeTool === 'lowercase') {
-    contentInput.value = val.toLowerCase();
-    successMsg = 'Text transformed to lowercase.';
-  } else if(activeTool === 'base64encode') {
-    contentInput.value = btoa(unescape(encodeURIComponent(val)));
-    successMsg = 'String encoded to Base64.';
-  } else if(activeTool === 'base64decode') {
-    try {
-      contentInput.value = decodeURIComponent(escape(atob(val)));
-      successMsg = 'Base64 string decoded successfully.';
-    } catch(err) {
-      alert('Invalid Base64 payload string!');
+    if(canvas) {
+      canvas.toBlob(blob => {
+        downloadBlob(blob, 'uxpro_thumbnail.png', 'image/png');
+      });
     }
+    successMsg = 'HD YouTube Thumbnail downloaded successfully.';
+  } else if(activeTool === 'uppercase' && contentInput) {
+    contentInput.value = val.toUpperCase();
+    successMsg = 'Converted to UPPERCASE.';
   }
 
   triggerSuccessNotification(successMsg);
@@ -461,6 +397,7 @@ function downloadBlob(content, filename, contentType) {
 }
 
 function triggerSuccessNotification(detailText) {
+  if(!successDetail || !successMessage || !successCard) return;
   successDetail.textContent = detailText;
   successMessage.classList.remove('opacity-0', 'pointer-events-none');
   successCard.classList.remove('scale-95');
@@ -508,6 +445,6 @@ if(clearHistoryBtn) {
     historyLogs = [];
     localStorage.removeItem('uxpro_history');
     renderHistoryLogs();
-    triggerSuccessNotification("History log cleared successfully.");
+    triggerSuccessNotification("History cleared.");
   });
 }
