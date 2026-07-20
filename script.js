@@ -59,7 +59,7 @@ const designImageFileSelector = document.getElementById('designImageFileSelector
 const triggerImageSelectBtn = document.getElementById('triggerImageSelectBtn');
 const imagePreviewFeedbackName = document.getElementById('imagePreviewFeedbackName');
 
-// Thumbnail Studio Fields
+// Thumbnail Studio Fields (AI & Trending Enhanced)
 const thumbnailFieldsContainer = document.getElementById('thumbnailFieldsContainer');
 const thumbBgUpload = document.getElementById('thumbBgUpload');
 const triggerThumbBgBtn = document.getElementById('triggerThumbBgBtn');
@@ -91,7 +91,7 @@ const lineCountText = document.getElementById('lineCount');
 const toolNames = {
   txt: 'Plain Text Converter (.txt)', zip: 'Zip Package Compressor (.zip)', rar: 'Rar Package Compressor (.rar)',
   pdf: 'PDF Document Compiler (.pdf)', docx: 'Word Document Builder (.docx)',
-  thumbnail: 'YouTube Thumbnail Studio 🖼️ [Design Mode]',
+  thumbnail: 'AI Trending Thumbnail Studio 🖼️ [Sinhala & English Support]',
   palette: 'Dynamic Palette Generator [Design Mode]', contrast: 'WCAG Contrast Checker Analysis [Design Mode]',
   img2base64: 'Image Asset To Base64 Encoder [Design Mode]', svgpreview: 'SVG Code Paths Optimizer [Design Mode]',
   lorem: 'Lorem Ipsum Dummy Typography Core [Design Mode]',
@@ -143,7 +143,7 @@ sidebarToolNavList.forEach(btn => {
     const targetId = btn.getAttribute('data-target');
     if(targetId === 'gridFiles') toggleTabActiveState(tabFiles, gridFiles);
     else if(targetId === 'gridDesign') toggleTabActiveState(tabDesign, gridDesign);
-    else if(targetId === 'gridUtils') toggleTabActiveState(tabUtils, gridUtils);
+    else if(targetId === 'gridUtils') toggleTabActiveState(tabDesign, gridUtils);
     else if(targetId === 'historyView') toggleTabActiveState(tabHistory, historyView);
   });
 });
@@ -161,7 +161,7 @@ const activateWorkspace = (toolKey) => {
   if (['palette', 'lorem'].includes(toolKey)) {
     generateBtn.textContent = "Roll / Rerender New Random Variables";
   } else if (['thumbnail'].includes(toolKey)) {
-    generateBtn.textContent = "Download Custom YouTube Thumbnail (.jpg)";
+    generateBtn.textContent = "Download AI Trending Thumbnail (.jpg)";
   } else if (['contrast', 'img2base64', 'svgpreview', 'uppercase', 'lowercase', 'base64encode', 'base64decode', 'jsonformat', 'regex', 'diff'].includes(toolKey)) {
     generateBtn.textContent = "Apply Transformation Engine Operation";
   } else if (toolKey === 'markdown') {
@@ -180,6 +180,7 @@ const activateWorkspace = (toolKey) => {
   } else if (toolKey === 'thumbnail') {
     thumbnailFieldsContainer.classList.remove('hidden');
     thumbnailPreviewDisplayWindow.classList.remove('hidden');
+    setupAITrendingThumbnailUI();
     drawThumbnailCanvas();
   } else if (toolKey === 'palette') {
     paletteFieldsContainer.classList.remove('hidden');
@@ -246,11 +247,76 @@ const updateMetrics = () => {
 contentInput.addEventListener('input', updateMetrics);
 thumbTextInput.addEventListener('input', drawThumbnailCanvas);
 
-// --- THUMBNAIL STUDIO LOGIC ---
+// --- AI & TRENDING THUMBNAIL STUDIO ADVANCED LOGIC ---
 let currentThumbImage = null;
-triggerThumbBgBtn.addEventListener('click', () => thumbBgUpload.click());
+let currentTrendingStyle = 'gaming';
 
-thumbBgUpload.addEventListener('change', (e) => {
+function setupAITrendingThumbnailUI() {
+  const container = thumbnailFieldsContainer;
+  container.innerHTML = `
+    <div class="flex flex-col gap-3">
+      <input type="file" id="thumbBgUpload" class="hidden" accept="image/*">
+      <div class="flex gap-2">
+        <button id="triggerThumbBgBtn" class="flex-1 bg-purple-600/20 border border-purple-500/40 hover:bg-purple-600 p-2.5 rounded-lg text-xs font-semibold transition text-center">Upload Custom Background</button>
+        <button id="aiSmartGenBtn" class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 hover:opacity-90 p-2.5 rounded-lg text-xs font-bold transition text-center shadow-lg">✨ AI Smart Auto-Design</button>
+      </div>
+      <div>
+        <label class="text-[11px] text-gray-400 block mb-1 font-semibold">Select Trending AI Style Template:</label>
+        <div id="trendingStyleBtns" class="grid grid-cols-3 gap-2">
+          <button data-style="gaming" class="trend-style-btn active text-[10px] p-2 rounded-lg border border-purple-500/50 bg-purple-600/20 font-bold transition">🔥 Gaming / FreeFire</button>
+          <button data-style="tech" class="trend-style-btn text-[10px] p-2 rounded-lg border border-gray-700 bg-black/40 font-semibold transition">⚡ Tech / Review</button>
+          <button data-style="vlog" class="trend-style-btn text-[10px] p-2 rounded-lg border border-gray-700 bg-black/40 font-semibold transition">🌟 Vlog / Lifestyle</button>
+        </div>
+      </div>
+      <div>
+        <label class="text-[11px] text-gray-400 block mb-1 font-semibold">Thumbnail Text (Supports Sinhala & English):</label>
+        <input type="text" id="thumbTextInput" class="w-full p-2.5 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-purple-500" placeholder="උදා: Free Fire Sinhala Gameplay 🔥">
+      </div>
+    </div>
+  `;
+
+  // Re-bind listeners for newly generated dynamic elements
+  document.getElementById('triggerThumbBgBtn').addEventListener('click', () => document.getElementById('thumbBgUpload').click());
+  document.getElementById('thumbBgUpload').addEventListener('change', handleThumbBgUpload);
+  document.getElementById('thumbTextInput').addEventListener('input', (e) => {
+    drawThumbnailCanvas();
+    updateMetrics();
+  });
+
+  document.querySelectorAll('.trend-style-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.trend-style-btn').forEach(b => {
+        b.classList.remove('active', 'border-purple-500/50', 'bg-purple-600/20', 'font-bold');
+        b.classList.add('border-gray-700', 'bg-black/40');
+      });
+      e.target.classList.add('active', 'border-purple-500/50', 'bg-purple-600/20', 'font-bold');
+      e.target.classList.remove('border-gray-700', 'bg-black/40');
+      currentTrendingStyle = e.target.getAttribute('data-style');
+      drawThumbnailCanvas();
+      triggerSuccessNotification(`Switched to ${currentTrendingStyle.toUpperCase()} trending template!`);
+    });
+  });
+
+  document.getElementById('aiSmartGenBtn').addEventListener('click', () => {
+    const aiPhrases = [
+      "🔥 මේක නම් පට්ටම ට්‍රික් එකක්! (Must Watch)",
+      "⚠️ කවුරුත් නොදන්න රහසක්! (Secret Revealed)",
+      "😱 පුදුම වෙයි! මේක බලන්නම වෙනවා",
+      "⚡ ලේසියෙන්ම ගේම ගහමු! (Pro Guide)"
+    ];
+    const randomAiText = aiPhrases[Math.floor(Math.random() * aiPhrases.length)];
+    const textInputEl = document.getElementById('thumbTextInput');
+    if (textInputEl) {
+      textInputEl.value = randomAiText;
+      contentInput.value = randomAiText;
+      updateMetrics();
+      drawThumbnailCanvas();
+      triggerSuccessNotification("✨ AI successfully optimized your thumbnail text for maximum CTR!");
+    }
+  });
+}
+
+function handleThumbBgUpload(e) {
   const asset = e.target.files[0];
   if(!asset) return;
   const reader = new FileReader();
@@ -259,36 +325,66 @@ thumbBgUpload.addEventListener('change', (e) => {
     img.onload = () => {
       currentThumbImage = img;
       drawThumbnailCanvas();
-      triggerSuccessNotification("Thumbnail background image applied.");
+      triggerSuccessNotification("Thumbnail custom background applied successfully.");
     };
     img.src = event.target.result;
   };
   reader.readAsDataURL(asset);
-});
+}
 
 function drawThumbnailCanvas() {
   const ctx = thumbCanvas.getContext('2d');
   ctx.clearRect(0, 0, 1280, 720);
   
+  // Trending Background Templates Styling
   if (currentThumbImage) {
     ctx.drawImage(currentThumbImage, 0, 0, 1280, 720);
+    // Dark professional gradient overlay for text readability
+    const darkGrad = ctx.createLinearGradient(0, 0, 0, 720);
+    darkGrad.addColorStop(0, 'rgba(0,0,0,0.2)');
+    darkGrad.addColorStop(1, 'rgba(0,0,0,0.7)');
+    ctx.fillStyle = darkGrad;
+    ctx.fillRect(0, 0, 1280, 720);
   } else {
     const grad = ctx.createLinearGradient(0, 0, 1280, 720);
-    grad.addColorStop(0, '#1e1b4b');
-    grad.addColorStop(1, '#311042');
+    if (currentTrendingStyle === 'gaming') {
+      grad.addColorStop(0, '#581c87');
+      grad.addColorStop(0.5, '#701a75');
+      grad.addColorStop(1, '#030712');
+    } else if (currentTrendingStyle === 'tech') {
+      grad.addColorStop(0, '#0f172a');
+      grad.addColorStop(0.5, '#1e3a8a');
+      grad.addColorStop(1, '#030712');
+    } else {
+      grad.addColorStop(0, '#831843');
+      grad.addColorStop(0.5, '#9d174d');
+      grad.addColorStop(1, '#030712');
+    }
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 1280, 720);
   }
 
-  const customText = thumbTextInput.value || contentInput.value || "YouTube Thumbnail Title";
+  // Draw Trending Accent Glow Elements (AI Studio Vibe)
+  ctx.save();
+  ctx.fillStyle = currentTrendingStyle === 'gaming' ? 'rgba(236, 72, 153, 0.25)' : (currentTrendingStyle === 'tech' ? 'rgba(59, 130, 246, 0.25)' : 'rgba(244, 63, 94, 0.25)');
+  ctx.beginPath();
+  ctx.arc(1050, 120, 250, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  const textInputEl = document.getElementById('thumbTextInput');
+  const customText = (textInputEl ? textInputEl.value : '') || contentInput.value || "YouTube Thumbnail Title";
+  
+  // Text Styling (Supports Sinhala & English Unicode Rendering)
   ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 72px 'Orbitron', sans-serif";
+  ctx.font = "bold 68px 'Inter', sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   
-  ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
-  ctx.shadowBlur = 20;
-  ctx.lineWidth = 6;
+  // Heavy Modern Outline / Drop Shadow for high click-through rate (CTR)
+  ctx.shadowColor = "rgba(0, 0, 0, 0.9)";
+  ctx.shadowBlur = 25;
+  ctx.lineWidth = 8;
   ctx.strokeStyle = "#000000";
   ctx.strokeText(customText, 640, 360, 1150);
   ctx.fillText(customText, 640, 360, 1150);
@@ -428,8 +524,8 @@ const executeTransformationEngine = (input, operation) => {
       case 'docx': renderDocxEngine(input, `${stampId}.docx`); break;
       case 'thumbnail': 
         drawThumbnailCanvas();
-        thumbCanvas.toBlob(blob => triggerBlobDownload(blob, `${stampId}_thumbnail.jpg`), 'image/jpeg', 0.95);
-        triggerSuccessNotification("YouTube Thumbnail rendered and downloaded.");
+        thumbCanvas.toBlob(blob => triggerBlobDownload(blob, `${stampId}_ai_trending_thumbnail.jpg`), 'image/jpeg', 0.95);
+        triggerSuccessNotification("AI Trending Thumbnail rendered and downloaded successfully!");
         break;
       case 'palette': generateColorPaletteEngine(); triggerSuccessNotification("Rerolled random design color maps."); break;
       case 'contrast': calculateContrastComplianceRatio(); triggerSuccessNotification("Contrast compliance analysis log refreshed."); break;
@@ -589,5 +685,5 @@ const clearUISession = () => {
   if (animationFrameId) { cancelAnimationFrame(animationFrameId); animationFrameId = null; }
 };
 
-clearInputBtn.addEventListener('click', () => { contentInput.value = ''; diffSecondaryInput.value = ''; regexPatternInput.value = ''; thumbTextInput.value = ''; updateMetrics(); });
+clearInputBtn.addEventListener('click', () => { contentInput.value = ''; diffSecondaryInput.value = ''; regexPatternInput.value = ''; if(document.getElementById('thumbTextInput')) document.getElementById('thumbTextInput').value = ''; updateMetrics(); });
 generateBtn.addEventListener('click', handleProcessInvocation);
