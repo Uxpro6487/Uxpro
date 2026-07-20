@@ -1,430 +1,359 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UxPro - Advanced Studio Suite</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UxPro - Ultimate File & Design Studio Workspace</title>
+  
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.3.0/docx.umd.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: { 900: '#030712', 800: '#0f172a', 700: '#1e293b', 600: '#334155' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter & Orbitron -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- External CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Required Processing Libraries (jszip, html2pdf, docx) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@7.3.0/build/index.js"></script>
 </head>
-<body class="bg-gray-950 text-white font-sans min-h-screen flex flex-col items-center justify-start p-4 md:p-6 overflow-x-hidden">
+<body class="bg-dark-900 text-gray-100 font-['Inter'] min-h-screen selection:bg-purple-500 selection:text-white overflow-x-hidden flex flex-col justify-between">
 
-  <!-- Animated Background Elements -->
-  <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute top-1/2 -right-40 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-  </div>
-
-  <!-- Header Section -->
-  <header class="w-full max-w-6xl mb-8 flex justify-between items-center bg-gray-900/60 p-4 rounded-2xl border border-purple-500/20 backdrop-blur-xl shadow-2xl">
-    <h1 id="brandHome" class="text-3xl font-extrabold text-gradient font-['Orbitron'] tracking-wider cursor-pointer animate-bounce-subtle">
-      UxPro
-    </h1>
-    <div class="flex gap-4 items-center">
-      <span class="text-xs text-purple-400 font-mono hidden sm:inline animate-pulse">✨ Studio Suite Active</span>
+  <!-- TOP APP NAVIGATION BAR -->
+  <header class="border-b border-white/10 backdrop-blur-md bg-dark-900/80 sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3 cursor-pointer" id="brandHome">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+        <span class="font-['Orbitron'] font-black text-lg text-white">UX</span>
+      </div>
+      <div>
+        <h1 class="font-['Orbitron'] font-bold text-base tracking-wider bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">UxPro Studio</h1>
+        <p class="text-[10px] text-purple-400 font-mono tracking-widest uppercase">AI File & Design Engine</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <button id="backToHomeBtn" class="text-xs bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-2 rounded-xl transition font-medium flex items-center gap-2">
+        <span>🏠 Home Dashboard</span>
+      </button>
     </div>
   </header>
 
-  <!-- Welcome Dashboard / Landing Animation View -->
-  <main id="welcomeDashboard" class="w-full max-w-5xl text-center py-10 transition-all duration-500">
-    <div class="inline-block px-4 py-1.5 mb-4 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs font-semibold tracking-wide animate-fade-in">
-      🚀 Next-Gen Web Design & Development Toolkit
-    </div>
-    <h2 class="text-4xl md:text-6xl font-extrabold font-['Orbitron'] tracking-tight mb-4 text-gradient">
-      Create. Convert. Optimize.
-    </h2>
-    <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base mb-8 leading-relaxed">
-      Unlock professional-grade creation tools, lightning-fast file converters, graphic generators, and our brand new Thumbnail Studio wrapped in an ultra-modern environment.
-    </p>
-    
-    <div class="mb-10">
-      <button id="getStartedBtn" class="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 px-8 py-4 rounded-full font-bold text-sm shadow-xl shadow-purple-900/40 transform hover:scale-105 active:scale-95 transition duration-300">
-        Launch Studio Dashboard ✨
-      </button>
-    </div>
+  <!-- MAIN CONTAINER AREA -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 flex flex-col justify-center">
 
-    <!-- Eye-Catching Active Tools & Secure Highlights Showcase -->
-    <div class="w-full bg-gray-900/40 border border-purple-500/20 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl text-left mt-6 animate-fade-in">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-gray-800 gap-4">
-        <div>
-          <span class="text-xs font-bold text-purple-400 tracking-widest font-['Orbitron'] uppercase block mb-1">SYSTEM OVERVIEW</span>
-          <h3 class="text-xl md:text-2xl font-bold font-['Orbitron'] text-white">Active Studio Suite & Secure Modules</h3>
-        </div>
-        <div class="flex items-center gap-2 bg-green-500/10 border border-green-500/30 px-3.5 py-1.5 rounded-full text-green-400 text-xs font-semibold">
-          <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> 100% Client-Side Secure Environment
-        </div>
+    <!-- 1. WELCOME DASHBOARD SCREEN -->
+    <section id="welcomeDashboard" class="transition-all duration-500 transform py-12 flex flex-col items-center text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-6 animate-pulse">
+        <span>✨ Next-Gen AI File, Design & Thumbnail Creator</span>
       </div>
-
-      <p class="text-gray-300 text-xs md:text-sm mb-6 leading-relaxed">
-        UxPro provides an advanced ecosystem of professional utilities designed to run directly inside your browser with absolute local security. Your data never leaves your device, ensuring maximum privacy across all file conversions, design assets, and text transformers.
+      <h2 class="text-4xl md:text-6xl font-black font-['Orbitron'] tracking-tight mb-6 max-w-4xl bg-gradient-to-r from-white via-gray-200 to-purple-400 bg-clip-text text-transparent">
+        Professional Studio Tools, Powered by Advanced AI.
+      </h2>
+      <p class="text-gray-400 max-w-2xl text-sm md:text-base mb-10 leading-relaxed">
+        Convert documents, compile archives, design high-CTR YouTube thumbnails with Sinhala font support, generate color palettes, and process text workflows seamlessly in one place.
       </p>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Tool Item 1 -->
-        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
-          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">📁 File Converters (.txt, .zip, .rar, .pdf, .docx)</h4>
-          <p class="text-xs text-gray-400 leading-normal">Instantly package text data into secure standard formats, compile clean PDF documents, or build MS Word files on the fly.</p>
-        </div>
-        <!-- Tool Item 2 -->
-        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
-          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">🖼️ Thumbnail Studio</h4>
-          <p class="text-xs text-gray-400 leading-normal">Design custom YouTube thumbnails with high-resolution image layering, custom background imports, and live text styling.</p>
-        </div>
-        <!-- Tool Item 3 -->
-        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
-          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">🎨 Design & Color Suite</h4>
-          <p class="text-xs text-gray-400 leading-normal">Generate dynamic color palettes, check WCAG accessibility contrast ratios, encode image assets to Base64, and optimize SVG vectors.</p>
-        </div>
-        <!-- Tool Item 4 -->
-        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
-          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">⚡ Text Transformers & Utils</h4>
-          <p class="text-xs text-gray-400 leading-normal">Perform case modifications, Base64 encoding/decoding, syntax-highlighted JSON formatting, live markdown previewing, and text diffing.</p>
-        </div>
-        <!-- Tool Item 5 -->
-        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
-          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">🎙️ Speech Dictation Support</h4>
-          <p class="text-xs text-gray-400 leading-normal">Input text hands-free using real-time browser speech recognition capabilities to speed up your content creation workflow.</p>
-        </div>
-        <!-- Tool Item 6 -->
-        <div class="bg-black/30 border border-gray-800 p-4 rounded-2xl hover:border-purple-500/40 transition">
-          <h4 class="text-sm font-bold text-purple-300 font-['Orbitron'] mb-1">📜 Local Action History</h4>
-          <p class="text-xs text-gray-400 leading-normal">Automatically track, review, and restore previous sandbox outputs directly from your browser's local storage.</p>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Main App Dashboard View (Initially Hidden) -->
-  <div id="mainDashboardView" class="w-full max-w-6xl hidden opacity-0 transition-all duration-500 flex flex-col md:flex-row gap-6">
-    
-    <!-- Optional Sidebar Tool-Card Navigation Bar -->
-    <aside class="w-full md:w-72 bg-gray-900/40 border border-gray-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col gap-3 max-h-[80vh] overflow-y-auto">
-      <h3 class="text-xs font-bold text-gray-400 tracking-wider font-['Orbitron'] px-2">QUICK STUDIO BAR</h3>
-      <div class="flex flex-col gap-1.5" id="sidebarToolNavList">
-        <button class="sidebar-tool-btn active text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="gridFiles">
-          <span>📁 File Converters</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">5</span>
-        </button>
-        <button class="sidebar-tool-btn text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="gridDesign">
-          <span>🎨 Design Suite & Thumbnails</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">6</span>
-        </button>
-        <button class="sidebar-tool-btn text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="gridUtils">
-          <span>⚡ Text Transformers</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">8</span>
-        </button>
-        <button class="sidebar-tool-btn text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between group" data-target="historyView">
-          <span>📜 Local History</span> <span class="text-[10px] text-gray-500 group-hover:text-purple-400">Logs</span>
-        </button>
-      </div>
-      <button id="backToHomeBtn" class="mt-auto bg-gray-800/60 hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-gray-700/60 p-2.5 rounded-xl text-xs font-semibold transition text-center">
-        ← Back to Welcome Screen
+      <button id="getStartedBtn" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-['Orbitron'] font-bold text-sm px-8 py-4 rounded-2xl shadow-xl shadow-purple-600/30 transition transform hover:scale-105 active:scale-95 flex items-center gap-3">
+        <span>Launch Studio Workspace</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
       </button>
-    </aside>
+    </section>
 
-    <!-- Main Content Area Grids -->
-    <div class="flex-grow flex flex-col">
-      <!-- Navigation Tabs Header -->
-      <div class="flex gap-3 mb-6 border-b border-gray-800 pb-3 overflow-x-auto">
-        <button id="tabFiles" class="tab-btn active px-4 py-2 font-semibold text-sm rounded-xl transition flex-shrink-0">File Engine</button>
-        <button id="tabDesign" class="tab-btn px-4 py-2 font-semibold text-sm rounded-xl transition flex-shrink-0">Design & Thumbnail Suite</button>
-        <button id="tabUtils" class="tab-btn px-4 py-2 font-semibold text-sm rounded-xl transition flex-shrink-0">Text Transformers</button>
-        <button id="tabHistory" class="tab-btn px-4 py-2 font-semibold text-sm rounded-xl transition flex-shrink-0">Local History</button>
+    <!-- 2. MAIN DASHBOARD GRID SCREEN (Initially Hidden) -->
+    <section id="mainDashboardView" class="hidden opacity-0 transition-opacity duration-300 py-6">
+      
+      <!-- Tab Navigation Header -->
+      <div class="flex flex-wrap gap-2 border-b border-white/10 pb-4 mb-6">
+        <button id="tabFiles" class="tab-btn active px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2">📁 File Generators</button>
+        <button id="tabDesign" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2">🎨 Design Suite & Thumbnails</button>
+        <button id="tabUtils" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2">⚡ Text Utilities</button>
+        <button id="tabHistory" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2">📜 History Log</button>
       </div>
 
-      <!-- Grid Layout 1: File Converters -->
-      <div id="gridFiles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade-in">
-        <div class="tool-card group" data-tool="txt">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Plain Text (.txt)</h3>
-            <span class="badge badge-general">General</span>
-          </div>
-          <p>Convert structures directly into optimized raw plaintext logs.</p>
+      <!-- Grid Group 1: File Generators -->
+      <div id="gridFiles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="txt">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">TXT</div>
+          <h3 class="font-bold text-sm mb-1">Plain Text Document</h3>
+          <p class="text-xs text-gray-400">Export clean formatted text documents (.txt) instantly.</p>
         </div>
-        <div class="tool-card group" data-tool="zip">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Zip Compressor (.zip)</h3>
-            <span class="badge badge-general">General</span>
-          </div>
-          <p>Package strings inside high efficiency standard zip archives.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="zip">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">ZIP</div>
+          <h3 class="font-bold text-sm mb-1">Zip Package Compressor</h3>
+          <p class="text-xs text-gray-400">Bundle content securely into compressed ZIP archives.</p>
         </div>
-        <div class="tool-card group" data-tool="rar">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Rar Compressor (.rar)</h3>
-            <span class="badge badge-general">General</span>
-          </div>
-          <p>Generate clean, client-simulated custom protected RAR structures.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="rar">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">RAR</div>
+          <h3 class="font-bold text-sm mb-1">Rar Package Container</h3>
+          <p class="text-xs text-gray-400">Package workspace payload into custom RAR archives.</p>
         </div>
-        <div class="tool-card group" data-tool="pdf">
-          <div class="flex justify-between items-start mb-2">
-            <h3>PDF Document (.pdf)</h3>
-            <span class="badge badge-design">Design & Dev</span>
-          </div>
-          <p>Render input characters elegantly on strict print-safe layouts.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="pdf">
+          <div class="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">PDF</div>
+          <h3 class="font-bold text-sm mb-1">PDF Document Compiler</h3>
+          <p class="text-xs text-gray-400">Compile raw string parameters into professional PDF files.</p>
         </div>
-        <div class="tool-card group" data-tool="docx">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Word Document (.docx)</h3>
-            <span class="badge badge-general">General</span>
-          </div>
-          <p>Build formatted MS Word documents directly on the browser layer.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="docx">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">DOC</div>
+          <h3 class="font-bold text-sm mb-1">Word Document Builder</h3>
+          <p class="text-xs text-gray-400">Generate structured Microsoft Word .docx files cleanly.</p>
         </div>
       </div>
 
-      <!-- Grid Layout 2: Design Suite & Thumbnail Studio -->
-      <div id="gridDesign" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden animate-fade-in">
-        <div class="tool-card group border-purple-500/40 bg-purple-950/20" data-tool="thumbnail">
-          <div class="flex justify-between items-start mb-2">
-            <h3 class="text-purple-300">Thumbnail Studio 🖼️</h3>
-            <span class="badge badge-design">Featured</span>
-          </div>
-          <p>Design custom YouTube thumbnails with live text and image layering.</p>
+      <!-- Grid Group 2: Design Suite & Thumbnails -->
+      <div id="gridDesign" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden">
+        <div class="tool-card group bg-gradient-to-br from-purple-900/30 to-pink-900/30 border border-purple-500/40 hover:border-purple-500 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1 shadow-lg shadow-purple-600/10" data-tool="thumbnail">
+          <div class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">🖼️</div>
+          <h3 class="font-bold text-sm mb-1 text-pink-300">AI Trending Thumbnail Studio</h3>
+          <p class="text-xs text-gray-300">Generate high-CTR trending thumbnails with Sinhala font support.</p>
         </div>
-        <div class="tool-card group" data-tool="palette">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Palette Generator</h3>
-            <span class="badge badge-design">Graphic Design</span>
-          </div>
-          <p>Generate trending custom color schemes with live HEX code mapping.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="palette">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">🎨</div>
+          <h3 class="font-bold text-sm mb-1">Dynamic Palette Generator</h3>
+          <p class="text-xs text-gray-400">Generate harmonic color schemes and hex codes instantly.</p>
         </div>
-        <div class="tool-card group" data-tool="contrast">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Contrast Checker</h3>
-            <span class="badge badge-design">UI/UX Design</span>
-          </div>
-          <p>Evaluate WCAG visibility compliance thresholds across contrast nodes.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="contrast">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">⚖️</div>
+          <h3 class="font-bold text-sm mb-1">WCAG Contrast Checker</h3>
+          <p class="text-xs text-gray-400">Analyze foreground/background color accessibility ratios.</p>
         </div>
-        <div class="tool-card group" data-tool="img2base64">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Image to Base64</h3>
-            <span class="badge badge-design">Graphic Design</span>
-          </div>
-          <p>Convert graphic asset layers into pure lightweight web code strings.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="img2base64">
+          <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">🔄</div>
+          <h3 class="font-bold text-sm mb-1">Image Asset To Base64</h3>
+          <p class="text-xs text-gray-400">Convert local image assets into web-ready Base64 streams.</p>
         </div>
-        <div class="tool-card group" data-tool="svgpreview">
-          <div class="flex justify-between items-start mb-2">
-            <h3>SVG Optimizer</h3>
-            <span class="badge badge-design">UI/UX Design</span>
-          </div>
-          <p>Render vector source paths live and clean markup formatting artifacts.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="svgpreview">
+          <div class="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">📐</div>
+          <h3 class="font-bold text-sm mb-1">SVG Code Paths Optimizer</h3>
+          <p class="text-xs text-gray-400">Render and validate vector XML source code markup live.</p>
         </div>
-        <div class="tool-card group" data-tool="lorem">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Dummy Typography</h3>
-            <span class="badge badge-design">Graphic Design</span>
-          </div>
-          <p>Instantly generate standard Lorem Ipsum dummy content arrays.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="lorem">
+          <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">📝</div>
+          <h3 class="font-bold text-sm mb-1">Lorem Ipsum Generator</h3>
+          <p class="text-xs text-gray-400">Generate dummy placeholder typography strings quickly.</p>
         </div>
       </div>
 
-      <!-- Grid Layout 3: Text Utilities -->
-      <div id="gridUtils" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden animate-fade-in">
-        <div class="tool-card group" data-tool="uppercase">
-          <div class="flex justify-between items-start mb-2">
-            <h3>UPPERCASE</h3>
-            <span class="badge badge-dev">Development</span>
-          </div>
-          <p>Transform your document text completely into capitalization mapping.</p>
+      <!-- Grid Group 3: Text Utilities -->
+      <div id="gridUtils" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden">
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="markdown">
+          <div class="w-10 h-10 rounded-xl bg-violet-500/20 text-violet-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">MD</div>
+          <h3 class="font-bold text-sm mb-1">Live Markdown Preview</h3>
+          <p class="text-xs text-gray-400">Render markdown elements live into formatted HTML views.</p>
         </div>
-        <div class="tool-card group" data-tool="lowercase">
-          <div class="flex justify-between items-start mb-2">
-            <h3>lowercase</h3>
-            <span class="badge badge-dev">Development</span>
-          </div>
-          <p>Instantly reduce text character nodes array into uniform lowercase formats.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="base64encode">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">ENC</div>
+          <h3 class="font-bold text-sm mb-1">Base64 Encryption Encoder</h3>
+          <p class="text-xs text-gray-400">Securely encode text strings into encrypted Base64 parameters.</p>
         </div>
-        <div class="tool-card group" data-tool="base64encode">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Base64 Encoder</h3>
-            <span class="badge badge-dev">Development</span>
-          </div>
-          <p>Encrypt structures into standard safe system transfer algorithms.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="base64decode">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">DEC</div>
+          <h3 class="font-bold text-sm mb-1">Base64 Decryption Decoder</h3>
+          <p class="text-xs text-gray-400">Decode Base64 sequence strings back to readable text.</p>
         </div>
-        <div class="tool-card group" data-tool="base64decode">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Base64 Decoder</h3>
-            <span class="badge badge-dev">Development</span>
-          </div>
-          <p>Parse incoming Base64 matrix outputs clean back into standard characters.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="jsonformat">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">JSON</div>
+          <h3 class="font-bold text-sm mb-1">JSON Tree Formatter</h3>
+          <p class="text-xs text-gray-400">Beautify and validate nested JSON data structures.</p>
         </div>
-        <div class="tool-card group" data-tool="jsonformat">
-          <div class="flex justify-between items-start mb-2">
-            <h3>JSON Formatter</h3>
-            <span class="badge badge-dev">Development</span>
-          </div>
-          <p>Validate, syntax-highlight, and beautify dense raw configuration strings.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="regex">
+          <div class="w-10 h-10 rounded-xl bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">REG</div>
+          <h3 class="font-bold text-sm mb-1">Regular Expression Tester</h3>
+          <p class="text-xs text-gray-400">Test and match custom regex patterns against text input.</p>
         </div>
-        <div class="tool-card group" data-tool="markdown">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Markdown Review</h3>
-            <span class="badge badge-dev">Development</span>
-          </div>
-          <p>Write raw markdown tags and view dynamic real-time parsed rendering layouts.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="diff">
+          <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">DIFF</div>
+          <h3 class="font-bold text-sm mb-1">Text Difference Comparator</h3>
+          <p class="text-xs text-gray-400">Compare text streams and track line alterations delta.</p>
         </div>
-        <div class="tool-card group" data-tool="regex">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Regex Tester</h3>
-            <span class="badge badge-dev">Development</span>
-          </div>
-          <p>Evaluate pattern configurations matches across custom texts live.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="uppercase">
+          <div class="w-10 h-10 rounded-xl bg-lime-500/20 text-lime-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">UP</div>
+          <h3 class="font-bold text-sm mb-1">Transform: UPPERCASE</h3>
+          <p class="text-xs text-gray-400">Convert all alphabetical text characters to uppercase.</p>
         </div>
-        <div class="tool-card group" data-tool="diff">
-          <div class="flex justify-between items-start mb-2">
-            <h3>Text Diff Tool</h3>
-            <span class="badge badge-dev">Development</span>
-          </div>
-          <p>Perform precise logical line comparison analytics highlighting differences.</p>
+        <div class="tool-card group bg-white/5 border border-white/10 hover:border-purple-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1" data-tool="lowercase">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold mb-3 group-hover:scale-110 transition">LOW</div>
+          <h3 class="font-bold text-sm mb-1">Transform: lowercase</h3>
+          <p class="text-xs text-gray-400">Convert all alphabetical text characters to lowercase.</p>
         </div>
       </div>
 
-      <!-- Local History Panel -->
-      <div id="historyView" class="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 hidden animate-fade-in backdrop-blur-md">
+      <!-- Grid Group 4: History View -->
+      <div id="historyView" class="hidden">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold font-['Orbitron'] text-purple-400">Recent Sandbox Actions</h2>
-          <button id="clearHistoryBtn" class="text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white transition">Clear Logs</button>
+          <h3 class="text-sm font-bold font-['Orbitron'] text-purple-400">Recent Workspace Activity Logs</h3>
+          <button id="clearHistoryBtn" class="bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-300 text-xs px-3 py-1.5 rounded-lg transition">Clear History Log</button>
         </div>
         <div id="historyContainerList" class="flex flex-col gap-3"></div>
       </div>
-    </div>
-  </div>
 
-  <!-- Workspace Processing Studio (Hidden by Default) -->
-  <section id="workspaceSection" class="w-full max-w-6xl hidden opacity-0 transform scale-95 transition-all duration-300">
-    <div class="flex justify-between items-center mb-4">
-      <button id="backToDashboardBtn" class="bg-gray-800/80 border border-gray-700 hover:border-purple-500 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition backdrop-blur-md">
-        ← Return Dashboard
-      </button>
-      <h2 id="activeToolTitle" class="text-lg md:text-xl font-bold font-['Orbitron'] text-gradient">Active Engine Module</h2>
-    </div>
+    </section>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <!-- Left Box: Workspace Input Stream -->
-      <div id="dragDropArea" class="relative bg-gray-900/40 border-2 border-dashed border-gray-800 rounded-3xl p-5 hover:border-purple-500 transition-colors flex flex-col min-h-[400px] backdrop-blur-md">
-        <div id="dragZoneOverlay" class="absolute inset-0 bg-purple-900/40 backdrop-blur-md rounded-3xl flex items-center justify-center border-2 border-purple-500 hidden z-20">
-          <p class="text-lg font-bold">Drop file asset here to import instantly...</p>
+    <!-- 3. WORKSPACE PROCESSOR SCREEN (Initially Hidden) -->
+    <section id="workspaceSection" class="hidden transform scale-95 opacity-0 transition-all duration-300 py-6">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <button id="backToDashboardBtn" class="text-xs text-purple-400 hover:text-purple-300 font-semibold flex items-center gap-1.5 mb-1 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <span>Back to Dashboard</span>
+          </button>
+          <h2 id="activeToolTitle" class="text-lg md:text-xl font-bold font-['Orbitron'] text-white">Tool Panel Active</h2>
         </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs text-gray-400 font-semibold tracking-wide">WORKSPACE INPUT STREAM</span>
-          <div class="flex gap-2">
-            <button id="speechRecordBtn" class="bg-gray-800 border border-gray-700 px-2.5 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 hover:border-purple-500 transition">
-              <span id="speechIconDot" class="w-2 h-2 rounded-full bg-red-500 animate-pulse hidden"></span>
-              <span id="speechTextLabel">Dictate Speech (Audio)</span>
-            </button>
-            <button id="clearInputBtn" class="text-[11px] bg-gray-800 hover:bg-red-900/30 border border-gray-700 text-gray-400 hover:text-red-400 px-2.5 py-1 rounded-md transition">Clear Buffer</button>
-          </div>
-        </div>
-
-        <div class="relative flex-grow flex flex-col">
-          <textarea id="contentInput" class="w-full flex-grow min-h-[300px] p-4 rounded-xl font-mono bg-black/40 focus:outline-none border border-gray-800 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 text-white resize-y" placeholder="Type or paste source data elements here..."></textarea>
-          <div id="codeHighlightView" class="w-full absolute inset-0 p-4 rounded-xl font-mono bg-black/95 text-white overflow-auto border border-gray-800 hidden whitespace-pre-wrap select-text"></div>
-        </div>
-
-        <!-- Thumbnail Studio Special UI Controls -->
-        <div id="thumbnailFieldsContainer" class="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl hidden flex flex-col gap-3">
-          <input type="file" id="thumbBgUpload" class="hidden" accept="image/*">
-          <button id="triggerThumbBgBtn" class="bg-purple-600/20 border border-purple-500/40 hover:bg-purple-600 p-2.5 rounded-lg text-xs font-semibold transition text-center">Set Thumbnail Background Image</button>
-          <input type="text" id="thumbTextInput" class="p-2.5 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-purple-500" placeholder="Enter Thumbnail Title Overlay...">
-        </div>
-
-        <!-- Design Tools Special Panels UI Controls -->
-        <div id="paletteFieldsContainer" class="mt-4 hidden grid grid-cols-5 gap-2"></div>
-
-        <div id="contrastFieldsContainer" class="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl hidden flex flex-col gap-3">
-          <div class="flex flex-col sm:flex-row gap-4">
-            <div class="flex-grow">
-              <label class="text-xs text-gray-400 block mb-1">Text Color (Hex)</label>
-              <input type="text" id="contrastTextColor" class="w-full p-2 rounded-lg bg-black/40 border border-gray-700 focus:outline-none font-mono text-xs text-white" value="#a855f7">
+        <!-- Left Column: Input Workspace & Extra Controls -->
+        <div class="lg:col-span-2 flex flex-col gap-4">
+          
+          <!-- Special Panel Containers -->
+          <div id="paletteFieldsContainer" class="hidden grid grid-cols-5 gap-2"></div>
+          
+          <div id="contrastFieldsContainer" class="hidden grid grid-cols-2 gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl">
+            <div>
+              <label class="text-xs text-gray-400 block mb-1 font-semibold">Foreground Text Color Hex:</label>
+              <input type="text" id="contrastTextColor" value="#FFFFFF" class="w-full p-2 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white">
             </div>
-            <div class="flex-grow">
-              <label class="text-xs text-gray-400 block mb-1">Background Color (Hex)</label>
-              <input type="text" id="contrastBgColor" class="w-full p-2 rounded-lg bg-black/40 border border-gray-700 focus:outline-none font-mono text-xs text-white" value="#111827">
+            <div>
+              <label class="text-xs text-gray-400 block mb-1 font-semibold">Background Container Hex:</label>
+              <input type="text" id="contrastBgColor" value="#7E22CE" class="w-full p-2 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white">
+            </div>
+            <div id="contrastLiveCard" class="col-span-2 p-4 rounded-xl text-center text-xs font-bold transition">
+              Live Accessibility Compliance Preview Card Text Sample
             </div>
           </div>
-          <div id="contrastLiveCard" class="p-3 rounded-lg text-center font-bold text-sm transition-colors">
-            WCAG Contrast Sample Display Text
-          </div>
-        </div>
 
-        <div id="imageUploadFieldsContainer" class="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl hidden flex flex-col items-center justify-center border-dashed border-purple-500/40">
-          <input type="file" id="designImageFileSelector" class="hidden" accept="image/*">
-          <button id="triggerImageSelectBtn" class="bg-purple-600/20 border border-purple-500/40 hover:bg-purple-600 px-4 py-2 rounded-xl text-xs transition">Select Local Image Layer Asset</button>
-          <p id="imagePreviewFeedbackName" class="text-[11px] text-gray-400 mt-2 italic"></p>
-        </div>
+          <!-- AI & Trending Thumbnail Studio Container -->
+          <div id="thumbnailFieldsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl"></div>
 
-        <div id="regexFieldsContainer" class="mt-4 p-3 bg-white/5 border border-white/10 rounded-xl hidden flex flex-col md:flex-row gap-3 items-center">
-          <input type="text" id="regexPatternInput" class="flex-grow p-2 rounded-lg bg-black/40 border border-gray-700 focus:outline-none text-xs font-mono text-purple-300" placeholder="Expression mapping regex (e.g., /[0-9]+/g)">
-          <div id="regexStatusFeedback" class="bg-gray-800 px-3 py-2 rounded-lg text-xs font-mono h-9 flex items-center">Matches: 0</div>
-        </div>
-
-        <div id="diffFieldsContainer" class="mt-4 hidden flex flex-col gap-2">
-          <span class="text-xs text-gray-400 font-semibold">TARGET TEXT BUFFER TO COMPARE</span>
-          <textarea id="diffSecondaryInput" class="w-full h-32 p-3 rounded-xl font-mono bg-black/40 border border-gray-800 focus:outline-none text-xs text-white" placeholder="Insert secondary tracking values text..."></textarea>
-        </div>
-
-        <div class="mt-4 pt-3 border-t border-gray-800/60 grid grid-cols-3 text-center text-[11px] font-semibold tracking-wider text-gray-400">
-          <div>WORDS: <span id="wordCount" class="text-purple-400 font-mono">0</span></div>
-          <div>CHARS: <span id="charCount" class="text-pink-400 font-mono">0</span></div>
-          <div>LINES: <span id="lineCount" class="text-blue-400 font-mono">0</span></div>
-        </div>
-      </div>
-
-      <!-- Right Box: System Output Render Node -->
-      <div class="bg-gray-900/40 border border-gray-800 rounded-3xl p-5 flex flex-col justify-between min-h-[400px] backdrop-blur-md">
-        <span class="text-xs text-gray-400 font-semibold tracking-wide block mb-3">SYSTEM PREVIEW RENDER NODE</span>
-        
-        <div class="flex-grow flex flex-col justify-between">
-          <div id="previewContainer" class="flex-grow border border-gray-800 bg-black/20 p-4 rounded-xl overflow-auto max-h-[300px] mb-4 hidden">
-            <div id="markdownPreview" class="prose prose-invert text-sm max-w-none"></div>
+          <div id="imageUploadFieldsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl text-center">
+            <input type="file" id="designImageFileSelector" class="hidden" accept="image/*">
+            <button id="triggerImageSelectBtn" class="bg-purple-600/20 border border-purple-500/40 hover:bg-purple-600 px-4 py-2.5 rounded-xl text-xs font-semibold transition">Browse & Upload Asset Image File</button>
+            <p id="imagePreviewFeedbackName" class="text-[11px] text-gray-400 mt-2 font-mono">No image loaded...</p>
           </div>
 
-          <div id="svgPreviewDisplayWindow" class="flex-grow border border-gray-800 bg-black/40 rounded-xl p-4 mb-4 hidden flex items-center justify-center max-h-[300px] min-h-[200px] overflow-auto"></div>
-
-          <div id="thumbnailPreviewDisplayWindow" class="flex-grow border border-gray-800 bg-black/40 rounded-xl p-2 mb-4 hidden flex items-center justify-center overflow-auto">
-            <canvas id="thumbCanvas" width="1280" height="720" class="w-full h-auto rounded-lg shadow-2xl border border-gray-700"></canvas>
+          <div id="regexFieldsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl">
+            <label class="text-xs text-gray-400 block mb-1 font-semibold">Regular Expression Match Pattern String:</label>
+            <input type="text" id="regexPatternInput" placeholder="/[A-Z]+/g" class="w-full p-2.5 bg-black/40 border border-gray-700 rounded-lg text-xs font-mono text-white focus:outline-none focus:border-purple-500">
+            <p id="regexStatusFeedback" class="text-xs font-bold text-purple-400 mt-2 font-mono">Matches Found: 0</p>
           </div>
 
-          <div id="diffResultsContainer" class="flex-grow border border-gray-800 bg-black/40 p-3 rounded-xl overflow-auto font-mono text-xs max-h-[300px] mb-4 hidden whitespace-pre-wrap">
-            <div id="diffVisualizerBox"></div>
+          <div id="diffFieldsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl">
+            <label class="text-xs text-gray-400 block mb-1 font-semibold">Secondary Text Stream Comparison Target:</label>
+            <textarea id="diffSecondaryInput" rows="3" placeholder="Insert secondary baseline text payload..." class="w-full p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500 resize-none"></textarea>
           </div>
 
-          <div class="flex flex-col items-center justify-center py-6 flex-grow">
-            <button id="generateBtn" class="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 px-8 py-3.5 rounded-full font-semibold text-sm shadow-lg transform hover:scale-105 transition active:scale-95 duration-200 z-10 relative">
-              Execute Engine Operation Module
+          <!-- Main Input Drag & Drop Zone Area -->
+          <div id="dragDropArea" class="relative bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col transition hover:border-purple-500/40">
+            <div id="dragZoneOverlay" class="hidden absolute inset-0 bg-purple-950/80 backdrop-blur-sm rounded-2xl z-20 flex items-center justify-center border-2 border-dashed border-purple-400">
+              <p class="font-bold text-sm text-purple-200">Drop local file assets here to process...</p>
+            </div>
+            
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs font-semibold text-gray-400 font-['Orbitron']">Primary Workspace Payload Area</span>
+              <div class="flex items-center gap-2">
+                <button id="speechRecordBtn" class="bg-white/5 hover:bg-white/10 border border-white/10 px-2.5 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition">
+                  <span id="speechIconDot" class="hidden w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                  <span id="speechTextLabel">Dictate Speech (Audio)</span>
+                </button>
+                <button id="clearInputBtn" class="bg-white/5 hover:bg-white/10 border border-white/10 px-2.5 py-1.5 rounded-lg text-xs transition">Clear Text</button>
+              </div>
+            </div>
+
+            <textarea id="contentInput" rows="8" placeholder="Type, paste text strings, or drop files here..." class="w-full p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500 resize-y"></textarea>
+            
+            <div id="codeHighlightView" class="hidden w-full p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono text-white h-48 overflow-y-auto"></div>
+
+            <div class="flex justify-between items-center mt-3 text-[11px] text-gray-400 font-mono">
+              <div class="flex gap-4">
+                <span>Characters: <strong id="charCount" class="text-purple-400">0</strong></span>
+                <span>Words: <strong id="wordCount" class="text-purple-400">0</strong></span>
+                <span>Lines: <strong id="lineCount" class="text-purple-400">0</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Diff Results Visualizer Box -->
+          <div id="diffResultsContainer" class="hidden bg-white/5 border border-white/10 p-4 rounded-2xl">
+            <label class="text-xs text-gray-400 block mb-2 font-semibold">Delta Transformation Comparator Visualizer Output:</label>
+            <div id="diffVisualizerBox" class="p-3 bg-black/40 border border-gray-700 rounded-xl text-xs font-mono h-36 overflow-y-auto whitespace-pre-wrap"></div>
+          </div>
+
+          <!-- Action Process Button & Progress Tracker -->
+          <div class="flex flex-col gap-3">
+            <button id="generateBtn" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-['Orbitron'] font-bold text-xs uppercase tracking-wider py-4 rounded-xl shadow-lg shadow-purple-600/30 transition transform active:scale-98">
+              Execute Transformation Engine Operation
             </button>
+
+            <div id="progressContainer" class="opacity-0 pointer-events-none transition-all duration-300 bg-white/5 border border-white/10 p-4 rounded-xl">
+              <div class="flex justify-between text-xs font-mono mb-2">
+                <span id="statusText">Analyzing System Stream: 0%</span>
+                <span id="timeElapsed">Time Elapsed: 0.00s</span>
+              </div>
+              <div class="w-full bg-black/50 h-2 rounded-full overflow-hidden border border-white/5">
+                <div id="progressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-full w-0 transition-all duration-150"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Live Render Previews -->
+        <div class="flex flex-col gap-4">
+          <div class="bg-white/5 border border-white/10 p-4 rounded-2xl flex flex-col h-full min-h-[380px]">
+            <h3 class="text-xs font-bold font-['Orbitron'] text-purple-400 mb-3">Live Studio Render Preview</h3>
+            
+            <div id="previewContainer" class="hidden flex-1 p-3 bg-black/40 border border-gray-700 rounded-xl text-xs overflow-y-auto">
+              <div id="markdownPreview" class="prose prose-invert max-w-none text-xs"></div>
+            </div>
+
+            <div id="svgPreviewDisplayWindow" class="hidden flex-1 p-3 bg-black/40 border border-gray-700 rounded-xl flex items-center justify-center overflow-auto">
+              <span class="text-gray-600 italic text-xs">Awaiting clean vector input XML code markup...</span>
+            </div>
+
+            <!-- Thumbnail Studio Preview Canvas -->
+            <div id="thumbnailPreviewDisplayWindow" class="hidden flex-1 flex flex-col items-center justify-center bg-black/60 border border-gray-700 rounded-xl p-2 overflow-hidden shadow-2xl">
+              <canvas id="thumbCanvas" width="1280" height="720" class="w-full aspect-video rounded-lg shadow-lg border border-white/10 object-contain"></canvas>
+              <p class="text-[10px] text-gray-400 mt-2 font-mono">16:9 HD YouTube Thumbnail Canvas Output</p>
+            </div>
           </div>
         </div>
 
-        <div id="progressContainer" class="w-full mt-4 flex flex-col gap-2 opacity-0 pointer-events-none transition-opacity duration-300">
-          <div class="w-full h-2.5 rounded-full bg-gray-800 overflow-hidden shadow-inner border border-purple-900/30">
-            <div id="progressBar" class="h-2.5 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 w-0 transition-all duration-75 ease-out shadow-neon"></div>
-          </div>
-          <div class="flex justify-between text-[11px] font-bold text-gray-400 font-mono">
-            <div id="statusText">Processing: 0%</div>
-            <div id="timeElapsed">Time Elapsed: 0.00s</div>
-          </div>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Success Notifications Overlay -->
-  <div id="successMessage" class="fixed inset-0 flex items-center justify-center bg-black/60 opacity-0 pointer-events-none z-50 transition-opacity duration-300 backdrop-blur-sm">
-    <div id="successCard" class="bg-gray-900 border border-green-500/30 p-6 rounded-2xl shadow-2xl flex items-center gap-4 transform scale-95 transition-transform duration-300 max-w-md w-full mx-4">
-      <div class="w-10 h-10 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center flex-shrink-0">
-        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
+  </main>
+
+  <!-- SUCCESS NOTIFICATION TOAST -->
+  <div id="successMessage" class="fixed bottom-6 right-6 opacity-0 pointer-events-none transition-all duration-300 z-50">
+    <div id="successCard" class="bg-purple-950/90 border border-purple-500/50 backdrop-blur-md px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 transform scale-95 transition-transform duration-300">
+      <div class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs">✓</div>
       <div>
-        <h4 class="text-md font-bold text-green-400 font-['Orbitron']">ACTION SUCCESSFUL</h4>
-        <p id="successDetail" class="text-xs text-gray-400 mt-0.5"></p>
+        <p class="text-xs font-bold text-white font-['Orbitron']">Operation Successful</p>
+        <p id="successDetail" class="text-[11px] text-gray-300 font-mono">Asset processed correctly.</p>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-4 text-center text-xs text-gray-500">
+    <p>UxPro Studio Core &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <!-- External Script Engine Link -->
   <script src="script.js"></script>
 </body>
 </html>
