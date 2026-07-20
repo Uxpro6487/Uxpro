@@ -170,7 +170,6 @@ const activateWorkspace = (toolKey) => {
     generateBtn.textContent = "Generate & Download Safe Protected File Asset";
   }
 
-  // Clear visibility loops overrides
   [previewContainer, svgPreviewDisplayWindow, thumbnailPreviewDisplayWindow, paletteFieldsContainer, contrastFieldsContainer, thumbnailFieldsContainer, imageUploadFieldsContainer, regexFieldsContainer, diffFieldsContainer, diffResultsContainer].forEach(node => node.classList.add('hidden'));
   contentInput.classList.remove('hidden');
   codeHighlightView.classList.add('hidden');
@@ -274,7 +273,6 @@ function drawThumbnailCanvas() {
   if (currentThumbImage) {
     ctx.drawImage(currentThumbImage, 0, 0, 1280, 720);
   } else {
-    // Default gradient background
     const grad = ctx.createLinearGradient(0, 0, 1280, 720);
     grad.addColorStop(0, '#1e1b4b');
     grad.addColorStop(1, '#311042');
@@ -282,21 +280,19 @@ function drawThumbnailCanvas() {
     ctx.fillRect(0, 0, 1280, 720);
   }
 
-  // Draw overlay title text
   const customText = thumbTextInput.value || contentInput.value || "YouTube Thumbnail Title";
   ctx.fillStyle = "#ffffff";
   ctx.font = "bold 72px 'Orbitron', sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   
-  // Text shadow for pop effect
   ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
   ctx.shadowBlur = 20;
   ctx.lineWidth = 6;
   ctx.strokeStyle = "#000000";
   ctx.strokeText(customText, 640, 360, 1150);
   ctx.fillText(customText, 640, 360, 1150);
-  ctx.shadowBlur = 0; // reset
+  ctx.shadowBlur = 0;
 }
 
 // --- DESIGN SUITE MODULE FUNCTIONAL LOGIC ---
